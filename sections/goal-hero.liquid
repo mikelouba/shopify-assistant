@@ -1,0 +1,185 @@
+{%- liquid
+  assign goal = section.settings.goal | default: page.handle | remove: 'goal-'
+
+  case goal
+    when 'sleep'
+      assign hero_bg       = '#0F1A2E,#1A2A4A,#243256'
+      assign hero_angle    = '135deg'
+      assign accent        = '#7B9CC4'
+      assign accent_dark   = '#0F1A2E'
+      assign text_color    = '#E8EDF5'
+      assign eyebrow_text  = '✦ Sleep Protocol'
+      assign headline      = 'Drift into <em>deeper</em> rest'
+      assign subheading    = 'Scientifically formulated to ease your nervous system into restorative, uninterrupted sleep — naturally, without habit-forming ingredients.'
+      assign btn_label     = 'Shop Sleep Collection'
+      assign collection    = 'sleep'
+      assign visual_emoji  = '🌙'
+      assign stat_label    = 'sleep quality'
+      assign stat_val      = '+68%'
+      assign badge_1       = '🌙 Non-habit forming'
+      assign badge_2       = '🧪 Clinically studied'
+      assign badge_3       = '🌿 No melatonin dependency'
+
+    when 'focus'
+      assign hero_bg       = '#1E1208,#2E1E0E,#3A2A16'
+      assign hero_angle    = '145deg'
+      assign accent        = '#C49B6C'
+      assign accent_dark   = '#1E1208'
+      assign text_color    = '#F5EDE0'
+      assign eyebrow_text  = '✦ Cognitive Protocol'
+      assign headline      = 'Unlock your <em>sharpest</em> mind'
+      assign subheading    = 'Precision nootropics formulated to sustain deep focus, protect memory, and elevate mental clarity — without the crash.'
+      assign btn_label     = 'Shop Focus Collection'
+      assign collection    = 'focus'
+      assign visual_emoji  = '🧠'
+      assign stat_label    = 'report better focus'
+      assign stat_val      = '89%'
+      assign badge_1       = '🍄 Lion\'s Mane NGF +42%'
+      assign badge_2       = '🧪 Clinically studied'
+      assign badge_3       = '⚡ Zero jitters or crash'
+
+    when 'stress'
+      assign hero_bg       = '#1A2E1C,#243626,#1A2A1C'
+      assign hero_angle    = '160deg'
+      assign accent        = '#7EAA82'
+      assign accent_dark   = '#1A2E1C'
+      assign text_color    = '#E8F0E8'
+      assign eyebrow_text  = '✦ Calm Protocol'
+      assign headline      = 'Breathe. <em>Release.</em> Restore.'
+      assign subheading    = 'Botanical adaptogens that work at the root of stress — your cortisol levels, your nervous system, your baseline.'
+      assign btn_label     = 'Shop Calm Collection'
+      assign collection    = 'stress-relief'
+      assign visual_emoji  = '🌿'
+      assign stat_label    = 'cortisol reduction'
+      assign stat_val      = '−28%'
+      assign badge_1       = '🌿 Adaptogen-rich'
+      assign badge_2       = '🧪 Cortisol tested'
+      assign badge_3       = '🌙 Non-sedating'
+
+    when 'glow'
+      assign hero_bg       = '#2E1420,#3A1E2C,#4A2838'
+      assign hero_angle    = '150deg'
+      assign accent        = '#C47B8C'
+      assign accent_dark   = '#2E1420'
+      assign text_color    = '#F5E8ED'
+      assign eyebrow_text  = '✦ Skin Ritual'
+      assign headline      = 'Radiance that starts <em>within</em>'
+      assign subheading    = 'True skin health is cellular. Our inside-out formulas rebuild your skin\'s architecture from the collagen layer up.'
+      assign btn_label     = 'Shop Skin Glow'
+      assign collection    = 'skin-glow'
+      assign visual_emoji  = '✨'
+      assign stat_label    = 'see visible improvement'
+      assign stat_val      = '87%'
+      assign badge_1       = '🐟 Marine Collagen 5g'
+      assign badge_2       = '🧪 Clinically trialed'
+      assign badge_3       = '✨ Results in 4–8 weeks'
+
+    when 'energy'
+      assign hero_bg       = '#1A1200,#2A1E06,#382810'
+      assign hero_angle    = '135deg'
+      assign accent        = '#C4A027'
+      assign accent_dark   = '#1A1200'
+      assign text_color    = '#F5EDD8'
+      assign eyebrow_text  = '✦ Vitality Protocol'
+      assign headline      = 'Ignite your <em>full potential</em> daily'
+      assign subheading    = 'Clean, sustained energy without the caffeine crash. Mitochondria-level vitality that makes you feel powerfully alive all day long.'
+      assign btn_label     = 'Shop Energy Collection'
+      assign collection    = 'energy'
+      assign visual_emoji  = '⚡'
+      assign stat_label    = 'vitality at 6 weeks'
+      assign stat_val      = '+84%'
+      assign badge_1       = '⚡ Zero stimulants'
+      assign badge_2       = '🍄 Cordyceps-powered'
+      assign badge_3       = '🔬 Mitochondrial support'
+  endcase
+
+  assign hero_gradient = 'linear-gradient(' | append: hero_angle | append: ', #' | append: hero_bg | replace: ',', ', #' | append: ')'
+-%}
+
+<div class="goal-hero-section" style="
+  background: linear-gradient({{ hero_angle }}, {{ hero_bg | split: ',' | first }}, {{ hero_bg | split: ',' | last }});
+  min-height: 88vh;
+  display: grid;
+  grid-template-columns: 55% 45%;
+  position: relative;
+  overflow: hidden;
+">
+  <!-- Radial glow overlay -->
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 75% 30%, {{ accent }}30 0%, transparent 55%),radial-gradient(ellipse at 15% 75%, {{ accent }}12 0%, transparent 50%);pointer-events:none"></div>
+
+  <!-- Content -->
+  <div style="position:relative;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:80px 72px;">
+    <span style="font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:{{ accent }};margin-bottom:14px;display:block">
+      {{ eyebrow_text }}
+    </span>
+
+    <h1 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(52px,6vw,84px);font-weight:400;color:{{ text_color }};line-height:1.05;margin-bottom:22px">
+      {{ headline }}
+    </h1>
+
+    <p style="font-size:16px;color:{{ text_color | append: 'aa' }};font-weight:300;max-width:420px;line-height:1.75;margin-bottom:44px">
+      {{ subheading }}
+    </p>
+
+    <div style="display:flex;gap:14px;margin-bottom:48px;flex-wrap:wrap">
+      <a href="{{ routes.collections_url }}/{{ collection }}" style="
+        background:{{ accent }};color:{{ accent_dark }};border:none;border-radius:3px;
+        padding:15px 34px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;
+        letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;
+        transition:all 0.25s;
+      ">{{ btn_label }}</a>
+      <a href="/pages/wellness-quiz" style="
+        background:transparent;color:{{ text_color }}bb;border:1.5px solid {{ accent }}55;border-radius:3px;
+        padding:14px 32px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;
+        letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;
+        transition:all 0.25s;
+      ">Find My Protocol</a>
+    </div>
+
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+      <span style="font-size:12px;color:{{ text_color }}55;display:flex;align-items:center;gap:6px">{{ badge_1 }}</span>
+      <span style="font-size:12px;color:{{ text_color }}55;display:flex;align-items:center;gap:6px">{{ badge_2 }}</span>
+      <span style="font-size:12px;color:{{ text_color }}55;display:flex;align-items:center;gap:6px">{{ badge_3 }}</span>
+    </div>
+  </div>
+
+  <!-- Visual -->
+  <div style="position:relative;z-index:2;display:flex;align-items:center;justify-content:center">
+    <div style="position:relative;width:340px;height:340px;display:flex;align-items:center;justify-content:center">
+      <div style="width:340px;height:340px;border-radius:50%;border:1px solid {{ accent }}22;position:absolute"></div>
+      <div style="width:240px;height:240px;border-radius:50%;border:1px solid {{ accent }}30;background:{{ accent }}08;position:absolute"></div>
+      <div style="width:140px;height:140px;border-radius:50%;border:1px solid {{ accent }}40;background:{{ accent }}10;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;position:relative;z-index:2">
+        <span style="font-size:52px">{{ visual_emoji }}</span>
+      </div>
+      <!-- Floating stat card -->
+      <div style="position:absolute;bottom:20px;right:-20px;background:{{ accent }}15;backdrop-filter:blur(10px);border:1px solid {{ accent }}25;border-radius:12px;padding:16px 20px">
+        <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:{{ accent }};margin-bottom:4px">Result at 6 weeks</div>
+        <div style="font-family:'DM Serif Display',Georgia,serif;font-size:24px;color:{{ text_color }}">{{ stat_val }}</div>
+        <div style="font-size:11px;color:{{ text_color }}44;margin-top:2px">{{ stat_label }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Goal Hero",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "goal",
+      "label": "Goal type",
+      "options": [
+        { "value": "sleep",  "label": "Better Sleep" },
+        { "value": "focus",  "label": "Focus & Clarity" },
+        { "value": "stress", "label": "Stress Relief" },
+        { "value": "glow",   "label": "Skin Glow" },
+        { "value": "energy", "label": "Energy & Vitality" }
+      ],
+      "default": "sleep"
+    }
+  ],
+  "presets": [{ "name": "Goal Hero" }]
+}
+{% endschema %}

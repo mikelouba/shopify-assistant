@@ -1,0 +1,76 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+  case goal
+    when 'sleep'
+      assign accent = '#7B9CC4'; assign heading_color = '#2A3A5C'
+      assign i1_em = '🫚'; assign i1_nm = 'Magnesium Glycinate'; assign i1_ds = 'Highly bioavailable form that calms the nervous system and prepares the body for deep sleep.'
+      assign i2_em = '🌿'; assign i2_nm = 'Ashwagandha KSM-66';  assign i2_ds = 'Clinically proven to lower cortisol by up to 28% — the #1 enemy of deep, restorative sleep.'
+      assign i3_em = '🍵'; assign i3_nm = 'L-Theanine';          assign i3_ds = 'Amino acid from green tea that promotes relaxation without sedation or morning grogginess.'
+      assign i4_em = '🌸'; assign i4_nm = 'Passionflower';       assign i4_ds = 'Traditional herb shown to increase GABA activity — your brain\'s natural off switch.'
+    when 'focus'
+      assign accent = '#C49B6C'; assign heading_color = '#3A2A1E'
+      assign i1_em = '🍄'; assign i1_nm = 'Lion\'s Mane';        assign i1_ds = 'Stimulates Nerve Growth Factor, rebuilding neural pathways for long-term cognitive enhancement.'
+      assign i2_em = '🌱'; assign i2_nm = 'Bacopa Monnieri';     assign i2_ds = '800-year Ayurvedic herb proven to improve information retention and processing speed.'
+      assign i3_em = '🏔️'; assign i3_nm = 'Rhodiola Rosea';      assign i3_ds = 'Arctic adaptogen that combats mental fatigue and extends the window of peak cognitive performance.'
+      assign i4_em = '⚡'; assign i4_nm = 'Alpha-GPC';           assign i4_ds = 'Choline precursor that feeds the brain\'s acetylcholine system — the neurotransmitter of focus.'
+    when 'stress'
+      assign accent = '#7EAA82'; assign heading_color = '#2A3A2E'
+      assign i1_em = '🌿'; assign i1_nm = 'KSM-66 Ashwagandha';  assign i1_ds = 'The most clinically studied adaptogen. Reduces serum cortisol by up to 28% in 60 days.'
+      assign i2_em = '🍄'; assign i2_nm = 'Reishi Mushroom';     assign i2_ds = '"The mushroom of immortality." Modulates the immune stress response and promotes inner calm.'
+      assign i3_em = '🌸'; assign i3_nm = 'Holy Basil (Tulsi)';  assign i3_ds = 'Sacred Ayurvedic herb that stabilizes mood and reduces anxiety through COX-2 inhibition.'
+      assign i4_em = '🍋'; assign i4_nm = 'Lemon Balm';          assign i4_ds = 'Calms an overactive mind and reduces anxious thinking without causing drowsiness.'
+    when 'glow'
+      assign accent = '#C47B8C'; assign heading_color = '#4A2A38'
+      assign i1_em = '🐟'; assign i1_nm = 'Marine Collagen';     assign i1_ds = 'Type I collagen peptides with 3x higher bioavailability. Rebuilds skin\'s structural matrix from within.'
+      assign i2_em = '🍊'; assign i2_nm = 'Liposomal Vitamin C'; assign i2_ds = 'Fat-soluble form for superior absorption. Essential collagen synthesis cofactor and antioxidant.'
+      assign i3_em = '🫐'; assign i3_nm = 'Astaxanthin';         assign i3_ds = '6,000x stronger than Vitamin C. Protects skin from UV damage and oxidative stress.'
+      assign i4_em = '🌺'; assign i4_nm = 'Hyaluronic Acid';     assign i4_ds = 'Oral HA shown to significantly improve skin hydration and reduce the appearance of fine lines.'
+    when 'energy'
+      assign accent = '#C4A027'; assign heading_color = '#3A2E0E'
+      assign i1_em = '⚡'; assign i1_nm = 'CoQ10 (Ubiquinol)';   assign i1_ds = 'Most bioavailable form of CoQ10 — the spark plug in every mitochondria in your body.'
+      assign i2_em = '🌿'; assign i2_nm = 'Cordyceps Militaris'; assign i2_ds = 'Elite mushroom used by Tibetan athletes. Dramatically increases VO2 max and ATP production.'
+      assign i3_em = '🍵'; assign i3_nm = 'Matcha + L-Theanine'; assign i3_ds = 'Zen energy: focused, calm alertness of a monk. No spike, no crash, sustained clarity all day.'
+      assign i4_em = '🌻'; assign i4_nm = 'Methylated B Complex';assign i4_ds = 'Full-spectrum methylated B vitamins — essential cofactors for every energy reaction in the body.'
+  endcase
+-%}
+
+<div style="padding:80px 64px;background:#FDFAF5">
+  <div style="text-align:center;margin-bottom:52px">
+    <span style="font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:{{ accent }};display:block;margin-bottom:14px">✦ Key Ingredients</span>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,3.5vw,46px);color:{{ heading_color }};font-weight:400">What makes it work</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:1100px;margin:0 auto">
+    {%- assign ings = 'i1,i2,i3,i4' | split: ',' -%}
+    {%- for ing in ings -%}
+      {%- liquid
+        case ing
+          when 'i1'; assign em = i1_em; assign nm = i1_nm; assign ds = i1_ds
+          when 'i2'; assign em = i2_em; assign nm = i2_nm; assign ds = i2_ds
+          when 'i3'; assign em = i3_em; assign nm = i3_nm; assign ds = i3_ds
+          when 'i4'; assign em = i4_em; assign nm = i4_nm; assign ds = i4_ds
+        endcase
+      -%}
+      <div style="background:white;border:1px solid {{ accent }}18;border-radius:10px;padding:24px 20px;text-align:center;transition:all 0.3s">
+        <div style="font-size:38px;margin-bottom:12px">{{ em }}</div>
+        <div style="font-family:'Playfair Display',serif;font-size:17px;color:{{ heading_color }};margin-bottom:8px;font-weight:400">{{ nm }}</div>
+        <div style="font-size:13px;color:#7A7060;line-height:1.6;font-weight:300">{{ ds }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Goal Ingredients",
+  "tag": "div",
+  "settings": [
+    { "type": "select", "id": "goal", "label": "Goal type",
+      "options": [
+        {"value":"sleep","label":"Better Sleep"},{"value":"focus","label":"Focus & Clarity"},
+        {"value":"stress","label":"Stress Relief"},{"value":"glow","label":"Skin Glow"},
+        {"value":"energy","label":"Energy & Vitality"}
+      ], "default": "sleep" }
+  ],
+  "presets": [{ "name": "Goal Ingredients" }]
+}
+{% endschema %}

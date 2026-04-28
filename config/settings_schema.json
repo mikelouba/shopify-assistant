@@ -1,1 +1,103 @@
-[]
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Solmara",
+    "theme_version": "1.0.0",
+    "theme_author": "Solmara",
+    "theme_documentation_url": "https://solmara.com",
+    "theme_support_url": "https://solmara.com/pages/support"
+  },
+  {
+    "name": "Announcement Bar",
+    "settings": [
+      {
+        "type": "text",
+        "id": "announcement_text",
+        "label": "Announcement 1",
+        "default": "100% Natural Ingredients"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text_2",
+        "label": "Announcement 2",
+        "default": "Free Shipping Over $60"
+      },
+      {
+        "type": "text",
+        "id": "announcement_text_3",
+        "label": "Announcement 3",
+        "default": "Science-Backed Formulas"
+      }
+    ]
+  },
+  {
+    "name": "Navigation",
+    "settings": [
+      {
+        "type": "link_list",
+        "id": "main_menu",
+        "label": "Main navigation menu",
+        "default": "main-menu"
+      }
+    ]
+  },
+  {
+    "name": "Footer",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "footer_tagline",
+        "label": "Footer tagline",
+        "default": "Wellness rooted in nature's wisdom. Every product made with purpose."
+      },
+      {
+        "type": "header",
+        "content": "Certification Badges"
+      },
+      { "type": "text", "id": "cert_1", "label": "Badge 1", "default": "🌱 Organic" },
+      { "type": "text", "id": "cert_2", "label": "Badge 2", "default": "🐰 Cruelty-Free" },
+      { "type": "text", "id": "cert_3", "label": "Badge 3", "default": "🌍 B Corp" },
+      { "type": "text", "id": "cert_4", "label": "Badge 4", "default": "♻️ Zero Plastic" },
+      {
+        "type": "header",
+        "content": "Footer Menus"
+      },
+      { "type": "text",      "id": "footer_menu_title_1", "label": "Menu 1 Title", "default": "Shop" },
+      { "type": "link_list", "id": "footer_menu_1",       "label": "Menu 1",       "default": "footer-shop" },
+      { "type": "text",      "id": "footer_menu_title_2", "label": "Menu 2 Title", "default": "Learn" },
+      { "type": "link_list", "id": "footer_menu_2",       "label": "Menu 2",       "default": "footer-learn" },
+      { "type": "text",      "id": "footer_menu_title_3", "label": "Menu 3 Title", "default": "Support" },
+      { "type": "link_list", "id": "footer_menu_3",       "label": "Menu 3",       "default": "footer-support" },
+      {
+        "type": "header",
+        "content": "Social Links"
+      },
+      { "type": "url", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "url", "id": "social_tiktok",    "label": "TikTok URL" },
+      { "type": "url", "id": "social_pinterest", "label": "Pinterest URL" },
+      { "type": "url", "id": "social_youtube",   "label": "YouTube URL" }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon image",
+        "info": "32 x 32px .png or .ico recommended"
+      }
+    ]
+  },
+  {
+    "name": "Free Shipping Bar",
+    "settings": [
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free shipping threshold (in dollars)",
+        "default": 60
+      }
+    ]
+  }
+]

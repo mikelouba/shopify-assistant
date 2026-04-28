@@ -1,0 +1,408 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'product-form-' | append: product.id
+-%}
+
+<div class="product-page" data-product-id="{{ product.id }}">
+  {%- render 'breadcrumbs' -%}
+
+  <div class="product-layout">
+
+    <!-- ══ GALLERY ══ -->
+    <div class="product-gallery" id="productGallery">
+      <!-- Thumbnails -->
+      <div class="gallery-thumbs" id="galleryThumbs">
+        {%- for image in product.images -%}
+          <button class="gallery-thumb {% if forloop.first %}active{% endif %}"
+                  onclick="setGalleryImage({{ forloop.index0 }})"
+                  aria-label="View image {{ forloop.index }}">
+            {{ image | image_url: width: 120 | image_tag:
+                alt: image.alt | default: product.title,
+                loading: 'lazy',
+                widths: '80, 120',
+                sizes: '80px' }}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      <!-- Main image -->
+      <div class="gallery-main">
+        <div class="gallery-slides" id="gallerySlides">
+          {%- for image in product.images -%}
+            <div class="gallery-slide {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
+              {{ image | image_url: width: 900 | image_tag:
+                  alt: image.alt | default: product.title,
+                  loading: forloop.first | downcase,
+                  class: 'gallery-img',
+                  widths: '500, 700, 900',
+                  sizes: '(max-width: 768px) 100vw, 50vw' }}
+            </div>
+          {%- endfor -%}
+          {%- if product.images.size == 0 -%}
+            <div class="gallery-slide active">
+              <div class="gallery-placeholder">🌿</div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Nav arrows -->
+        {%- if product.images.size > 1 -%}
+          <button class="gallery-arrow gallery-prev" onclick="galleryNav(-1)" aria-label="Previous image">&#8592;</button>
+          <button class="gallery-arrow gallery-next" onclick="galleryNav(1)"  aria-label="Next image">&#8594;</button>
+        {%- endif -%}
+
+        <!-- Badges -->
+        <div class="gallery-badges">
+          {%- if product.tags contains 'bestseller' -%}<span class="p-badge b-best">Bestseller</span>{%- endif -%}
+          {%- if product.tags contains 'new' -%}<span class="p-badge b-new">New</span>{%- endif -%}
+          {%- unless current_variant.available -%}<span class="p-badge b-sold">Sold Out</span>{%- endunless -%}
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PRODUCT INFO ══ -->
+    <div class="product-info">
+
+      {%- if section.settings.show_vendor and product.vendor != blank -%}
+        <p class="product-vendor">{{ product.vendor }}</p>
+      {%- endif -%}
+
+      <h1 class="product-title">{{ product.title }}</h1>
+
+      <!-- Rating -->
+      {%- if product.metafields.reviews.rating != blank -%}
+        <div class="product-rating">
+          <span class="stars-val">
+            {%- assign rating = product.metafields.reviews.rating.value | times: 1 -%}
+            {%- for i in (1..5) -%}{%- if i <= rating -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+          </span>
+          <span class="rating-count">{{ product.metafields.reviews.rating_count }} reviews</span>
+          <a href="#product-reviews" class="rating-link">Read reviews</a>
+        </div>
+      {%- endif -%}
+
+      <!-- Price -->
+      <div class="product-price-block" id="productPriceBlock">
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span class="product-price sale">{{ current_variant.price | money }}</span>
+          <span class="product-price-compare">{{ current_variant.compare_at_price | money }}</span>
+          <span class="product-save-badge">
+            Save {{ current_variant.compare_at_price | minus: current_variant.price | money }}
+          </span>
+        {%- else -%}
+          <span class="product-price">{{ current_variant.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <!-- Subscribe & Save nudge -->
+      {%- if product.tags contains 'subscribe-save' -%}
+        <div class="product-sub-banner">
+          <span class="sub-banner-icon">🔁</span>
+          <div>
+            <strong>Subscribe &amp; Save 20%</strong>
+            <p>Choose your delivery frequency at checkout. Cancel anytime.</p>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- Short description -->
+      {%- if product.metafields.custom.short_description != blank -%}
+        <p class="product-short-desc">{{ product.metafields.custom.short_description }}</p>
+      {%- endif -%}
+
+      <!-- FORM -->
+      {%- form 'product', product, id: product_form_id, novalidate: true -%}
+
+        <!-- Variants -->
+        {%- unless product.has_only_default_variant -%}
+          <div class="product-variants">
+            {%- for option in product.options_with_values -%}
+              <div class="variant-group">
+                <label class="variant-label">
+                  {{ option.name }}:
+                  <span class="variant-selected" id="optionSelected{{ forloop.index }}">
+                    {{ current_variant.options[forloop.index0] }}
+                  </span>
+                </label>
+
+                {%- liquid
+                  assign is_color = false
+                  assign option_lc = option.name | downcase
+                  if option_lc == 'color' or option_lc == 'colour'
+                    assign is_color = true
+                  endif
+                -%}
+
+                {%- if is_color -%}
+                  <div class="variant-swatches">
+                    {%- for value in option.values -%}
+                      <button type="button"
+                              class="variant-swatch {% if value == current_variant.options[forloop.index0] %}active{% endif %}"
+                              data-option-index="{{ forloop.index0 }}"
+                              data-value="{{ value }}"
+                              onclick="selectVariantOption(this, '{{ option.name }}', '{{ value }}')"
+                              title="{{ value }}"
+                              style="background-color: {{ value | downcase | replace: ' ', '' }};">
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- else -%}
+                  <div class="variant-pills">
+                    {%- for value in option.values -%}
+                      <button type="button"
+                              class="variant-pill {% if value == current_variant.options[forloop.index0] %}active{% endif %}"
+                              data-option-index="{{ forloop.index0 }}"
+                              data-value="{{ value }}"
+                              onclick="selectVariantOption(this, '{{ option.name }}', '{{ value }}')">
+                        {{ value }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
+              </div>
+            {%- endfor -%}
+          </div>
+
+          <!-- Hidden variant selector -->
+          <select name="id" id="variantSelect" class="visually-hidden" aria-label="Product variant">
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}"
+                      {% if variant == current_variant %}selected{% endif %}
+                      {% unless variant.available %}disabled{% endunless %}
+                      data-price="{{ variant.price }}"
+                      data-compare-price="{{ variant.compare_at_price }}"
+                      data-available="{{ variant.available }}">
+                {{ variant.title }} — {{ variant.price | money }}
+              </option>
+            {%- endfor -%}
+          </select>
+
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ current_variant.id }}">
+        {%- endunless -%}
+
+        <!-- Quantity -->
+        <div class="product-qty-row">
+          <label class="variant-label">Quantity</label>
+          {%- render 'quantity-selector' -%}
+        </div>
+
+        <!-- Add to cart -->
+        <div class="product-atc-row">
+          <button type="submit"
+                  class="btn-atc {% unless current_variant.available %}btn-atc-sold{% endunless %}"
+                  id="addToCartBtn"
+                  {% unless current_variant.available %}disabled{% endunless %}>
+            {%- if current_variant.available -%}
+              Add to Bag — {{ current_variant.price | money }}
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+          <button type="button" class="btn-atc-wish"
+                  onclick="toggleWishlist(this, '{{ product.id }}')"
+                  data-product-id="{{ product.id }}"
+                  aria-label="Add to wishlist">♡</button>
+        </div>
+
+        <!-- Buy now -->
+        {%- if current_variant.available -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+
+      {%- endform -%}
+
+      <!-- Trust strip -->
+      <div class="product-trust-strip">
+        <div class="pts-item"><span>🔒</span> Secure Checkout</div>
+        <div class="pts-item"><span>🚚</span> Free over $60</div>
+        <div class="pts-item"><span>↩️</span> 30-day returns</div>
+        <div class="pts-item"><span>🌿</span> Certified Organic</div>
+      </div>
+
+      <!-- Accordion details -->
+      <div class="product-accordions">
+        {%- if product.description != blank -%}
+          <div class="accordion">
+            <button class="accordion-header active" onclick="toggleAccordion(this)">
+              Description
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body open">
+              <div class="accordion-content rte">{{ product.description }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if product.metafields.custom.ingredients != blank -%}
+          <div class="accordion">
+            <button class="accordion-header" onclick="toggleAccordion(this)">
+              Ingredients
+              <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="accordion-body">
+              <div class="accordion-content rte">{{ product.metafields.custom.ingredients }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <div class="accordion">
+          <button class="accordion-header" onclick="toggleAccordion(this)">
+            Shipping &amp; Returns
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content">
+              <p>Free shipping on orders over $60. Standard delivery 3–5 business days. Express available at checkout.</p>
+              <p style="margin-top:10px">30-day money-back guarantee. If you're not satisfied, we'll refund you — no questions asked.</p>
+            </div>
+          </div>
+        </div>
+
+        {%- if section.settings.show_sku and current_variant.sku != blank -%}
+          <p class="product-sku">SKU: <span id="productSku">{{ current_variant.sku }}</span></p>
+        {%- endif -%}
+      </div>
+
+      <!-- Share -->
+      {%- if section.settings.show_share -%}
+        <div class="product-share">
+          <span class="share-label">Share:</span>
+          <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.origin }}{{ product.url }}" target="_blank" rel="noopener" aria-label="Share on Facebook">Facebook</a>
+          <a class="share-btn" href="https://twitter.com/intent/tweet?url={{ request.origin }}{{ product.url }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Twitter">Twitter</a>
+          <a class="share-btn" href="https://pinterest.com/pin/create/button/?url={{ request.origin }}{{ product.url }}&media={{ product.featured_image | image_url: width: 800 }}&description={{ product.title | url_encode }}" target="_blank" rel="noopener" aria-label="Pin on Pinterest">Pinterest</a>
+        </div>
+      {%- endif -%}
+
+    </div><!-- /.product-info -->
+  </div><!-- /.product-layout -->
+</div>
+
+<!-- Product variant JS -->
+<script>
+(function() {
+  const productData = {{ product.variants | json }};
+  let currentOptions = [
+    {%- for option in product.options_with_values -%}
+      "{{ product.selected_or_first_available_variant.options[forloop.index0] }}"
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+
+  function findVariant(options) {
+    return productData.find(v =>
+      v.options.every((opt, i) => opt === options[i])
+    );
+  }
+
+  window.selectVariantOption = function(btn, optionName, value) {
+    const idx = parseInt(btn.dataset.optionIndex);
+    currentOptions[idx] = value;
+
+    // Update pill/swatch active state
+    document.querySelectorAll(`[data-option-index="${idx}"]`).forEach(el => el.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update label
+    const label = document.getElementById('optionSelected' + (idx + 1));
+    if (label) label.textContent = value;
+
+    const variant = findVariant(currentOptions);
+    if (!variant) return;
+
+    // Update hidden select
+    const sel = document.getElementById('variantSelect');
+    if (sel) sel.value = variant.id;
+
+    // Update price
+    updatePrice(variant);
+
+    // Update ATC button
+    const atcBtn = document.getElementById('addToCartBtn');
+    if (atcBtn) {
+      atcBtn.disabled = !variant.available;
+      atcBtn.textContent = variant.available
+        ? 'Add to Bag — ' + formatMoney(variant.price)
+        : 'Sold Out';
+      atcBtn.classList.toggle('btn-atc-sold', !variant.available);
+    }
+
+    // Update SKU
+    const skuEl = document.getElementById('productSku');
+    if (skuEl && variant.sku) skuEl.textContent = variant.sku;
+
+    // Update URL without reload
+    const url = new URL(window.location.href);
+    url.searchParams.set('variant', variant.id);
+    history.replaceState({}, '', url.toString());
+  };
+
+  function updatePrice(variant) {
+    const block = document.getElementById('productPriceBlock');
+    if (!block) return;
+    if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+      block.innerHTML = `
+        <span class="product-price sale">${formatMoney(variant.price)}</span>
+        <span class="product-price-compare">${formatMoney(variant.compare_at_price)}</span>
+        <span class="product-save-badge">Save ${formatMoney(variant.compare_at_price - variant.price)}</span>
+      `;
+    } else {
+      block.innerHTML = `<span class="product-price">${formatMoney(variant.price)}</span>`;
+    }
+  }
+
+  // Gallery
+  let galleryIndex = 0;
+  const slides = document.querySelectorAll('.gallery-slide');
+  const thumbs  = document.querySelectorAll('.gallery-thumb');
+
+  window.setGalleryImage = function(index) {
+    galleryIndex = index;
+    slides.forEach((s, i) => s.classList.toggle('active', i === index));
+    thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+  };
+
+  window.galleryNav = function(dir) {
+    const next = (galleryIndex + dir + slides.length) % slides.length;
+    setGalleryImage(next);
+  };
+
+  // Accordion
+  window.toggleAccordion = function(btn) {
+    const body = btn.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.accordion-body.open').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.accordion-header.active').forEach(b => b.classList.remove('active'));
+    if (!isOpen) {
+      body.classList.add('open');
+      btn.classList.add('active');
+    }
+  };
+
+  // Product form — AJAX add to cart
+  const form = document.getElementById('{{ product_form_id }}');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('addToCartBtn');
+      const variantId = form.querySelector('[name="id"]').value;
+      const qty = parseInt(form.querySelector('[name="quantity"]')?.value || 1);
+      await addToCartAjax(variantId, btn, qty);
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Product Main",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor",    "default": true },
+    { "type": "checkbox", "id": "show_sku",    "label": "Show SKU",       "default": true },
+    { "type": "checkbox", "id": "show_share",  "label": "Show share links","default": true }
+  ],
+  "presets": [{ "name": "Product Main" }]
+}
+{% endschema %}

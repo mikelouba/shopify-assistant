@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "collection_banner": {
+      "type": "collection-banner",
+      "settings": {}
+    },
+    "collection_main": {
+      "type": "collection-main",
+      "settings": {
+        "products_per_page": 12,
+        "columns": 4,
+        "show_filters": true,
+        "show_sort": true
+      }
+    }
+  },
+  "order": ["collection_banner", "collection_main"]
+}

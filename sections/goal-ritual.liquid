@@ -1,0 +1,83 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+  case goal
+    when 'sleep'
+      assign accent = '#7B9CC4'; assign heading_color = '#2A3A5C'
+      assign ritual_heading = 'Your nightly ritual'
+      assign s1_time = '60 min before bed';   assign s1_desc = 'Take 2 Magnesium Sleep Ritual capsules with warm water. Dim your screens.'
+      assign s2_time = '30 min before bed';   assign s2_desc = 'Take 1 Calm Night Complex. Begin your wind-down: stretch, journal, or breathe.'
+      assign s3_time = 'Lights out';          assign s3_desc = 'Let the blend do its work. Most customers notice a difference within 7–14 days.'
+      assign s4_time = 'Wake refreshed';      assign s4_desc = 'No grogginess. No dependency. Just natural, restorative sleep — every single night.'
+    when 'focus'
+      assign accent = '#C49B6C'; assign heading_color = '#3A2A1E'
+      assign ritual_heading = 'Your daily cognitive ritual'
+      assign s1_time = 'Morning (with breakfast)'; assign s1_desc = 'Take 2 Lion\'s Mane capsules with food. Builds in the background over 4–6 weeks.'
+      assign s2_time = 'Before deep work';          assign s2_desc = 'Take 1 Rhodiola 30 minutes before your most important work session. No jitters.'
+      assign s3_time = 'Afternoon maintenance';     assign s3_desc = 'Bacopa taken daily builds cumulative memory effects over 8–12 weeks.'
+      assign s4_time = 'Consistent for 12 weeks';  assign s4_desc = 'Lion\'s Mane\'s neural effects are cumulative. The 12-week mark is when most feel the full shift.'
+    when 'stress'
+      assign accent = '#7EAA82'; assign heading_color = '#2A3A2E'
+      assign ritual_heading = 'How to build your baseline'
+      assign s1_time = 'Morning — with breakfast'; assign s1_desc = 'Take 2 Ashwagandha capsules. Adaptogens need daily consistency — they build a cortisol buffer.'
+      assign s2_time = 'High-stress moments';      assign s2_desc = 'Take 1 Reishi Calm Elixir. Notice the nervous system shift within 20–30 minutes.'
+      assign s3_time = 'Stay consistent 6 weeks';  assign s3_desc = 'At week 6, most customers describe feeling like a genuinely different person.'
+      assign s4_time = 'Maintain the baseline';    assign s4_desc = 'Once you find your dose, a daily ritual keeps your cortisol baseline calm year-round.'
+    when 'glow'
+      assign accent = '#C47B8C'; assign heading_color = '#4A2A38'
+      assign ritual_heading = 'Your glow timeline'
+      assign s1_time = 'Week 2 — Hydration';   assign s1_desc = 'Hyaluronic acid kicks in first. Skin feels plumper, more cushioned. Friends notice before you do.'
+      assign s2_time = 'Week 4 — Radiance';    assign s2_desc = 'Collagen synthesis accelerates. That inner glow people notice but can\'t quite explain — that\'s this.'
+      assign s3_time = 'Week 8 — Renewal';     assign s3_desc = 'Fine lines visibly soften. Skin texture smooths. 87% confirm visible improvement here.'
+      assign s4_time = 'Week 12 — Structural'; assign s4_desc = 'Deep collagen architecture rebuilt. Skin that doesn\'t just look good — it IS good.'
+    when 'energy'
+      assign accent = '#C4A027'; assign heading_color = '#3A2E0E'
+      assign ritual_heading = 'Your energy ritual'
+      assign s1_time = 'Morning (before breakfast)'; assign s1_desc = 'Take the Golden Energy Blend on an empty stomach. Clean lift within 30 minutes.'
+      assign s2_time = 'Midday (with lunch)';        assign s2_desc = 'Take the Mito Complex. CoQ10 needs fat to absorb — food maximizes its mitochondrial impact.'
+      assign s3_time = 'Consistent for 6 weeks';     assign s3_desc = 'True mitochondrial energy builds cumulatively. Week 6 is when customers report the biggest shift.'
+      assign s4_time = 'Full vitality maintained';   assign s4_desc = 'At full dose, the protocol keeps your energy elevated, stable, and sustainable all day.'
+  endcase
+-%}
+
+<div style="background:#F7F3EC;padding:80px 64px">
+  <div style="text-align:center;margin-bottom:52px">
+    <span style="font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:{{ accent }};display:block;margin-bottom:14px">✦ The Protocol</span>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,3.5vw,46px);color:{{ heading_color }};font-weight:400">{{ ritual_heading }}</h2>
+  </div>
+  <div style="max-width:700px;margin:0 auto">
+    {%- assign steps = '1,2,3,4' | split: ',' -%}
+    {%- for step in steps -%}
+      {%- liquid
+        case step
+          when '1'; assign t = s1_time; assign d = s1_desc; assign n = '01'
+          when '2'; assign t = s2_time; assign d = s2_desc; assign n = '02'
+          when '3'; assign t = s3_time; assign d = s3_desc; assign n = '03'
+          when '4'; assign t = s4_time; assign d = s4_desc; assign n = '04'
+        endcase
+      -%}
+      <div style="display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(0,0,0,0.06)">
+        <span style="font-family:'DM Serif Display',Georgia,serif;font-size:44px;color:{{ accent }}44;min-width:60px;line-height:1;flex-shrink:0">{{ n }}</span>
+        <div>
+          <h4 style="font-family:'Playfair Display',serif;font-size:19px;font-weight:400;color:{{ heading_color }};margin-bottom:6px">{{ t }}</h4>
+          <p style="font-size:14px;color:#7A7060;line-height:1.7;font-weight:300">{{ d }}</p>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Goal Ritual",
+  "tag": "div",
+  "settings": [
+    { "type": "select", "id": "goal", "label": "Goal type",
+      "options": [
+        {"value":"sleep","label":"Better Sleep"},{"value":"focus","label":"Focus & Clarity"},
+        {"value":"stress","label":"Stress Relief"},{"value":"glow","label":"Skin Glow"},
+        {"value":"energy","label":"Energy & Vitality"}
+      ], "default": "sleep" }
+  ],
+  "presets": [{ "name": "Goal Ritual Steps" }]
+}
+{% endschema %}
