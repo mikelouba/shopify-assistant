@@ -36,7 +36,7 @@
             "icon": "😴",
             "name": "Better Sleep",
             "desc": "Drift deeper, wake refreshed",
-            "url": "/pages/sleep"
+            "url": "/pages/goal-sleep"
           }
         },
         "goal_2": {
@@ -45,7 +45,7 @@
             "icon": "🧠",
             "name": "Focus & Clarity",
             "desc": "Sharpen your mind naturally",
-            "url": "/pages/focus"
+            "url": "/pages/goal-focus"
           }
         },
         "goal_3": {
@@ -54,7 +54,7 @@
             "icon": "🌿",
             "name": "Stress Relief",
             "desc": "Calm your nervous system",
-            "url": "/pages/stress"
+            "url": "/pages/goal-stress"
           }
         },
         "goal_4": {
@@ -63,7 +63,7 @@
             "icon": "✨",
             "name": "Skin Glow",
             "desc": "Radiance from within",
-            "url": "/pages/glow"
+            "url": "/pages/goal-glow"
           }
         },
         "goal_5": {
@@ -72,7 +72,7 @@
             "icon": "⚡",
             "name": "Energy & Vitality",
             "desc": "Feel alive all day long",
-            "url": "/pages/energy"
+            "url": "/pages/goal-energy"
           }
         }
       },
