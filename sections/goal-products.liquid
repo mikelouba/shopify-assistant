@@ -1,6 +1,15 @@
 {%- liquid
   assign goal = section.settings.goal | default: 'sleep'
-  assign col_handle = section.settings.collection_override | default: goal
+
+  assign default_handle = goal
+  case goal
+    when 'stress'
+      assign default_handle = 'stress-relief'
+    when 'glow'
+      assign default_handle = 'skin-glow'
+  endcase
+
+  assign col_handle = section.settings.collection_override | default: default_handle
   assign goal_collection = collections[col_handle]
 
   case goal
@@ -100,11 +109,4 @@
       "default": "sleep"
     },
     {
-      "type": "collection",
-      "id": "collection_override",
-      "label": "Collection to display (overrides auto-detection)"
-    }
-  ],
-  "presets": [{ "name": "Goal Products" }]
-}
-{% endschema %}
+      "type": 
