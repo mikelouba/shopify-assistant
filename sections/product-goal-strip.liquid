@@ -1,0 +1,138 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+
+  case goal
+    when 'sleep'
+      assign accent      = '#7B9CC4'
+      assign accent_dark = '#0F1A2E'
+      assign bg          = '#E8EDF5'
+      assign eyebrow     = 'Sleep Protocol'
+      assign tagline     = 'Drift deeper, wake refreshed'
+      assign emoji       = '🌙'
+      assign back_label  = 'All Sleep Products'
+      assign back_handle = 'sleep'
+    when 'focus'
+      assign accent      = '#C49B6C'
+      assign accent_dark = '#1E1208'
+      assign bg          = '#F5EDE0'
+      assign eyebrow     = 'Cognitive Protocol'
+      assign tagline     = 'Sharpen your mind naturally'
+      assign emoji       = '🧠'
+      assign back_label  = 'All Focus Products'
+      assign back_handle = 'focus'
+    when 'stress'
+      assign accent      = '#7EAA82'
+      assign accent_dark = '#1A2E1C'
+      assign bg          = '#E8F0E8'
+      assign eyebrow     = 'Calm Protocol'
+      assign tagline     = 'Breathe. Release. Restore.'
+      assign emoji       = '🌿'
+      assign back_label  = 'All Calm Products'
+      assign back_handle = 'stress-relief'
+    when 'glow'
+      assign accent      = '#C47B8C'
+      assign accent_dark = '#2E1420'
+      assign bg          = '#F5E8ED'
+      assign eyebrow     = 'Skin Ritual'
+      assign tagline     = 'Radiance from within'
+      assign emoji       = '✨'
+      assign back_label  = 'All Glow Products'
+      assign back_handle = 'skin-glow'
+    when 'energy'
+      assign accent      = '#C4A027'
+      assign accent_dark = '#1A1200'
+      assign bg          = '#F5EDD8'
+      assign eyebrow     = 'Vitality Protocol'
+      assign tagline     = 'Feel alive all day long'
+      assign emoji       = '⚡'
+      assign back_label  = 'All Energy Products'
+      assign back_handle = 'energy'
+  endcase
+
+  if collections[back_handle] != empty and collections[back_handle].id
+    assign back_url = routes.collections_url | append: '/' | append: back_handle
+  else
+    assign back_url = routes.all_products_collection_url
+  endif
+-%}
+
+<div class="product-goal-strip" style="
+  background: {{ bg }};
+  border-bottom: 1px solid {{ accent }}33;
+  padding: 14px 64px;
+">
+  <div style="
+    max-width: 1300px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  ">
+    <div style="display:flex;align-items:center;gap:14px">
+      <span style="
+        font-size: 22px;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: {{ accent }}22;
+      ">{{ emoji }}</span>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="
+          font-size: 10.5px;
+          letter-spacing: 3px;
+          text-transform: uppercase;
+          font-weight: 600;
+          color: {{ accent }};
+        ">✦ {{ eyebrow }}</span>
+        <span style="
+          font-family: 'Playfair Display', Georgia, serif;
+          font-style: italic;
+          font-size: 15px;
+          color: {{ accent_dark }};
+        ">{{ tagline }}</span>
+      </div>
+    </div>
+
+    <a href="{{ back_url }}" style="
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: {{ accent_dark }};
+      text-decoration: none;
+      border: 1px solid {{ accent }}55;
+      border-radius: 3px;
+      padding: 10px 22px;
+      transition: all 0.2s;
+    ">← {{ back_label }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Goal Strip",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "goal",
+      "label": "Goal type",
+      "options": [
+        { "value": "sleep",  "label": "Better Sleep" },
+        { "value": "focus",  "label": "Focus & Clarity" },
+        { "value": "stress", "label": "Stress Relief" },
+        { "value": "glow",   "label": "Skin Glow" },
+        { "value": "energy", "label": "Energy & Vitality" }
+      ],
+      "default": "sleep"
+    }
+  ],
+  "presets": [{ "name": "Product Goal Strip" }]
+}
+{% endschema %}

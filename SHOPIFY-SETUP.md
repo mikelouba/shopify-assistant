@@ -81,13 +81,11 @@ The "Shop by Goal" tabs on the home page link to `/pages/goal-sleep`, `/pages/go
 
 ---
 
-## 6. Quick verification checklist
+## 6. Themed product pages (per-goal product templates)
 
-After everything is in place, walk through these URLs and make sure each loads (no 404, no broken images):
+Every product can use one of five themed product templates. Each one wraps the standard product page in goal-specific colors (palette, accent, eyebrow) and adds a matching CTA banner at the bottom — so a sleep product page feels visually consistent with the sleep landing page, a focus product feels like the focus landing page, etc.
 
-- `/` — home
-- `/pages/goal-sleep`, `/pages/goal-focus`, `/pages/goal-stress`, `/pages/goal-glow`, `/pages/goal-energy`
-- `/pages/about`, `/pages/faq`, `/pages/contact`, `/pages/wellness-quiz`, `/pages/our-standards`
-- `/collections/all`, `/collections/sleep`, `/collections/focus`, `/collections/stress-relief`, `/collections/skin-glow`, `/collections/energy`, `/collections/bestsellers`
-- Click into any product → product page should render
-- Click "Add to cart" → cart page should render
+The templates available (already in this theme):
+
+| Template       | Use for products in   | Visual palette      |
+|----------------|-----------------------|

@@ -37,28 +37,4 @@
       "type": "goal-ritual",
       "settings": {
         "goal": "focus"
-      }
-    },
-    "goal_testimonials": {
-      "type": "goal-testimonials",
-      "settings": {
-        "goal": "focus"
-      }
-    },
-    "goal_cta": {
-      "type": "goal-cta",
-      "settings": {
-        "goal": "focus"
-      }
-    }
-  },
-  "order": [
-    "goal_hero",
-    "goal_science",
-    "goal_products",
-    "goal_ingredients",
-    "goal_ritual",
-    "goal_testimonials",
-    "goal_cta"
-  ]
-}
+ 

@@ -214,33 +214,4 @@
         }
       },
       "block_order": [
-        "t1",
-        "t2",
-        "t3"
-      ],
-      "settings": {
-        "eyebrow": "✦ Real Results",
-        "heading": "What our community feels"
-      }
-    },
-    "newsletter": {
-      "type": "newsletter",
-      "settings": {
-        "heading": "Join the Solmara Circle",
-        "subheading": "Wellness insights, new arrivals, and members-only offers — delivered with intention, never spam.",
-        "btn_label": "Join Free"
-      }
-    }
-  },
-  "order": [
-    "hero",
-    "marquee",
-    "goals",
-    "featured_products",
-    "feature_split",
-    "ingredients",
-    "quiz_banner",
-    "testimonials",
-    "newsletter"
-  ]
-}
+   
