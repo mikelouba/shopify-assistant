@@ -94,6 +94,12 @@
       assign badge_3       = '🔬 Mitochondrial support'
   endcase
 
+  if collections[collection] != empty and collections[collection].id
+    assign safe_collection_url = routes.collections_url | append: '/' | append: collection
+  else
+    assign safe_collection_url = routes.all_products_collection_url
+  endif
+
   assign hero_gradient = 'linear-gradient(' | append: hero_angle | append: ', #' | append: hero_bg | replace: ',', ', #' | append: ')'
 -%}
 
@@ -123,7 +129,7 @@
     </p>
 
     <div style="display:flex;gap:14px;margin-bottom:48px;flex-wrap:wrap">
-      <a href="{{ routes.collections_url }}/{{ collection }}" style="
+      <a href="{{ safe_collection_url }}" style="
         background:{{ accent }};color:{{ accent_dark }};border:none;border-radius:3px;
         padding:15px 34px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;
         letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;align-items:center;

@@ -4,6 +4,12 @@
   assign col_handle = section.settings.collection_override | default: goal
   assign goal_collection = collections[col_handle]
 
+  if goal_collection != empty and goal_collection.id
+    assign safe_view_all_url = routes.collections_url | append: '/' | append: col_handle
+  else
+    assign safe_view_all_url = routes.all_products_collection_url
+  endif
+
   case goal
     when 'sleep'
       assign accent      = '#7B9CC4'
@@ -73,7 +79,7 @@
   </div>
 
   <div style="text-align:center;margin-top:40px">
-    <a href="{{ routes.collections_url }}/{{ col_handle }}" style="
+    <a href="{{ safe_view_all_url }}" style="
       display:inline-flex;align-items:center;gap:8px;
       font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
       color:{{ accent_dark }};text-decoration:none;
