@@ -16,88 +16,16 @@
     },
     "collection_main": {
       "type": "collection-main",
-      "disabled": true,
       "settings": {
-        "products_per_page": 12,
+        "products_per_page": 24,
         "columns": "4",
         "show_filters": true,
         "show_sort": true
-      }
-    },
-    "goal_cta_tBpdQU": {
-      "type": "goal-cta",
-      "name": "Goal CTA Banner",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "product_goal_strip_EKteVB": {
-      "type": "product-goal-strip",
-      "custom_css": [],
-      "name": "Product Goal Strip",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "goal_products_bTJnty": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "sleep",
-        "collection_override": ""
-      }
-    },
-    "goal_products_gdLHKp": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "focus",
-        "collection_override": ""
-      }
-    },
-    "goal_products_Tmxz8y": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "stress",
-        "collection_override": ""
-      }
-    },
-    "goal_products_6zkd4q": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "glow",
-        "collection_override": ""
-      }
-    },
-    "goal_products_7pcy6G": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "energy",
-        "collection_override": ""
-      }
-    },
-    "goal_products_DJMnbf": {
-      "type": "goal-products",
-      "name": "Goal Products",
-      "settings": {
-        "goal": "sleep",
-        "collection_override": ""
       }
     }
   },
   "order": [
     "collection_banner",
-    "collection_main",
-    "goal_cta_tBpdQU",
-    "product_goal_strip_EKteVB",
-    "goal_products_bTJnty",
-    "goal_products_gdLHKp",
-    "goal_products_Tmxz8y",
-    "goal_products_6zkd4q",
-    "goal_products_7pcy6G",
-    "goal_products_DJMnbf"
+    "collection_main"
   ]
 }

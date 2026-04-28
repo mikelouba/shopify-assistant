@@ -1,10 +1,131 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "about_hero": { "type": "about-hero", "settings": {} },
-    "about_story": { "type": "about-story", "settings": {} },
-    "about_values": { "type": "about-values", "settings": {} },
-    "about_team": { "type": "about-team", "settings": {} },
-    "newsletter": { "type": "newsletter", "settings": { "heading": "Join the Solmara Circle" } }
+    "faq_main_V7eDkU": {
+      "type": "faq-main",
+      "blocks": {
+        "category_9PgQfE": {
+          "type": "category",
+          "settings": {
+            "icon": "📦",
+            "title": "Products"
+          }
+        },
+        "question_QbUtD7": {
+          "type": "question",
+          "settings": {
+            "question": "Are your supplements third-party tested?",
+            "answer": "<p>Yes. Every batch is independently tested for purity, potency, and contaminants before it reaches you. Certificate of Analysis available on request.</p>"
+          }
+        },
+        "question_BjwwnW": {
+          "type": "question",
+          "settings": {
+            "question": "Are your products vegan and cruelty-free?",
+            "answer": "<p>All Solmara products are 100% vegan, cruelty-free, and certified organic. We never test on animals.</p>"
+          }
+        },
+        "question_XN6VPk": {
+          "type": "question",
+          "settings": {
+            "question": "How long until I see results?",
+            "answer": "<p>Most customers notice a difference within 2–4 weeks of consistent use. Adaptogens and botanical compounds work cumulatively — the longer you take them, the better they perform.</p>"
+          }
+        },
+        "category_NF8XCY": {
+          "type": "category",
+          "settings": {
+            "icon": "🚚",
+            "title": "Shipping & Orders"
+          }
+        },
+        "question_4g3dWH": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard US shipping takes 3–5 business days. Express (1–2 days) is available at checkout. International orders typically arrive in 7–14 days.</p>"
+          }
+        },
+        "question_epmeh7": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! All US orders over $60 qualify for free standard shipping. This is automatically applied at checkout.</p>"
+          }
+        },
+        "category_iheE3Y": {
+          "type": "category",
+          "settings": {
+            "icon": "↩️",
+            "title": "Returns"
+          }
+        },
+        "question_a9kx6t": {
+          "type": "question",
+          "settings": {
+            "question": "What's your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee. If you're not satisfied for any reason, contact us at hello@solmara.com and we'll process a full refund — no questions asked.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "category_9PgQfE",
+        "question_QbUtD7",
+        "question_BjwwnW",
+        "question_XN6VPk",
+        "category_NF8XCY",
+        "question_4g3dWH",
+        "question_epmeh7",
+        "category_iheE3Y",
+        "question_a9kx6t"
+      ],
+      "name": "FAQ",
+      "settings": {}
+    },
+    "about_team": {
+      "type": "about-team",
+      "disabled": true,
+      "settings": {}
+    },
+    "about_hero": {
+      "type": "about-hero",
+      "disabled": true,
+      "settings": {}
+    },
+    "about_story": {
+      "type": "about-story",
+      "disabled": true,
+      "settings": {}
+    },
+    "about_values": {
+      "type": "about-values",
+      "disabled": true,
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "disabled": true,
+      "settings": {
+        "heading": "Join the Solmara Circle",
+        "subheading": "",
+        "btn_label": "Join Free"
+      }
+    }
   },
-  "order": ["about_hero","about_story","about_values","about_team","newsletter"]
+  "order": [
+    "faq_main_V7eDkU",
+    "about_team",
+    "about_hero",
+    "about_story",
+    "about_values",
+    "newsletter"
+  ]
 }
