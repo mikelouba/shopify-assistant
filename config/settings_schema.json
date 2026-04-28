@@ -63,11 +63,11 @@
         "content": "Footer Menus"
       },
       { "type": "text",      "id": "footer_menu_title_1", "label": "Menu 1 Title", "default": "Shop" },
-      { "type": "link_list", "id": "footer_menu_1",       "label": "Menu 1",       "default": "footer-shop" },
+      { "type": "link_list", "id": "footer_menu_1",       "label": "Menu 1" },
       { "type": "text",      "id": "footer_menu_title_2", "label": "Menu 2 Title", "default": "Learn" },
-      { "type": "link_list", "id": "footer_menu_2",       "label": "Menu 2",       "default": "footer-learn" },
+      { "type": "link_list", "id": "footer_menu_2",       "label": "Menu 2" },
       { "type": "text",      "id": "footer_menu_title_3", "label": "Menu 3 Title", "default": "Support" },
-      { "type": "link_list", "id": "footer_menu_3",       "label": "Menu 3",       "default": "footer-support" },
+      { "type": "link_list", "id": "footer_menu_3",       "label": "Menu 3" },
       {
         "type": "header",
         "content": "Social Links"

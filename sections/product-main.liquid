@@ -1,4 +1,3 @@
-{%- comment -%}re-sync{%- endcomment -%}
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign product_form_id = 'product-form-' | append: product.id
@@ -14,11 +13,12 @@
       <!-- Thumbnails -->
       <div class="gallery-thumbs" id="galleryThumbs">
         {%- for image in product.images -%}
+          {%- assign thumb_alt = image.alt | default: product.title -%}
           <button class="gallery-thumb {% if forloop.first %}active{% endif %}"
                   onclick="setGalleryImage({{ forloop.index0 }})"
                   aria-label="View image {{ forloop.index }}">
             {{ image | image_url: width: 120 | image_tag:
-                alt: image.alt | default: product.title,
+                alt: thumb_alt,
                 loading: 'lazy',
                 widths: '80, 120',
                 sizes: '80px' }}
@@ -30,10 +30,17 @@
       <div class="gallery-main">
         <div class="gallery-slides" id="gallerySlides">
           {%- for image in product.images -%}
+            {%- liquid
+              assign img_alt = image.alt | default: product.title
+              assign img_loading = 'lazy'
+              if forloop.first
+                assign img_loading = 'eager'
+              endif
+            -%}
             <div class="gallery-slide {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}">
               {{ image | image_url: width: 900 | image_tag:
-                  alt: image.alt | default: product.title,
-                  loading: forloop.first | downcase,
+                  alt: img_alt,
+                  loading: img_loading,
                   class: 'gallery-img',
                   widths: '500, 700, 900',
                   sizes: '(max-width: 768px) 100vw, 50vw' }}
