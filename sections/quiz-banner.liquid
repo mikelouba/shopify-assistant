@@ -1,0 +1,21 @@
+<section class="quiz-banner" id="quiz">
+  <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+  <h2 class="quiz-title">{{ section.settings.heading }}</h2>
+  <p class="quiz-sub">{{ section.settings.subheading }}</p>
+  <a class="btn-quiz" href="{{ section.settings.btn_url }}">{{ section.settings.btn_label }}</a>
+</section>
+
+{% schema %}
+{
+  "name": "Quiz Banner",
+  "tag": "div",
+  "settings": [
+    { "type": "text",     "id": "eyebrow",    "label": "Eyebrow",   "default": "✦ 60 Seconds to Clarity" },
+    { "type": "text",     "id": "heading",    "label": "Heading",   "default": "Not sure where to start? Let your body guide you." },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "text",     "id": "btn_label",  "label": "Button text","default": "Take the Free Quiz →" },
+    { "type": "url",      "id": "btn_url",    "label": "Button link" }
+  ],
+  "presets": [{ "name": "Quiz Banner" }]
+}
+{% endschema %}

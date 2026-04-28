@@ -1,0 +1,66 @@
+<div class="account-page">
+  <div class="account-header">
+    <h1 class="page-title">Order {{ order.name }}</h1>
+    <a href="{{ routes.account_url }}" class="account-logout">← Back to Account</a>
+  </div>
+
+  <div class="order-detail-layout">
+    <div class="order-items-col">
+      <h2 class="account-section-title">Items</h2>
+      <div class="order-items-list">
+        {%- for line_item in order.line_items -%}
+          <div class="order-item">
+            {%- if line_item.image -%}
+              {{ line_item.image | image_url: width: 150 | image_tag: alt: line_item.title, loading: 'lazy', class: 'order-item-img' }}
+            {%- else -%}
+              <div class="order-item-img-placeholder">🌿</div>
+            {%- endif -%}
+            <div class="order-item-info">
+              <p class="order-item-title">{{ line_item.product.title }}</p>
+              {%- unless line_item.variant.title == 'Default Title' -%}
+                <p class="order-item-variant">{{ line_item.variant.title }}</p>
+              {%- endunless -%}
+              <p class="order-item-qty">Qty: {{ line_item.quantity }}</p>
+            </div>
+            <span class="order-item-price">{{ line_item.final_line_price | money }}</span>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <!-- Order totals -->
+      <div class="order-totals">
+        <div class="cart-total-row"><span>Subtotal</span><span>{{ order.subtotal_price | money }}</span></div>
+        {%- for shipping_method in order.shipping_methods -%}
+          <div class="cart-total-row"><span>{{ shipping_method.title }}</span><span>{{ shipping_method.price | money }}</span></div>
+        {%- endfor -%}
+        {%- for tax_line in order.tax_lines -%}
+          <div class="cart-total-row"><span>{{ tax_line.title }} ({{ tax_line.rate | times: 100 }}%)</span><span>{{ tax_line.price | money }}</span></div>
+        {%- endfor -%}
+        <div class="cart-total-row cart-total-final"><span>Total</span><span>{{ order.total_price | money }}</span></div>
+      </div>
+    </div>
+
+    <aside class="order-sidebar">
+      <div class="order-info-card">
+        <h3>Order Info</h3>
+        <p><strong>Order date:</strong> {{ order.created_at | date: '%B %d, %Y' }}</p>
+        <p><strong>Status:</strong> <span class="order-status order-status-{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span></p>
+        <p><strong>Payment:</strong> {{ order.financial_status_label }}</p>
+      </div>
+
+      {%- if order.shipping_address -%}
+        <div class="order-info-card">
+          <h3>Shipping Address</h3>
+          <p>{{ order.shipping_address.name }}</p>
+          <p>{{ order.shipping_address.street }}</p>
+          <p>{{ order.shipping_address.city }}, {{ order.shipping_address.province_code }} {{ order.shipping_address.zip }}</p>
+          <p>{{ order.shipping_address.country }}</p>
+        </div>
+      {%- endif -%}
+    </aside>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Order", "tag": "div", "settings": [], "presets": [{"name":"Customer Order"}] }
+{% endschema %}

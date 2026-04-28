@@ -1,0 +1,204 @@
+<div class="cart-page">
+  <div class="page-header">
+    <h1 class="page-title">Your Bag</h1>
+    <a href="{{ routes.all_products_collection_url }}" class="cart-continue-link">← Continue Shopping</a>
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+
+  <div class="cart-layout">
+
+    <!-- ══ CART ITEMS ══ -->
+    <div class="cart-items-col">
+      {%- form 'cart', cart, id: 'cart-page-form' -%}
+        <div class="cart-items-list">
+          {%- for item in cart.items -%}
+            <div class="cart-page-item" data-line="{{ forloop.index }}">
+              <!-- Image -->
+              <a href="{{ item.url }}" class="cart-item-img-link">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 200 | image_tag:
+                      alt: item.image.alt | default: item.title,
+                      loading: 'lazy',
+                      class: 'cart-item-photo',
+                      widths: '100, 150, 200',
+                      sizes: '100px' }}
+                {%- else -%}
+                  <div class="cart-item-no-img">🌿</div>
+                {%- endif -%}
+              </a>
+
+              <!-- Details -->
+              <div class="cart-item-details">
+                <div class="cart-item-top">
+                  <div>
+                    <p class="cart-item-vendor">{{ item.vendor }}</p>
+                    <a href="{{ item.url }}" class="cart-item-title">{{ item.product_title }}</a>
+                    {%- unless item.variant_title == 'Default Title' -%}
+                      <p class="cart-item-variant">{{ item.variant_title }}</p>
+                    {%- endunless -%}
+                    {%- if item.selling_plan_allocation -%}
+                      <p class="cart-item-selling-plan">🔁 {{ item.selling_plan_allocation.selling_plan.name }}</p>
+                    {%- endif -%}
+                  </div>
+                  <div class="cart-item-price-col">
+                    {%- if item.original_line_price != item.final_line_price -%}
+                      <span class="cart-item-price-original">{{ item.original_line_price | money }}</span>
+                    {%- endif -%}
+                    <span class="cart-item-price">{{ item.final_line_price | money }}</span>
+                  </div>
+                </div>
+
+                <div class="cart-item-bottom">
+                  <!-- Quantity -->
+                  <div class="cart-qty-wrap">
+                    <button type="button" class="qty-btn" onclick="cartPageQty({{ forloop.index }}, -1)">−</button>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0"
+                           class="cart-qty-input qty-num"
+                           onchange="cartPageQtyDirect({{ forloop.index }}, this.value)"
+                           aria-label="Quantity for {{ item.title | escape }}">
+                    <button type="button" class="qty-btn" onclick="cartPageQty({{ forloop.index }}, 1)">+</button>
+                  </div>
+
+                  <a href="{{ item.url_to_remove }}" class="cart-remove-btn" aria-label="Remove {{ item.title }}">Remove</a>
+                </div>
+
+                <!-- Line discounts -->
+                {%- for discount in item.line_level_discount_allocations -%}
+                  <p class="cart-discount-label">🏷️ {{ discount.discount_application.title }} (−{{ discount.amount | money }})</p>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- if section.settings.show_order_note -%}
+          <div class="cart-note-wrap">
+            <label for="cartNote" class="cart-note-label">Order note (optional)</label>
+            <textarea id="cartNote" name="note" class="cart-note-input" rows="3" placeholder="Special instructions, gift messages...">{{ cart.note }}</textarea>
+          </div>
+        {%- endif -%}
+
+        <button type="submit" name="update" class="btn-outline cart-update-btn">Update Cart</button>
+      {%- endform -%}
+    </div>
+
+    <!-- ══ ORDER SUMMARY ══ -->
+    <aside class="cart-summary">
+      <h2 class="cart-summary-title">Order Summary</h2>
+
+      <!-- Free shipping progress -->
+      {%- assign threshold_cents = section.settings.free_shipping_threshold | times: 100 -%}
+      {%- assign remaining = threshold_cents | minus: cart.total_price -%}
+      {%- if remaining > 0 -%}
+        <div class="cart-shipping-bar">
+          <p class="cart-shipping-msg">
+            Add <strong>{{ remaining | money }}</strong> more for free shipping 🌿
+          </p>
+          <div class="shipping-bar-track">
+            <div class="shipping-bar-fill" style="width: {{ cart.total_price | times: 100 | divided_by: threshold_cents }}%"></div>
+          </div>
+        </div>
+      {%- else -%}
+        <div class="cart-shipping-bar achieved">
+          <p class="cart-shipping-msg">✅ You've unlocked free shipping!</p>
+          <div class="shipping-bar-track"><div class="shipping-bar-fill" style="width:100%"></div></div>
+        </div>
+      {%- endif -%}
+
+      <!-- Totals -->
+      <div class="cart-totals">
+        <div class="cart-total-row">
+          <span>Subtotal</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <div class="cart-total-row discount">
+            <span>🏷️ {{ discount.title }}</span>
+            <span>−{{ discount.total_allocated_amount | money }}</span>
+          </div>
+        {%- endfor -%}
+        <div class="cart-total-row muted">
+          <span>Shipping</span>
+          <span>{%- if remaining <= 0 -%}Free{%- else -%}Calculated at checkout{%- endif -%}</span>
+        </div>
+        <div class="cart-total-row cart-total-final">
+          <span>Total</span>
+          <span>{{ cart.total_price | money }}</span>
+        </div>
+      </div>
+
+      <!-- Discount code -->
+      <div class="cart-discount-form">
+        <input type="text" class="cart-discount-input" id="discountInput" placeholder="Discount code">
+        <button type="button" class="btn-outline" onclick="applyDiscount()">Apply</button>
+      </div>
+
+      <!-- Checkout -->
+      {%- form 'cart', cart -%}
+        <button type="submit" name="checkout" class="btn-checkout">
+          Checkout Securely →
+        </button>
+        <div class="cart-payment-icons">
+          {%- for type in shop.enabled_payment_types -%}
+            {{ type | payment_type_svg_tag: class: 'pay-icon' }}
+          {%- endfor -%}
+        </div>
+      {%- endform -%}
+
+      <!-- Trust -->
+      <div class="cart-trust">
+        <p>🔒 256-bit SSL encryption</p>
+        <p>↩️ 30-day money-back guarantee</p>
+        <p>🌿 Every purchase plants a tree</p>
+      </div>
+    </aside>
+  </div>
+
+  {%- else -%}
+  <!-- Empty cart -->
+  <div class="cart-empty-page">
+    <div class="cart-empty-icon">🛒</div>
+    <h2>Your bag is empty</h2>
+    <p>Looks like you haven't added anything yet. Let's fix that.</p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn-fill">Shop All Products</a>
+  </div>
+  {%- endif -%}
+</div>
+
+<script>
+async function cartPageQty(line, delta) {
+  const input = document.querySelector(`.cart-page-item[data-line="${line}"] .cart-qty-input`);
+  if (!input) return;
+  const newQty = Math.max(0, parseInt(input.value) + delta);
+  input.value = newQty;
+  await changeCartItem(line, newQty);
+  if (newQty === 0) location.reload();
+}
+
+async function cartPageQtyDirect(line, value) {
+  const qty = Math.max(0, parseInt(value));
+  await changeCartItem(line, qty);
+  if (qty === 0) location.reload();
+}
+
+function applyDiscount() {
+  const code = document.getElementById('discountInput').value.trim();
+  if (code) {
+    window.location.href = `/discount/${code}?redirect=/cart`;
+  }
+}
+</script>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_order_note",   "label": "Show order note field", "default": true },
+    { "type": "checkbox", "id": "show_gift_message",  "label": "Show gift message",     "default": true },
+    { "type": "number",   "id": "free_shipping_threshold", "label": "Free shipping threshold ($)", "default": 60 }
+  ],
+  "presets": [{ "name": "Cart" }]
+}
+{% endschema %}

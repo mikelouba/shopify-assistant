@@ -1,0 +1,4 @@
+{
+  "sections": { "register_main": { "type": "customers-register", "settings": {} } },
+  "order": ["register_main"]
+}

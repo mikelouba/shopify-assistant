@@ -1,0 +1,32 @@
+<div class="about-story">
+  <div class="about-story-text">
+    <p class="section-eyebrow" style="text-align:left">✦ The Beginning</p>
+    <h2 class="about-story-title">From a kitchen table to 12,000 happy customers</h2>
+    <div class="about-story-body">
+      <p>Solmara started when our founder, after years of burnout and sleepless nights, discovered that the right botanical blend could do what no prescription had managed. She spent two years researching, formulating, and testing — first on herself, then on friends and family.</p>
+      <p>What began as a passion project quickly became a mission: make clinically-effective, honestly-sourced wellness products accessible to everyone who needed them. No fluff, no filler, no greenwashing.</p>
+      <p>Today, Solmara is a team of 18 scientists, herbalists, and wellness advocates — all united by the belief that how you feel every day matters more than anything else.</p>
+    </div>
+  </div>
+  <div class="about-story-img">
+    {%- if section.settings.story_image != blank -%}
+      {{ section.settings.story_image | image_url: width: 700 | image_tag: alt: 'Solmara story', loading: 'lazy', class: 'about-story-photo' }}
+    {%- else -%}
+      <div class="about-story-placeholder">
+        <span style="font-size:80px">🌿</span>
+        <p style="font-family:var(--serif);font-style:italic;font-size:18px;color:rgba(45,74,48,0.4)">Your brand photo here</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Story",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "story_image", "label": "Story image" }
+  ],
+  "presets": [{"name":"About Story"}]
+}
+{% endschema %}

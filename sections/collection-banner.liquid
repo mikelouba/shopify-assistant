@@ -1,0 +1,30 @@
+<div class="collection-banner">
+  {%- if collection.image -%}
+    <div class="col-banner-img">
+      {{ collection.image | image_url: width: 1400 | image_tag:
+          alt: collection.title,
+          loading: 'eager',
+          class: 'col-banner-photo',
+          widths: '800, 1000, 1400',
+          sizes: '100vw' }}
+      <div class="col-banner-overlay"></div>
+    </div>
+  {%- endif -%}
+  <div class="col-banner-content {% unless collection.image %}col-banner-no-img{% endunless %}">
+    {%- render 'breadcrumbs' -%}
+    <h1 class="col-banner-title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <p class="col-banner-desc">{{ collection.description }}</p>
+    {%- endif -%}
+    <p class="col-banner-count">{{ collection.products_count }} products</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection Banner",
+  "tag": "div",
+  "settings": [],
+  "presets": [{ "name": "Collection Banner" }]
+}
+{% endschema %}

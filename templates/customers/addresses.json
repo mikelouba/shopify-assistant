@@ -1,0 +1,4 @@
+{
+  "sections": { "addresses_main": { "type": "customers-addresses", "settings": {} } },
+  "order": ["addresses_main"]
+}

@@ -1,0 +1,141 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "New — Spring Wellness Collection",
+        "heading": "Wellness rooted in nature's wisdom",
+        "subheading": "Solmara blends ancient botanical knowledge with modern science — creating supplements, skincare, and rituals that work with your body, not against it.",
+        "btn_primary_label": "Shop the Collection",
+        "btn_primary_url": "/collections/all",
+        "btn_secondary_label": "Take the Wellness Quiz",
+        "btn_secondary_url": "#quiz",
+        "trust_1": "Clinically tested",
+        "trust_2": "Certified organic",
+        "trust_3": "Plastic-free packaging",
+        "stat_orders": "24,800+",
+        "stat_rating": "4.9 / 5 Rating"
+      }
+    },
+    "marquee": {
+      "type": "marquee-strip",
+      "settings": {
+        "items": "Gut Health,Sleep Support,Stress Relief,Immune Boost,Energy & Focus,Skin Glow,Hormonal Balance"
+      }
+    },
+    "goals": {
+      "type": "shop-by-goal",
+      "settings": {
+        "eyebrow": "✦ Personalized Wellness",
+        "heading": "Shop by Your Goal"
+      },
+      "blocks": {
+        "goal_1": {
+          "type": "goal",
+          "settings": { "icon": "😴", "name": "Better Sleep", "desc": "Drift deeper, wake refreshed", "url": "/collections/sleep" }
+        },
+        "goal_2": {
+          "type": "goal",
+          "settings": { "icon": "🧠", "name": "Focus & Clarity", "desc": "Sharpen your mind naturally", "url": "/collections/focus" }
+        },
+        "goal_3": {
+          "type": "goal",
+          "settings": { "icon": "🌿", "name": "Stress Relief", "desc": "Calm your nervous system", "url": "/collections/stress" }
+        },
+        "goal_4": {
+          "type": "goal",
+          "settings": { "icon": "✨", "name": "Skin Glow", "desc": "Radiance from within", "url": "/collections/skin" }
+        },
+        "goal_5": {
+          "type": "goal",
+          "settings": { "icon": "⚡", "name": "Energy & Vitality", "desc": "Feel alive all day long", "url": "/collections/energy" }
+        }
+      },
+      "block_order": ["goal_1","goal_2","goal_3","goal_4","goal_5"]
+    },
+    "featured_products": {
+      "type": "featured-products",
+      "settings": {
+        "eyebrow": "✦ Most Loved",
+        "heading": "Our Bestsellers",
+        "collection": "bestsellers",
+        "products_to_show": 8,
+        "view_all_url": "/collections/all"
+      }
+    },
+    "feature_split": {
+      "type": "feature-split",
+      "settings": {
+        "eyebrow": "✦ The Solmara Difference",
+        "heading": "Science meets nature's intelligence",
+        "body": "Every Solmara formula starts with rigorous research — then we let the earth do the rest. We source from certified organic farms, use only bioavailable ingredients, and third-party test every batch for purity and potency.",
+        "pillar_1_icon": "🔬",
+        "pillar_1_title": "Clinically Validated",
+        "pillar_1_body": "Every formula backed by peer-reviewed research and tested for efficacy at therapeutic doses.",
+        "pillar_2_icon": "🌿",
+        "pillar_2_title": "Certified Organic Sourcing",
+        "pillar_2_body": "Ingredients traced from soil to shelf. No fillers, no synthetics, no compromise.",
+        "pillar_3_icon": "♻️",
+        "pillar_3_title": "Zero-Plastic Packaging",
+        "pillar_3_body": "Glass, recycled cardboard, and biodegradable mailers only. Good for you and the planet.",
+        "btn_label": "Our Standards →",
+        "btn_url": "/pages/our-standards"
+      }
+    },
+    "ingredients": {
+      "type": "ingredients-grid",
+      "settings": {
+        "eyebrow": "✦ Hero Ingredients",
+        "heading": "Nature's most powerful botanicals"
+      },
+      "blocks": {
+        "ing_1": { "type": "ingredient", "settings": { "emoji": "🌿", "name": "Ashwagandha", "desc": "Ancient adaptogen that reduces cortisol, combats stress, and supports deep restorative sleep." }},
+        "ing_2": { "type": "ingredient", "settings": { "emoji": "🍄", "name": "Lion's Mane", "desc": "Nootropic mushroom that stimulates NGF production for memory, focus, and neural protection." }},
+        "ing_3": { "type": "ingredient", "settings": { "emoji": "🫚", "name": "Magnesium Glycinate", "desc": "Highly absorbable form of magnesium that calms the nervous system and improves sleep quality." }},
+        "ing_4": { "type": "ingredient", "settings": { "emoji": "🐟", "name": "Marine Collagen", "desc": "Type I collagen peptides from wild-caught fish — building blocks for skin, joints, and hair." }}
+      },
+      "block_order": ["ing_1","ing_2","ing_3","ing_4"]
+    },
+    "quiz_banner": {
+      "type": "quiz-banner",
+      "settings": {
+        "eyebrow": "✦ 60 Seconds to Clarity",
+        "heading": "Not sure where to start? Let your body guide you.",
+        "subheading": "Answer 6 quick questions and we'll build a personalized wellness protocol just for you — completely free.",
+        "btn_label": "Take the Free Quiz →",
+        "btn_url": "/pages/wellness-quiz"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "eyebrow": "✦ Real Results",
+        "heading": "What our community feels"
+      },
+      "blocks": {
+        "t1": { "type": "testimonial", "settings": { "stars": 5, "text": "After 3 weeks on the Ashwagandha Complex, I noticed I wasn't reaching for my phone at 2am in a spiral of anxiety. This stuff genuinely changed my mornings.", "author": "Maya R.", "location": "Austin, TX", "avatar": "🌸" }},
+        "t2": { "type": "testimonial", "settings": { "stars": 5, "text": "The Lion's Mane blend is unlike anything I've tried. Week two of a big product launch and I'm clearer than I've ever been. My team has noticed the difference.", "author": "James K.", "location": "London, UK", "avatar": "🧠" }},
+        "t3": { "type": "testimonial", "settings": { "stars": 5, "text": "I've tried everything for sleep — melatonin, magnesium oil, prescriptions. Solmara's Sleep Ritual is the only thing that gives me genuine, uninterrupted rest.", "author": "Priya M.", "location": "Sydney, AU", "avatar": "😴" }}
+      },
+      "block_order": ["t1","t2","t3"]
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "heading": "Join the Solmara Circle",
+        "subheading": "Wellness insights, new arrivals, and members-only offers — delivered with intention, never spam."
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "goals",
+    "featured_products",
+    "feature_split",
+    "ingredients",
+    "quiz_banner",
+    "testimonials",
+    "newsletter"
+  ]
+}

@@ -1,0 +1,52 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">🌿 Solmara</div>
+    <h1 class="auth-title">Sign In</h1>
+    <p class="auth-sub">Welcome back to the Solmara Circle.</p>
+
+    {%- form 'customer_login' -%}
+      {%- if form.errors -%}
+        <div class="auth-error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="auth-field">
+        <label for="loginEmail">Email</label>
+        <input class="nl-input" type="email" name="customer[email]" id="loginEmail"
+               autocomplete="email" required placeholder="your@email.com">
+      </div>
+
+      <div class="auth-field">
+        <label for="loginPassword">Password</label>
+        <input class="nl-input" type="password" name="customer[password]" id="loginPassword"
+               autocomplete="current-password" required placeholder="••••••••">
+      </div>
+
+      <div class="auth-forgot">
+        <a href="#" onclick="document.getElementById('recoverForm').style.display='block';document.getElementById('loginSection').style.display='none'">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-fill auth-submit">Sign In</button>
+    {%- endform -%}
+
+    <div id="recoverForm" style="display:none">
+      <h2 class="auth-title">Reset Password</h2>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="nl-success">✅ Check your email for a reset link.</p>
+        {%- endif -%}
+        <div class="auth-field">
+          <label for="recoverEmail">Email</label>
+          <input class="nl-input" type="email" name="email" id="recoverEmail" required placeholder="your@email.com">
+        </div>
+        <button type="submit" class="btn-fill auth-submit">Send Reset Link</button>
+      {%- endform -%}
+      <button class="btn-outline" style="width:100%;margin-top:12px" onclick="document.getElementById('recoverForm').style.display='none';document.getElementById('loginSection').style.display='block'">Back to Sign In</button>
+    </div>
+
+    <p class="auth-switch">Don't have an account? <a href="{{ routes.account_register_url }}">Create one</a></p>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Login", "tag": "div", "settings": [], "presets": [{"name":"Customer Login"}] }
+{% endschema %}

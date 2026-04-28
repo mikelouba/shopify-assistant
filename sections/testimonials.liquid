@@ -1,0 +1,49 @@
+<section class="testimonials-section">
+  <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+  <h2 class="section-title">{{ section.settings.heading | replace: 'feels', '<em>feels</em>' }}</h2>
+
+  <div class="testimonials-grid">
+    {%- for block in section.blocks -%}
+      <div class="testimonial-card" {{ block.shopify_attributes }}>
+        <div class="t-stars">
+          {%- assign stars = block.settings.stars | times: 1 -%}
+          {%- for i in (1..5) -%}
+            {%- if i <= stars -%}★{%- else -%}☆{%- endif -%}
+          {%- endfor -%}
+        </div>
+        <p class="t-text">&#8220;{{ block.settings.text }}&#8221;</p>
+        <div class="t-footer">
+          <div class="t-avatar">{{ block.settings.avatar }}</div>
+          <div>
+            <div class="t-author">{{ block.settings.author }}</div>
+            <div class="t-meta">Verified Customer · {{ block.settings.location }}</div>
+            <div class="t-verified">✓ Verified Purchase</div>
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "✦ Real Results" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our community feels" }
+  ],
+  "blocks": [{
+    "type": "testimonial",
+    "name": "Testimonial",
+    "settings": [
+      { "type": "range",    "id": "stars",    "label": "Stars",    "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "textarea", "id": "text",     "label": "Review text" },
+      { "type": "text",     "id": "author",   "label": "Customer name", "default": "Happy Customer" },
+      { "type": "text",     "id": "location", "label": "Location",      "default": "United States" },
+      { "type": "text",     "id": "avatar",   "label": "Avatar emoji",  "default": "🌿" }
+    ]
+  }],
+  "presets": [{ "name": "Testimonials" }]
+}
+{% endschema %}

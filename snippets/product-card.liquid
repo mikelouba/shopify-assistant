@@ -1,0 +1,91 @@
+{%- comment -%}
+  Snippet: product-card.liquid
+  Usage:   {%- render 'product-card', product: product -%}
+{%- endcomment -%}
+
+{%- liquid
+  assign first_image   = product.featured_image
+  assign first_variant = product.selected_or_first_available_variant
+  assign badge_text    = ''
+  if product.tags contains 'bestseller'
+    assign badge_text  = 'Bestseller'
+    assign badge_class = 'b-best'
+  elsif product.tags contains 'new'
+    assign badge_text  = 'New'
+    assign badge_class = 'b-new'
+  elsif product.tags contains 'subscribe'
+    assign badge_text  = 'Subscribe'
+    assign badge_class = 'b-sub'
+  endif
+-%}
+
+<div class="product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="p-img-wrap" aria-label="{{ product.title | escape }}">
+
+    {%- if first_image != blank -%}
+      {{ first_image | image_url: width: 600 | image_tag:
+          alt: first_image.alt | default: product.title,
+          loading: 'lazy',
+          class: 'p-img',
+          widths: '300, 400, 600',
+          sizes: '(max-width: 640px) 50vw, 25vw' }}
+    {%- else -%}
+      <div class="p-img-bg" style="background: var(--sand)">
+        <span class="p-icon">🌿</span>
+        <span>{{ product.title }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- if badge_text != '' -%}
+      <span class="p-badge {{ badge_class }}">{{ badge_text }}</span>
+    {%- endif -%}
+
+    <button class="p-wish"
+            onclick="event.preventDefault(); toggleWishlist(this, '{{ product.id }}')"
+            aria-label="Add to wishlist">♡</button>
+
+    <div class="p-add-bar">
+      {%- if product.variants.size == 1 -%}
+        <button class="p-add-btn"
+                data-variant-id="{{ first_variant.id }}"
+                onclick="event.preventDefault(); addToCartAjax('{{ first_variant.id }}', this)">
+          Add to Bag
+        </button>
+      {%- else -%}
+        <a class="p-add-btn" href="{{ product.url }}">Choose Options</a>
+      {%- endif -%}
+    </div>
+  </a>
+
+  <div class="p-info">
+    <p class="p-cat">
+      {%- if product.type != blank -%}{{ product.type }}{%- else -%}Wellness{%- endif -%}
+    </p>
+    <a href="{{ product.url }}"><p class="p-name">{{ product.title }}</p></a>
+
+    <div class="p-price-row">
+      {%- if first_variant.compare_at_price > first_variant.price -%}
+        <span class="p-price" style="color:var(--terracotta)">{{ first_variant.price | money }}</span>
+        <span class="p-price-old">{{ first_variant.compare_at_price | money }}</span>
+      {%- else -%}
+        <span class="p-price">{{ first_variant.price | money }}</span>
+      {%- endif -%}
+    </div>
+
+    {%- if product.metafields.reviews.rating != blank -%}
+      <div class="p-stars">
+        <span class="stars-val">
+          {%- assign rating = product.metafields.reviews.rating.value | times: 1 -%}
+          {%- for i in (1..5) -%}
+            {%- if i <= rating -%}★{%- else -%}☆{%- endif -%}
+          {%- endfor -%}
+        </span>
+        <span class="p-rev">&nbsp;({{ product.metafields.reviews.rating_count }})</span>
+      </div>
+    {%- endif -%}
+
+    {%- if product.tags contains 'subscribe-save' -%}
+      <div class="p-sub-nudge">🔁 Subscribe &amp; save 20%</div>
+    {%- endif -%}
+  </div>
+</div>

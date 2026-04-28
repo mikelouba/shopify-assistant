@@ -1,0 +1,47 @@
+<div class="about-team">
+  <p class="section-eyebrow">✦ The People Behind Solmara</p>
+  <h2 class="section-title">Meet our <em>team</em></h2>
+  <div class="team-grid">
+    {%- for block in section.blocks -%}
+      <div class="team-card" {{ block.shopify_attributes }}>
+        <div class="team-photo-wrap">
+          {%- if block.settings.photo != blank -%}
+            {{ block.settings.photo | image_url: width: 400 | image_tag: alt: block.settings.name, loading: 'lazy', class: 'team-photo' }}
+          {%- else -%}
+            <div class="team-photo-placeholder">{{ block.settings.emoji | default: '👤' }}</div>
+          {%- endif -%}
+        </div>
+        <h3 class="team-name">{{ block.settings.name }}</h3>
+        <p class="team-role">{{ block.settings.role }}</p>
+        <p class="team-bio">{{ block.settings.bio }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Team",
+  "tag": "div",
+  "settings": [],
+  "blocks": [{
+    "type": "member",
+    "name": "Team Member",
+    "settings": [
+      { "type": "image_picker", "id": "photo", "label": "Photo" },
+      { "type": "text",         "id": "emoji", "label": "Placeholder emoji (if no photo)", "default": "👤" },
+      { "type": "text",         "id": "name",  "label": "Name",  "default": "Team Member" },
+      { "type": "text",         "id": "role",  "label": "Role",  "default": "Co-Founder" },
+      { "type": "textarea",     "id": "bio",   "label": "Short bio" }
+    ]
+  }],
+  "presets": [{
+    "name": "About Team",
+    "blocks": [
+      { "type": "member", "settings": { "emoji": "🌿", "name": "Sarah Chen", "role": "Founder & Herbalist", "bio": "15 years studying plant medicine. Former research lead at a leading nutraceutical lab." } },
+      { "type": "member", "settings": { "emoji": "🔬", "name": "Dr. James Okafor", "role": "Head of Formulation", "bio": "PhD in Pharmacognosy. Passionate about bridging ancient plant wisdom with modern delivery systems." } },
+      { "type": "member", "settings": { "emoji": "♻️", "name": "Mia Santos", "role": "Head of Sustainability", "bio": "Former environmental consultant ensuring every Solmara decision starts with the planet." } }
+    ]
+  }]
+}
+{% endschema %}

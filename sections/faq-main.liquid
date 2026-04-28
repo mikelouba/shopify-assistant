@@ -1,0 +1,104 @@
+<div class="faq-page">
+  <div class="page-header centered">
+    <p class="section-eyebrow">✦ Got Questions?</p>
+    <h1 class="page-title">Frequently Asked <em>Questions</em></h1>
+    <p class="page-subtitle">Everything you need to know about Solmara products and your order.</p>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="faq-categories">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'category' -%}
+        <button class="faq-cat-btn {% if forloop.first %}active{% endif %}"
+                onclick="switchFaqCat(this, 'faqCat{{ forloop.index }}')"
+                {{ block.shopify_attributes }}>
+          {{ block.settings.icon }} {{ block.settings.title }}
+        </button>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <!-- FAQ groups -->
+  {%- assign cat_index = 0 -%}
+  {%- for block in section.blocks -%}
+    {%- if block.type == 'category' -%}
+      {%- assign cat_index = cat_index | plus: 1 -%}
+      <div class="faq-group {% if cat_index == 1 %}active{% endif %}" id="faqCat{{ cat_index }}" {{ block.shopify_attributes }}>
+        <h2 class="faq-group-title">{{ block.settings.icon }} {{ block.settings.title }}</h2>
+      </div>
+    {%- elsif block.type == 'question' -%}
+      <div class="faq-group {% if cat_index == 1 %}active{% endif %}" id="faqCat{{ cat_index }}-q{{ forloop.index }}" data-group="faqCat{{ cat_index }}">
+        <div class="accordion">
+          <button class="accordion-header" onclick="toggleAccordion(this)" {{ block.shopify_attributes }}>
+            {{ block.settings.question }}
+            <svg class="accordion-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="accordion-body">
+            <div class="accordion-content rte">{{ block.settings.answer }}</div>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  <!-- Still have questions -->
+  <div class="faq-contact-cta">
+    <h3>Still have questions?</h3>
+    <p>Our wellness team is available Monday–Friday, 9am–6pm EST.</p>
+    <div class="faq-contact-btns">
+      <a href="mailto:hello@solmara.com" class="btn-fill">Email Us</a>
+      <a href="{{ pages['contact'].url | default: '/pages/contact' }}" class="btn-outline">Contact Form</a>
+    </div>
+  </div>
+</div>
+
+<script>
+window.switchFaqCat = function(btn, catId) {
+  document.querySelectorAll('.faq-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Show/hide FAQ items (simplified — in production filter by data-group)
+  document.querySelectorAll('.faq-group').forEach(g => {
+    g.classList.toggle('active', g.id === catId || g.dataset.group === catId);
+  });
+};
+</script>
+
+{% schema %}
+{
+  "name": "FAQ",
+  "tag": "div",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "icon",  "label": "Emoji",    "default": "🌿" },
+        { "type": "text", "id": "title", "label": "Category", "default": "Products" }
+      ]
+    },
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text",     "id": "question", "label": "Question", "default": "Are your products vegan?" },
+        { "type": "richtext", "id": "answer",   "label": "Answer",   "default": "<p>Yes, all Solmara products are 100% vegan and cruelty-free.</p>" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "FAQ",
+    "blocks": [
+      { "type": "category", "settings": { "icon": "📦", "title": "Products" } },
+      { "type": "question", "settings": { "question": "Are your supplements third-party tested?", "answer": "<p>Yes. Every batch is independently tested for purity, potency, and contaminants before it reaches you. Certificate of Analysis available on request.</p>" } },
+      { "type": "question", "settings": { "question": "Are your products vegan and cruelty-free?", "answer": "<p>All Solmara products are 100% vegan, cruelty-free, and certified organic. We never test on animals.</p>" } },
+      { "type": "question", "settings": { "question": "How long until I see results?", "answer": "<p>Most customers notice a difference within 2–4 weeks of consistent use. Adaptogens and botanical compounds work cumulatively — the longer you take them, the better they perform.</p>" } },
+      { "type": "category", "settings": { "icon": "🚚", "title": "Shipping & Orders" } },
+      { "type": "question", "settings": { "question": "How long does shipping take?", "answer": "<p>Standard US shipping takes 3–5 business days. Express (1–2 days) is available at checkout. International orders typically arrive in 7–14 days.</p>" } },
+      { "type": "question", "settings": { "question": "Do you offer free shipping?", "answer": "<p>Yes! All US orders over $60 qualify for free standard shipping. This is automatically applied at checkout.</p>" } },
+      { "type": "category", "settings": { "icon": "↩️", "title": "Returns" } },
+      { "type": "question", "settings": { "question": "What's your return policy?", "answer": "<p>We offer a 30-day money-back guarantee. If you're not satisfied for any reason, contact us at hello@solmara.com and we'll process a full refund — no questions asked.</p>" } }
+    ]
+  }]
+}
+{% endschema %}

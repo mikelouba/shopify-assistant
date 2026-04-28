@@ -1,0 +1,39 @@
+<section class="newsletter">
+  <h2 class="nl-title">{{ section.settings.heading | replace: 'Solmara Circle', '<em>Solmara Circle</em>' }}</h2>
+  <p class="nl-sub">{{ section.settings.subheading }}</p>
+
+  {%- form 'customer', id: 'newsletter-form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter">
+    <div class="nl-form">
+      <input class="nl-input"
+             type="email"
+             name="contact[email]"
+             id="nlEmail"
+             placeholder="your@email.com"
+             autocomplete="email"
+             required
+             aria-label="Email address">
+      <button type="submit" class="nl-btn">
+        {{ section.settings.btn_label | default: 'Join Free' }}
+      </button>
+    </div>
+    {%- if form.posted_successfully? -%}
+      <p class="nl-success">🌿 Welcome to the Solmara Circle!</p>
+    {%- endif -%}
+  {%- endform -%}
+
+  <p class="nl-privacy">🔒 No spam, ever. Unsubscribe anytime.</p>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "div",
+  "settings": [
+    { "type": "text",     "id": "heading",    "label": "Heading",     "default": "Join the Solmara Circle" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" },
+    { "type": "text",     "id": "btn_label",  "label": "Button text", "default": "Join Free" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

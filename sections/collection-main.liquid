@@ -1,0 +1,172 @@
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign products_per_page = section.settings.products_per_page | default: 12
+-%}
+
+<div class="collection-main">
+
+  <!-- ── TOOLBAR ── -->
+  <div class="col-toolbar">
+    <div class="col-toolbar-left">
+      <span class="col-count">
+        Showing {{ collection.products.size }} of {{ collection.products_count }} products
+      </span>
+      {%- if section.settings.show_filters -%}
+        <button class="col-filter-toggle" onclick="toggleFilters()" aria-expanded="false" aria-controls="colFilters">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
+          Filter
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.show_sort -%}
+    <div class="col-sort-wrap">
+      <label class="col-sort-label" for="sortSelect">Sort:</label>
+      <select class="col-sort-select" id="sortSelect" onchange="sortCollection(this.value)">
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>
+            {{ option.name }}
+          </option>
+        {%- endfor -%}
+      </select>
+    </div>
+    {%- endif -%}
+  </div>
+
+  <div class="col-layout">
+
+    <!-- ── FILTERS SIDEBAR ── -->
+    {%- if section.settings.show_filters -%}
+    <aside class="col-filters" id="colFilters">
+      <div class="col-filters-header">
+        <h3>Filter</h3>
+        <button class="col-filter-clear" onclick="clearFilters()">Clear all</button>
+      </div>
+
+      {%- for filter in collection.filters -%}
+        <div class="filter-group">
+          <button class="filter-group-header" onclick="toggleFilterGroup(this)" aria-expanded="true">
+            {{ filter.label }}
+            <svg class="filter-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="filter-group-body">
+            {%- if filter.type == 'list' -%}
+              {%- for value in filter.values -%}
+                <label class="filter-option">
+                  <input type="checkbox"
+                         name="{{ filter.param_name }}"
+                         value="{{ value.value }}"
+                         {% if value.active %}checked{% endif %}
+                         onchange="applyFilter()"
+                         {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+                  <span class="filter-option-label">{{ value.label }}</span>
+                  <span class="filter-option-count">({{ value.count }})</span>
+                </label>
+              {%- endfor -%}
+            {%- elsif filter.type == 'price_range' -%}
+              <div class="filter-price-range">
+                <div class="filter-price-inputs">
+                  <div class="filter-price-field">
+                    <span class="filter-price-currency">{{ cart.currency.symbol }}</span>
+                    <input class="filter-price-input" type="number"
+                           name="{{ filter.min_value.param_name }}"
+                           value="{{ filter.min_value.value | divided_by: 100 }}"
+                           min="0"
+                           max="{{ filter.range_max | divided_by: 100 }}"
+                           placeholder="Min"
+                           onchange="applyFilter()">
+                  </div>
+                  <span class="filter-price-to">–</span>
+                  <div class="filter-price-field">
+                    <span class="filter-price-currency">{{ cart.currency.symbol }}</span>
+                    <input class="filter-price-input" type="number"
+                           name="{{ filter.max_value.param_name }}"
+                           value="{{ filter.max_value.value | divided_by: 100 }}"
+                           min="0"
+                           max="{{ filter.range_max | divided_by: 100 }}"
+                           placeholder="Max"
+                           onchange="applyFilter()">
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </aside>
+    {%- endif -%}
+
+    <!-- ── PRODUCT GRID ── -->
+    <div class="col-products-wrap">
+      {%- if collection.products.size > 0 -%}
+        <div class="products-grid col-grid-{{ section.settings.columns }}" id="colProductGrid">
+          {%- paginate collection.products by products_per_page -%}
+            {%- for product in collection.products -%}
+              {%- render 'product-card', product: product -%}
+            {%- endfor -%}
+          {%- endpaginate -%}
+        </div>
+
+        {%- paginate collection.products by products_per_page -%}
+          {%- render 'pagination', paginate: paginate -%}
+        {%- endpaginate -%}
+
+      {%- else -%}
+        <div class="col-empty">
+          <div class="col-empty-icon">🌿</div>
+          <h3>No products found</h3>
+          <p>Try adjusting your filters or <a href="{{ collection.url }}">clear all filters</a>.</p>
+        </div>
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+<script>
+function sortCollection(val) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('sort_by', val);
+  window.location.href = url.toString();
+}
+function toggleFilters() {
+  const sidebar = document.getElementById('colFilters');
+  const btn = document.querySelector('.col-filter-toggle');
+  const open = sidebar.classList.toggle('open');
+  btn.setAttribute('aria-expanded', open);
+}
+function toggleFilterGroup(btn) {
+  const body = btn.nextElementSibling;
+  const open = body.classList.toggle('hidden');
+  btn.setAttribute('aria-expanded', !open);
+}
+function applyFilter() {
+  const url = new URL(window.location.href);
+  // Collect all checked filters
+  document.querySelectorAll('.filter-option input:checked').forEach(inp => {
+    url.searchParams.append(inp.name, inp.value);
+  });
+  // Price range
+  document.querySelectorAll('.filter-price-input').forEach(inp => {
+    if (inp.value) url.searchParams.set(inp.name, inp.value * 100);
+  });
+  window.location.href = url.toString();
+}
+function clearFilters() {
+  window.location.href = '{{ collection.url }}';
+}
+</script>
+
+{% schema %}
+{
+  "name": "Collection Products",
+  "tag": "div",
+  "settings": [
+    { "type": "range",    "id": "products_per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 12 },
+    { "type": "select",   "id": "columns",           "label": "Columns (desktop)", "options": [{"value":"3","label":"3"},{"value":"4","label":"4"}], "default": "4" },
+    { "type": "checkbox", "id": "show_filters",      "label": "Show filter sidebar", "default": true },
+    { "type": "checkbox", "id": "show_sort",          "label": "Show sort dropdown",  "default": true }
+  ],
+  "presets": [{ "name": "Collection Products" }]
+}
+{% endschema %}

@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "cart_main": {
+      "type": "cart-main",
+      "settings": {
+        "show_order_note": true,
+        "show_gift_message": true,
+        "free_shipping_threshold": 60
+      }
+    }
+  },
+  "order": ["cart_main"]
+}

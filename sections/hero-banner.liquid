@@ -1,0 +1,92 @@
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="leaf-icon">🌿</span>
+      {{ section.settings.eyebrow }}
+    </div>
+
+    <h1 class="hero-title">
+      {{ section.settings.heading | replace: "nature's", "<em>nature's</em>" }}
+    </h1>
+
+    <p class="hero-sub">{{ section.settings.subheading }}</p>
+
+    <div class="hero-btns">
+      <a class="btn-fill" href="{{ section.settings.btn_primary_url }}">
+        {{ section.settings.btn_primary_label }}
+      </a>
+      <a class="btn-outline" href="{{ section.settings.btn_secondary_url }}">
+        {{ section.settings.btn_secondary_label }}
+      </a>
+    </div>
+
+    <div class="hero-trust">
+      {%- if section.settings.trust_1 != blank -%}
+        <span class="trust-item"><span class="trust-icon">🧪</span> {{ section.settings.trust_1 }}</span>
+      {%- endif -%}
+      {%- if section.settings.trust_2 != blank -%}
+        <span class="trust-item"><span class="trust-icon">🌱</span> {{ section.settings.trust_2 }}</span>
+      {%- endif -%}
+      {%- if section.settings.trust_3 != blank -%}
+        <span class="trust-item"><span class="trust-icon">♻️</span> {{ section.settings.trust_3 }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <div class="hero-blob">
+        <div class="fc-dot"></div>
+        <div class="fc-dot2"></div>
+        {%- if section.settings.hero_image != blank -%}
+          {{ section.settings.hero_image | img_tag:
+              section.settings.hero_image.alt | default: shop.name,
+              loading: 'eager',
+              class: 'hero-product-img',
+              widths: '400, 600, 800',
+              sizes: '45vw' }}
+        {%- else -%}
+          <span class="blob-icon">🌿</span>
+          <span class="blob-label">Pure · Potent · Kind</span>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="hero-floating-card2">
+      <div class="hfc2-text">⭐ {{ section.settings.stat_rating }}</div>
+      <div class="hfc2-stars">★★★★★ 12,400+ reviews</div>
+    </div>
+
+    <div class="hero-floating-card">
+      <div class="hfc-label">This Month</div>
+      <div class="hfc-val">{{ section.settings.stat_orders }}</div>
+      <div class="hfc-sub">orders shipped worldwide 🌍</div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "div",
+  "class": "hero-wrapper",
+  "settings": [
+    { "type": "text",  "id": "eyebrow",           "label": "Eyebrow text",       "default": "New — Spring Wellness Collection" },
+    { "type": "text",  "id": "heading",            "label": "Main heading",        "default": "Wellness rooted in nature's wisdom" },
+    { "type": "textarea","id": "subheading",       "label": "Subheading",          "default": "Solmara blends ancient botanical knowledge with modern science." },
+    { "type": "text",  "id": "btn_primary_label",  "label": "Primary button text", "default": "Shop the Collection" },
+    { "type": "url",   "id": "btn_primary_url",    "label": "Primary button link" },
+    { "type": "text",  "id": "btn_secondary_label","label": "Secondary button text","default": "Take the Wellness Quiz" },
+    { "type": "url",   "id": "btn_secondary_url",  "label": "Secondary button link" },
+    { "type": "image_picker", "id": "hero_image",  "label": "Hero product image (optional — replaces leaf graphic)" },
+    { "type": "header","content": "Trust Badges" },
+    { "type": "text",  "id": "trust_1",            "label": "Trust badge 1",       "default": "Clinically tested" },
+    { "type": "text",  "id": "trust_2",            "label": "Trust badge 2",       "default": "Certified organic" },
+    { "type": "text",  "id": "trust_3",            "label": "Trust badge 3",       "default": "Plastic-free packaging" },
+    { "type": "header","content": "Social Proof Stats" },
+    { "type": "text",  "id": "stat_orders",        "label": "Orders shipped stat", "default": "24,800+" },
+    { "type": "text",  "id": "stat_rating",        "label": "Rating stat",         "default": "4.9 / 5 Rating" }
+  ],
+  "presets": [{ "name": "Hero Banner" }]
+}
+{% endschema %}

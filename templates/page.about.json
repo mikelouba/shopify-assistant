@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "about_hero": { "type": "about-hero", "settings": {} },
+    "about_story": { "type": "about-story", "settings": {} },
+    "about_values": { "type": "about-values", "settings": {} },
+    "about_team": { "type": "about-team", "settings": {} },
+    "newsletter": { "type": "newsletter", "settings": { "heading": "Join the Solmara Circle" } }
+  },
+  "order": ["about_hero","about_story","about_values","about_team","newsletter"]
+}

@@ -1,0 +1,4 @@
+{
+  "sections": { "not_found": { "type": "404-main", "settings": {} } },
+  "order": ["not_found"]
+}

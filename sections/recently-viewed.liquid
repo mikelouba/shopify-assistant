@@ -1,0 +1,42 @@
+<div class="recently-viewed-section" id="recentlyViewed" style="display:none">
+  <p class="section-eyebrow" style="text-align:center">✦ Your Journey</p>
+  <h2 class="section-title">{{ section.settings.heading }}</h2>
+  <div class="products-grid related-grid" id="recentlyViewedGrid"></div>
+</div>
+
+<script>
+(function() {
+  const KEY = 'solmara_recently_viewed';
+  const PRODUCT_ID = {{ product.id }};
+  const PRODUCT_HANDLE = '{{ product.handle }}';
+
+  // Save current product
+  let viewed = JSON.parse(localStorage.getItem(KEY) || '[]');
+  viewed = viewed.filter(h => h !== PRODUCT_HANDLE);
+  viewed.unshift(PRODUCT_HANDLE);
+  viewed = viewed.slice(0, 8);
+  localStorage.setItem(KEY, JSON.stringify(viewed));
+
+  // Show other recently viewed
+  const others = viewed.filter(h => h !== PRODUCT_HANDLE).slice(0, {{ section.settings.products_to_show }});
+  if (others.length > 0) {
+    const section = document.getElementById('recentlyViewed');
+    const grid = document.getElementById('recentlyViewedGrid');
+    section.style.display = 'block';
+    // Note: In production, fetch product data via AJAX using Shopify's product API
+    // e.g., fetch(`/products/${handle}.js`) for each handle
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Recently Viewed",
+  "tag": "div",
+  "settings": [
+    { "type": "text",  "id": "heading",          "label": "Heading",          "default": "Recently Viewed" },
+    { "type": "range", "id": "products_to_show", "label": "Products to show", "min": 2, "max": 6, "step": 1, "default": 4 }
+  ],
+  "presets": [{ "name": "Recently Viewed" }]
+}
+{% endschema %}

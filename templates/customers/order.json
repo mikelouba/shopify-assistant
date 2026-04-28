@@ -1,0 +1,4 @@
+{
+  "sections": { "order_main": { "type": "customers-order", "settings": {} } },
+  "order": ["order_main"]
+}

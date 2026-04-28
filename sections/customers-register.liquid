@@ -1,0 +1,38 @@
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">🌿 Solmara</div>
+    <h1 class="auth-title">Create Account</h1>
+    <p class="auth-sub">Join the Solmara Circle and get 15% off your first order.</p>
+
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <div class="auth-error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+      <div class="auth-grid">
+        <div class="auth-field">
+          <label for="regFirst">First name</label>
+          <input class="nl-input" type="text" name="customer[first_name]" id="regFirst" autocomplete="given-name" placeholder="First name">
+        </div>
+        <div class="auth-field">
+          <label for="regLast">Last name</label>
+          <input class="nl-input" type="text" name="customer[last_name]" id="regLast" autocomplete="family-name" placeholder="Last name">
+        </div>
+      </div>
+      <div class="auth-field">
+        <label for="regEmail">Email</label>
+        <input class="nl-input" type="email" name="customer[email]" id="regEmail" autocomplete="email" required placeholder="your@email.com">
+      </div>
+      <div class="auth-field">
+        <label for="regPassword">Password</label>
+        <input class="nl-input" type="password" name="customer[password]" id="regPassword" autocomplete="new-password" required placeholder="Min. 8 characters">
+      </div>
+      <button type="submit" class="btn-fill auth-submit">Create Account</button>
+    {%- endform -%}
+
+    <p class="auth-switch">Already have an account? <a href="{{ routes.account_login_url }}">Sign in</a></p>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Register", "tag": "div", "settings": [], "presets": [{"name":"Customer Register"}] }
+{% endschema %}

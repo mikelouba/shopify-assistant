@@ -1,0 +1,40 @@
+{% comment %}─── ABOUT VALUES ───{% endcomment %}
+<div class="about-values">
+  <p class="section-eyebrow">✦ What We Stand For</p>
+  <h2 class="section-title">Our <em>values</em> are our formula</h2>
+  <div class="values-grid">
+    {%- for block in section.blocks -%}
+      <div class="value-card" {{ block.shopify_attributes }}>
+        <div class="value-icon">{{ block.settings.icon }}</div>
+        <h3 class="value-title">{{ block.settings.title }}</h3>
+        <p class="value-desc">{{ block.settings.desc }}</p>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Values",
+  "tag": "div",
+  "settings": [],
+  "blocks": [{
+    "type": "value",
+    "name": "Value",
+    "settings": [
+      { "type": "text",     "id": "icon",  "label": "Emoji icon", "default": "🌿" },
+      { "type": "text",     "id": "title", "label": "Title",      "default": "Transparency" },
+      { "type": "textarea", "id": "desc",  "label": "Description" }
+    ]
+  }],
+  "presets": [{
+    "name": "About Values",
+    "blocks": [
+      { "type": "value", "settings": { "icon": "🔬", "title": "Science-Backed", "desc": "Every formula is supported by peer-reviewed research. We never make claims we can't prove." } },
+      { "type": "value", "settings": { "icon": "🌱", "title": "Truly Organic", "desc": "Certified organic sourcing from farms we visit personally. No exceptions, no compromises." } },
+      { "type": "value", "settings": { "icon": "♻️", "title": "Zero Waste",    "desc": "Plastic-free packaging, carbon-neutral shipping, and biodegradable everything." } },
+      { "type": "value", "settings": { "icon": "🤝", "title": "Radical Honesty","desc": "If something doesn't work for you, we'll refund you. No hoops, no fine print." } }
+    ]
+  }]
+}
+{% endschema %}

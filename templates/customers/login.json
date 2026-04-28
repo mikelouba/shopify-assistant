@@ -1,0 +1,4 @@
+{
+  "sections": { "login_main": { "type": "customers-login", "settings": {} } },
+  "order": ["login_main"]
+}

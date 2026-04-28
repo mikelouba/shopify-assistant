@@ -1,0 +1,33 @@
+{
+  "general": {
+    "password_page": {
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_password_placeholder": "Your password",
+      "login_form_submit": "Enter",
+      "login_error": "Oops – looks like that's not the right password. Try again."
+    }
+  },
+  "cart": {
+    "title": "Your Bag",
+    "empty": "Your bag is empty",
+    "checkout": "Checkout Securely",
+    "continue_shopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "add_to_cart": "Add to Bag",
+    "sold_out": "Sold Out",
+    "unavailable": "Unavailable"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "new_badge": "New"
+    }
+  },
+  "newsletter": {
+    "success": "🌿 Welcome to the Solmara Circle!"
+  }
+}

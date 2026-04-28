@@ -1,0 +1,69 @@
+<div class="account-page">
+  <div class="account-header">
+    <h1 class="page-title">Saved Addresses</h1>
+    <a href="{{ routes.account_url }}" class="account-logout">← Back to Account</a>
+  </div>
+
+  {%- form 'customer_address', customer.new_address -%}
+    <div class="address-form-card">
+      <h2 class="account-section-title">Add New Address</h2>
+      <div class="auth-grid">
+        <div class="auth-field"><label>First Name</label><input class="nl-input" type="text" name="address[first_name]" value="{{ form.first_name }}" autocomplete="given-name"></div>
+        <div class="auth-field"><label>Last Name</label><input class="nl-input" type="text" name="address[last_name]" value="{{ form.last_name }}" autocomplete="family-name"></div>
+      </div>
+      <div class="auth-field"><label>Address</label><input class="nl-input" type="text" name="address[address1]" value="{{ form.address1 }}" autocomplete="address-line1"></div>
+      <div class="auth-field"><label>Apartment, suite, etc. (optional)</label><input class="nl-input" type="text" name="address[address2]" value="{{ form.address2 }}" autocomplete="address-line2"></div>
+      <div class="auth-grid">
+        <div class="auth-field"><label>City</label><input class="nl-input" type="text" name="address[city]" value="{{ form.city }}" autocomplete="address-level2"></div>
+        <div class="auth-field"><label>ZIP / Postal Code</label><input class="nl-input" type="text" name="address[zip]" value="{{ form.zip }}" autocomplete="postal-code"></div>
+      </div>
+      <div class="auth-field">
+        <label>Country</label>
+        <select name="address[country]" id="addressCountry" class="col-sort-select" style="width:100%;padding:12px" data-default="{{ form.country }}">
+          {{ all_country_option_tags }}
+        </select>
+      </div>
+      <div class="auth-field"><label>Phone (optional)</label><input class="nl-input" type="tel" name="address[phone]" value="{{ form.phone }}" autocomplete="tel"></div>
+      <label class="filter-option" style="margin-bottom:16px">
+        <input type="checkbox" name="address[default]" {% if form.set_as_default_checkbox %}checked{% endif %}>
+        <span>Set as default address</span>
+      </label>
+      <button type="submit" class="btn-fill">Save Address</button>
+    </div>
+  {%- endform -%}
+
+  {%- if customer.addresses.size > 0 -%}
+    <h2 class="account-section-title" style="margin-top:40px">Saved Addresses</h2>
+    <div class="addresses-grid">
+      {%- for address in customer.addresses -%}
+        <div class="address-card {% if address == customer.default_address %}default{% endif %}">
+          {%- if address == customer.default_address -%}
+            <span class="address-default-badge">Default</span>
+          {%- endif -%}
+          <p>{{ address.name }}</p>
+          <p>{{ address.street }}</p>
+          <p>{{ address.city }}, {{ address.province_code }} {{ address.zip }}</p>
+          <p>{{ address.country }}</p>
+          {%- if address.phone != blank -%}<p>{{ address.phone }}</p>{%- endif -%}
+          <div class="address-actions">
+            <button class="btn-outline" onclick="toggleAddressEdit('edit-{{ address.id }}')">Edit</button>
+            <a href="{{ address.url }}" data-confirm="Delete this address?" class="cart-remove-btn">Delete</a>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+</div>
+
+<style>
+.address-form-card { background: var(--cream); border-radius: 12px; padding: 32px; max-width: 600px; margin-bottom: 40px; }
+.addresses-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 20px; }
+.address-card { background: var(--cream); border-radius: 10px; padding: 20px; font-size: 14px; color: var(--dark); line-height: 1.7; position: relative; border: 1.5px solid transparent; }
+.address-card.default { border-color: var(--sage); }
+.address-default-badge { position: absolute; top: 14px; right: 14px; font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); font-weight: 600; }
+.address-actions { display: flex; gap: 12px; margin-top: 14px; align-items: center; }
+</style>
+
+{% schema %}
+{ "name": "Addresses", "tag": "div", "settings": [], "presets": [{"name":"Customer Addresses"}] }
+{% endschema %}

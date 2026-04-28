@@ -1,0 +1,20 @@
+{
+  "current": {
+    "announcement_text":   "100% Natural Ingredients",
+    "announcement_text_2": "Free Shipping Over $60",
+    "announcement_text_3": "Science-Backed Formulas",
+    "main_menu":           "main-menu",
+    "footer_tagline":      "Wellness rooted in nature's wisdom. Every product made with purpose, for people who care about what they put in and on their bodies.",
+    "cert_1": "🌱 Organic",
+    "cert_2": "🐰 Cruelty-Free",
+    "cert_3": "🌍 B Corp",
+    "cert_4": "♻️ Zero Plastic",
+    "footer_menu_title_1": "Shop",
+    "footer_menu_1":       "footer-shop",
+    "footer_menu_title_2": "Learn",
+    "footer_menu_2":       "footer-learn",
+    "footer_menu_title_3": "Support",
+    "footer_menu_3":       "footer-support",
+    "free_shipping_threshold": 60
+  }
+}

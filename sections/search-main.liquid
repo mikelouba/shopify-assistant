@@ -1,0 +1,47 @@
+<div class="search-page">
+  <div class="page-header centered">
+    <h1 class="page-title">
+      {%- if search.performed -%}
+        Results for &#8220;{{ search.terms }}&#8221;
+      {%- else -%}
+        Search
+      {%- endif -%}
+    </h1>
+  </div>
+
+  <!-- Search form -->
+  <form action="{{ routes.search_url }}" method="get" class="search-page-form">
+    <input type="hidden" name="type" value="product">
+    <div class="search-page-input-wrap">
+      <input class="search-input" type="search" name="q"
+             value="{{ search.terms | escape }}"
+             placeholder="Search products, ingredients..."
+             autocomplete="off"
+             aria-label="Search">
+      <button type="submit" class="btn-fill">Search</button>
+    </div>
+  </form>
+
+  {%- if search.performed -%}
+    {%- if search.results_count == 0 -%}
+      <div class="search-no-results">
+        <p class="search-no-results-text">No results for &#8220;{{ search.terms }}&#8221;.</p>
+        <p>Try a different search term, or <a href="{{ routes.all_products_collection_url }}">browse all products</a>.</p>
+      </div>
+    {%- else -%}
+      <p class="search-count">{{ search.results_count }} results found</p>
+      <div class="products-grid">
+        {%- for result in search.results -%}
+          {%- if result.object_type == 'product' -%}
+            {%- render 'product-card', product: result -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- render 'pagination', paginate: search -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{ "name": "Search", "tag": "div", "settings": [], "presets": [{"name":"Search"}] }
+{% endschema %}

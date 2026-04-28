@@ -1,0 +1,37 @@
+{%- unless template == 'index' -%}
+<nav class="breadcrumbs" aria-label="Breadcrumb">
+  <a href="{{ routes.root_url }}" class="breadcrumb-link">Home</a>
+
+  {%- if template == 'collection' -%}
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ collection.title }}</span>
+
+  {%- elsif template == 'product' -%}
+    {%- if collection != blank -%}
+      <span class="breadcrumb-sep">›</span>
+      <a href="{{ collection.url }}" class="breadcrumb-link">{{ collection.title }}</a>
+    {%- endif -%}
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ product.title | truncate: 40 }}</span>
+
+  {%- elsif template == 'page' -%}
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ page.title }}</span>
+
+  {%- elsif template.name == 'blog' -%}
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ blog.title }}</span>
+
+  {%- elsif template.name == 'article' -%}
+    <span class="breadcrumb-sep">›</span>
+    <a href="{{ blog.url }}" class="breadcrumb-link">{{ blog.title }}</a>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">{{ article.title | truncate: 40 }}</span>
+
+  {%- elsif template.name == 'cart' -%}
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-current">Cart</span>
+
+  {%- endif -%}
+</nav>
+{%- endunless -%}

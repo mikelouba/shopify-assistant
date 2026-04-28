@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "faq_main": { "type": "faq-main", "settings": {} },
+    "newsletter": { "type": "newsletter", "settings": {} }
+  },
+  "order": ["faq_main","newsletter"]
+}

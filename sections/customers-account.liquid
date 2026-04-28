@@ -1,0 +1,60 @@
+<div class="account-page">
+  <div class="account-header">
+    <h1 class="page-title">Hello, {{ customer.first_name }} 🌿</h1>
+    <a href="{{ routes.account_logout_url }}" class="account-logout">Sign Out</a>
+  </div>
+
+  <div class="account-layout">
+    <!-- Sidebar -->
+    <aside class="account-sidebar">
+      <nav class="account-nav">
+        <a href="{{ routes.account_url }}"  class="account-nav-link active">My Orders</a>
+        <a href="{{ routes.account_addresses_url }}" class="account-nav-link">Addresses</a>
+        <a href="/pages/wellness-quiz" class="account-nav-link">Wellness Profile</a>
+        <a href="{{ routes.account_logout_url }}" class="account-nav-link logout">Sign Out</a>
+      </nav>
+    </aside>
+
+    <!-- Main -->
+    <div class="account-main">
+      <h2 class="account-section-title">Order History</h2>
+
+      {%- if customer.orders.size > 0 -%}
+        <div class="orders-table-wrap">
+          <table class="orders-table">
+            <thead>
+              <tr>
+                <th>Order</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}" class="order-num">#{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%b %d, %Y' }}</td>
+                  <td><span class="order-status order-status-{{ order.fulfillment_status }}">{{ order.fulfillment_status_label }}</span></td>
+                  <td>{{ order.total_price | money }}</td>
+                  <td><a href="{{ order.customer_url }}" class="order-view-link">View →</a></td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- else -%}
+        <div class="account-empty">
+          <div class="account-empty-icon">🌿</div>
+          <p>You haven't placed any orders yet.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn-fill">Start Shopping</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Account", "tag": "div", "settings": [], "presets": [{"name":"Customer Account"}] }
+{% endschema %}

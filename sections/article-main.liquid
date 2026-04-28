@@ -1,0 +1,100 @@
+<article class="article-page">
+  {%- render 'breadcrumbs' -%}
+
+  <!-- Header -->
+  <header class="article-header">
+    {%- if article.tags.size > 0 -%}
+      <div class="article-tags">
+        {%- for tag in article.tags -%}
+          <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-card-tag">{{ tag }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <h1 class="article-title">{{ article.title }}</h1>
+
+    <div class="article-meta">
+      <span>By {{ article.author }}</span>
+      <span>·</span>
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
+        {{ article.published_at | date: '%B %d, %Y' }}
+      </time>
+      {%- if article.comments_count > 0 -%}
+        <span>·</span>
+        <span>{{ article.comments_count }} comments</span>
+      {%- endif -%}
+    </div>
+
+    {%- if article.image -%}
+      <div class="article-hero-img">
+        {{ article.image | image_url: width: 1200 | image_tag:
+            alt: article.image.alt | default: article.title,
+            loading: 'eager',
+            class: 'article-hero-photo',
+            widths: '700, 900, 1200',
+            sizes: '(max-width:768px) 100vw, 800px' }}
+      </div>
+    {%- endif -%}
+  </header>
+
+  <!-- Content -->
+  <div class="article-body rte">
+    {{ article.content }}
+  </div>
+
+  <!-- Share -->
+  <div class="article-share">
+    <span class="share-label">Share this article:</span>
+    <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.origin }}{{ article.url }}" target="_blank" rel="noopener">Facebook</a>
+    <a class="share-btn" href="https://twitter.com/intent/tweet?url={{ request.origin }}{{ article.url }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">Twitter</a>
+    <a class="share-btn" href="https://pinterest.com/pin/create/button/?url={{ request.origin }}{{ article.url }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
+  </div>
+
+  <!-- Prev / Next -->
+  <nav class="article-nav">
+    {%- if blog.previous_article -%}
+      <a href="{{ blog.previous_article }}" class="article-nav-link prev">← Previous Article</a>
+    {%- endif -%}
+    <a href="{{ blog.url }}" class="btn-outline">All Articles</a>
+    {%- if blog.next_article -%}
+      <a href="{{ blog.next_article }}" class="article-nav-link next">Next Article →</a>
+    {%- endif -%}
+  </nav>
+
+  <!-- Comments -->
+  {%- if blog.comments_enabled? -%}
+    <div class="article-comments">
+      <h3 class="comments-title">{{ article.comments_count }} Comments</h3>
+
+      {%- for comment in article.comments -%}
+        <div class="comment" id="comment-{{ comment.id }}">
+          <div class="comment-avatar">{{ comment.author | slice: 0 }}</div>
+          <div class="comment-body">
+            <div class="comment-meta">
+              <strong>{{ comment.author }}</strong>
+              <time>{{ comment.created_at | date: '%B %d, %Y' }}</time>
+            </div>
+            <p>{{ comment.content }}</p>
+          </div>
+        </div>
+      {%- endfor -%}
+
+      {%- form 'new_comment', article, id: 'comment-form' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="comment-success">✅ Thanks for your comment! It will appear after review.</p>
+        {%- endif -%}
+        <h4 class="comment-form-title">Leave a Comment</h4>
+        <div class="comment-form-grid">
+          <input class="nl-input" type="text" name="comment[author]" placeholder="Your name" required>
+          <input class="nl-input" type="email" name="comment[email]" placeholder="Email (not published)" required>
+        </div>
+        <textarea class="nl-input cart-note-input" name="comment[body]" rows="4" placeholder="Your comment..." required></textarea>
+        <button type="submit" class="btn-fill">Post Comment</button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+</article>
+
+{% schema %}
+{ "name": "Article", "tag": "div", "settings": [], "presets": [{"name":"Article"}] }
+{% endschema %}

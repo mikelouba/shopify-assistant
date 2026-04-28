@@ -1,0 +1,25 @@
+<div class="not-found-page">
+  <div class="not-found-inner">
+    <div class="not-found-icon">🌿</div>
+    <h1 class="not-found-title">Page Not Found</h1>
+    <p class="not-found-sub">This page has wandered off into the forest. Let's help you find your way back.</p>
+    <div class="not-found-actions">
+      <a href="{{ routes.root_url }}" class="btn-fill">Go Home</a>
+      <a href="{{ routes.all_products_collection_url }}" class="btn-outline">Shop All Products</a>
+    </div>
+    <div class="not-found-search">
+      <p>Or try searching:</p>
+      <form action="{{ routes.search_url }}" method="get">
+        <input type="hidden" name="type" value="product">
+        <div class="search-page-input-wrap">
+          <input class="search-input" type="search" name="q" placeholder="Search..." aria-label="Search">
+          <button type="submit" class="btn-fill">Go</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{ "name": "404", "tag": "div", "settings": [], "presets": [{"name":"404 Page"}] }
+{% endschema %}

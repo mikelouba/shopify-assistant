@@ -1,0 +1,49 @@
+<section class="goals-section" id="goals">
+  <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
+  <h2 class="section-title">{{ section.settings.heading | replace: 'Your Goal', '<em>Your Goal</em>' }}</h2>
+
+  <div class="goals-grid">
+    {%- for block in section.blocks -%}
+      <a class="goal-card" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+        <div class="goal-icon-wrap">{{ block.settings.icon }}</div>
+        <div class="goal-name">{{ block.settings.name }}</div>
+        <div class="goal-desc">{{ block.settings.desc }}</div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Shop by Goal",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow",  "default": "✦ Personalized Wellness" },
+    { "type": "text", "id": "heading", "label": "Heading",  "default": "Shop by Your Goal" }
+  ],
+  "blocks": [
+    {
+      "type": "goal",
+      "name": "Goal Card",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji icon",   "default": "🌿" },
+        { "type": "text", "id": "name", "label": "Goal name",    "default": "Better Sleep" },
+        { "type": "text", "id": "desc", "label": "Description",  "default": "Drift deeper, wake refreshed" },
+        { "type": "url",  "id": "url",  "label": "Collection link" }
+      ]
+    }
+  ],
+  "max_blocks": 6,
+  "presets": [{
+    "name": "Shop by Goal",
+    "blocks": [
+      { "type": "goal", "settings": { "icon": "😴", "name": "Better Sleep",    "desc": "Drift deeper, wake refreshed" } },
+      { "type": "goal", "settings": { "icon": "🧠", "name": "Focus & Clarity", "desc": "Sharpen your mind naturally" } },
+      { "type": "goal", "settings": { "icon": "🌿", "name": "Stress Relief",   "desc": "Calm your nervous system" } },
+      { "type": "goal", "settings": { "icon": "✨", "name": "Skin Glow",       "desc": "Radiance from within" } },
+      { "type": "goal", "settings": { "icon": "⚡", "name": "Energy & Vitality","desc": "Feel alive all day long" } }
+    ]
+  }]
+}
+{% endschema %}

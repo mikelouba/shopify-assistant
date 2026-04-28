@@ -1,0 +1,82 @@
+<div class="product-tabs-section">
+  <div class="product-tabs-nav">
+    <button class="ptab active" onclick="switchTab(this,'tab-details')"   >Details</button>
+    <button class="ptab"        onclick="switchTab(this,'tab-howto')"     >How to Use</button>
+    <button class="ptab"        onclick="switchTab(this,'tab-ingredients')">Ingredients</button>
+    <button class="ptab"        onclick="switchTab(this,'tab-reviews')"   >Reviews</button>
+  </div>
+
+  <div class="product-tabs-body">
+    <div class="ptab-panel active" id="tab-details">
+      <div class="ptab-content rte">
+        {%- if product.description != blank -%}
+          {{ product.description }}
+        {%- else -%}
+          <p>Full product details coming soon.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ptab-panel" id="tab-howto">
+      <div class="ptab-content">
+        {%- if product.metafields.custom.how_to_use != blank -%}
+          <div class="rte">{{ product.metafields.custom.how_to_use }}</div>
+        {%- else -%}
+          <div class="ptab-howto-steps">
+            <div class="howto-step"><span class="howto-num">01</span><div><h4>Start with clean skin</h4><p>Apply to clean, dry skin for best absorption.</p></div></div>
+            <div class="howto-step"><span class="howto-num">02</span><div><h4>Take the recommended dose</h4><p>Follow the dosage instructions on the label.</p></div></div>
+            <div class="howto-step"><span class="howto-num">03</span><div><h4>Be consistent</h4><p>Use daily for at least 4 weeks to see results.</p></div></div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ptab-panel" id="tab-ingredients">
+      <div class="ptab-content">
+        {%- if product.metafields.custom.ingredients != blank -%}
+          <div class="rte">{{ product.metafields.custom.ingredients }}</div>
+        {%- else -%}
+          <p class="ptab-placeholder">Ingredient information will be listed here. Add them via product metafields in your Shopify admin.</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="ptab-panel" id="tab-reviews">
+      <div class="ptab-content" id="tab-reviews-content">
+        <!-- If using a reviews app like Judge.me or Okendo, their widget renders here -->
+        {%- if product.metafields.reviews.rating != blank -%}
+          <div class="reviews-summary">
+            <div class="reviews-avg">
+              <span class="reviews-avg-num">{{ product.metafields.reviews.rating.value | round: 1 }}</span>
+              <div class="reviews-avg-stars">
+                {%- assign r = product.metafields.reviews.rating.value | times: 1 -%}
+                {%- for i in (1..5) -%}{%- if i <= r -%}★{%- else -%}☆{%- endif -%}{%- endfor -%}
+              </div>
+              <p>{{ product.metafields.reviews.rating_count }} reviews</p>
+            </div>
+          </div>
+        {%- endif -%}
+        <!-- Reviews app placeholder -->
+        <div id="shopify-product-reviews" data-id="{{ product.id }}"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+window.switchTab = function(btn, panelId) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.ptab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(panelId).classList.add('active');
+};
+</script>
+
+{% schema %}
+{
+  "name": "Product Tabs",
+  "tag": "div",
+  "settings": [],
+  "presets": [{ "name": "Product Tabs" }]
+}
+{% endschema %}
