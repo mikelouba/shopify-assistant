@@ -9,9 +9,12 @@
  */
 {
   "sections": {
-    "collection_banner": {
-      "type": "collection-banner",
-      "settings": {}
+    "goal_hero_r6KP7d": {
+      "type": "goal-hero",
+      "name": "Goal Hero",
+      "settings": {
+        "goal": "sleep"
+      }
     },
     "collection_main": {
       "type": "collection-main",
@@ -21,10 +24,18 @@
         "show_filters": true,
         "show_sort": true
       }
+    },
+    "goal_science_E9r8AB": {
+      "type": "goal-science",
+      "name": "Goal Science Stats",
+      "settings": {
+        "goal": "sleep"
+      }
     }
   },
   "order": [
-    "collection_banner",
-    "collection_main"
+    "goal_hero_r6KP7d",
+    "collection_main",
+    "goal_science_E9r8AB"
   ]
 }
