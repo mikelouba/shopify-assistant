@@ -2,59 +2,119 @@
   assign goal = section.settings.goal | default: 'sleep'
   case goal
     when 'sleep'
-      assign bg1 = '#0F1A2E' assign bg2 = '#1A2A4A' assign accent = '#7B9CC4' assign txt = '#E8EDF5'
-      assign section_eyebrow = '✦ Sleep Stories' assign section_heading = 'Real nights, real results'
+      assign bg1 = '#0F1A2E'
+      assign bg2 = '#1A2A4A'
+      assign accent = '#7B9CC4'
+      assign txt = '#E8EDF5'
+      assign section_eyebrow = '✦ Sleep Stories'
+      assign section_heading = 'Real nights, real results'
       assign t1_quote = "I've struggled with sleep for 6 years. After 2 weeks on the Sleep Kit, I'm consistently getting 7–8 hours and waking without an alarm."
-      assign t1_name = 'Lauren T.' assign t1_loc = 'Chicago, IL' assign t1_avi = 'L'
+      assign t1_name = 'Lauren T.'
+      assign t1_loc = 'Chicago, IL'
+      assign t1_avi = 'L'
       assign t2_quote = "The Magnesium is the best I've taken. I fall asleep within 20 minutes every night now."
-      assign t2_name = 'Marcus B.' assign t2_loc = 'London, UK' assign t2_avi = 'M'
+      assign t2_name = 'Marcus B.'
+      assign t2_loc = 'London, UK'
+      assign t2_avi = 'M'
       assign t3_quote = 'My Oura ring showed deep sleep went from 45 to 90+ minutes average. I can feel the difference.'
-      assign t3_name = 'Amara N.' assign t3_loc = 'Toronto, CA' assign t3_avi = 'A'
+      assign t3_name = 'Amara N.'
+      assign t3_loc = 'Toronto, CA'
+      assign t3_avi = 'A'
     when 'focus'
-      assign bg1 = '#1E1208' assign bg2 = '#2E1E0E' assign accent = '#C49B6C' assign txt = '#F5EDE0'
-      assign section_eyebrow = '✦ Focus Stories' assign section_heading = 'When focus changes everything'
+      assign bg1 = '#1E1208'
+      assign bg2 = '#2E1E0E'
+      assign accent = '#C49B6C'
+      assign txt = '#F5EDE0'
+      assign section_eyebrow = '✦ Focus Stories'
+      assign section_heading = 'When focus changes everything'
       assign t1_quote = "I'm a software engineer and the Lion's Mane has been transformative. I go into flow states faster and stay there longer."
-      assign t1_name = 'James K.' assign t1_loc = 'London, UK' assign t1_avi = 'J'
+      assign t1_name = 'James K.'
+      assign t1_loc = 'London, UK'
+      assign t1_avi = 'J'
       assign t2_quote = "I took my bar exam on month 2 of the stack. I genuinely believe it helped me retain more and stay calm under pressure."
-      assign t2_name = 'Sophia L.' assign t2_loc = 'New York, NY' assign t2_avi = 'S'
+      assign t2_name = 'Sophia L.'
+      assign t2_loc = 'New York, NY'
+      assign t2_avi = 'S'
       assign t3_quote = "I stopped drinking coffee and replaced it with the Focus stack. The energy is cleaner and I'm more productive than I've been in years."
-      assign t3_name = 'Raj M.' assign t3_loc = 'San Francisco, CA' assign t3_avi = 'R'
+      assign t3_name = 'Raj M.'
+      assign t3_loc = 'San Francisco, CA'
+      assign t3_avi = 'R'
     when 'stress'
-      assign bg1 = '#1A2E1C' assign bg2 = '#243626' assign accent = '#7EAA82' assign txt = '#E8F0E8'
-      assign section_eyebrow = '✦ Calm Stories' assign section_heading = 'When the noise finally quiets'
+      assign bg1 = '#1A2E1C'
+      assign bg2 = '#243626'
+      assign accent = '#7EAA82'
+      assign txt = '#E8F0E8'
+      assign section_eyebrow = '✦ Calm Stories'
+      assign section_heading = 'When the noise finally quiets'
       assign t1_quote = "I was on anxiety medication for 3 years. Under my doctor's supervision I transitioned to the calm stack. I feel more myself than I have in a decade."
-      assign t1_name = 'Maya R.' assign t1_loc = 'Austin, TX' assign t1_avi = 'M'
+      assign t1_name = 'Maya R.'
+      assign t1_loc = 'Austin, TX'
+      assign t1_avi = 'M'
       assign t2_quote = "I'm a nurse working 12-hour shifts. This protocol has genuinely changed how I handle pressure. I feel centered even on the hardest days."
-      assign t2_name = 'Chen W.' assign t2_loc = 'Melbourne, AU' assign t2_avi = 'C'
+      assign t2_name = 'Chen W.'
+      assign t2_loc = 'Melbourne, AU'
+      assign t2_avi = 'C'
       assign t3_quote = 'The Ashwagandha took about 3 weeks to really kick in, then everything shifted. My shoulders stopped living near my ears. I laugh more now.'
-      assign t3_name = 'Tasha B.' assign t3_loc = 'Dublin, IE' assign t3_avi = 'T'
+      assign t3_name = 'Tasha B.'
+      assign t3_loc = 'Dublin, IE'
+      assign t3_avi = 'T'
     when 'glow'
-      assign bg1 = '#2E1420' assign bg2 = '#3A1E2C' assign accent = '#C47B8C' assign txt = '#F5E8ED'
-      assign section_eyebrow = '✦ Glow Stories' assign section_heading = 'Skin transformations'
+      assign bg1 = '#2E1420'
+      assign bg2 = '#3A1E2C'
+      assign accent = '#C47B8C'
+      assign txt = '#F5E8ED'
+      assign section_eyebrow = '✦ Glow Stories'
+      assign section_heading = 'Skin transformations'
       assign t1_quote = "My esthetician asked what I'd changed in my routine. She was genuinely impressed by the improvement in my skin density."
-      assign t1_name = 'Isabelle R.' assign t1_loc = 'Paris, France' assign t1_avi = 'I'
+      assign t1_name = 'Isabelle R.'
+      assign t1_loc = 'Paris, France'
+      assign t1_avi = 'I'
       assign t2_quote = "I'm 48 and I've been using the Glow Ritual Kit for 4 months. My skin genuinely looks younger than it did at 42."
-      assign t2_name = 'Nora C.' assign t2_loc = 'Stockholm, SE' assign t2_avi = 'N'
+      assign t2_name = 'Nora C.'
+      assign t2_loc = 'Stockholm, SE'
+      assign t2_avi = 'N'
       assign t3_quote = "I thought inside-beauty products were a gimmick. Six weeks in and I've cancelled half my topical skincare because I simply don't need it anymore."
-      assign t3_name = 'Kenji T.' assign t3_loc = 'Tokyo, Japan' assign t3_avi = 'K'
+      assign t3_name = 'Kenji T.'
+      assign t3_loc = 'Tokyo, Japan'
+      assign t3_avi = 'K'
     when 'energy'
-      assign bg1 = '#1A1200' assign bg2 = '#2A1E06' assign accent = '#C4A027' assign txt = '#F5EDD8'
-      assign section_eyebrow = '✦ Energy Stories' assign section_heading = 'What full vitality feels like'
+      assign bg1 = '#1A1200'
+      assign bg2 = '#2A1E06'
+      assign accent = '#C4A027'
+      assign txt = '#F5EDD8'
+      assign section_eyebrow = '✦ Energy Stories'
+      assign section_heading = 'What full vitality feels like'
       assign t1_quote = "I'm 52 and I have more energy than I did at 35. I'm training for my second marathon and people keep asking if I've done something different."
-      assign t1_name = 'David M.' assign t1_loc = 'Denver, CO' assign t1_avi = 'D'
+      assign t1_name = 'David M.'
+      assign t1_loc = 'Denver, CO'
+      assign t1_avi = 'D'
       assign t2_quote = 'I run a startup and work 14-hour days. The Golden Energy Blend replaced my third coffee and I actually feel MORE focused at 4pm than at 9am.'
-      assign t2_name = 'Zara K.' assign t2_loc = 'Dubai, UAE' assign t2_avi = 'Z'
+      assign t2_name = 'Zara K.'
+      assign t2_loc = 'Dubai, UAE'
+      assign t2_avi = 'Z'
       assign t3_quote = "As a personal trainer I was skeptical. But the Cordyceps genuinely improved my clients' endurance numbers. I now recommend it to every athlete I work with."
-      assign t3_name = 'Priya V.' assign t3_loc = 'Mumbai, India' assign t3_avi = 'P'
+      assign t3_name = 'Priya V.'
+      assign t3_loc = 'Mumbai, India'
+      assign t3_avi = 'P'
     when 'wellness'
-      assign bg1 = '#0E2018' assign bg2 = '#163022' assign accent = '#6DB88A' assign txt = '#E6F2EC'
-      assign section_eyebrow = '✦ Wellness Stories' assign section_heading = 'Whole health, real results'
+      assign bg1 = '#0E2018'
+      assign bg2 = '#163022'
+      assign accent = '#6DB88A'
+      assign txt = '#E6F2EC'
+      assign section_eyebrow = '✦ Wellness Stories'
+      assign section_heading = 'Whole health, real results'
       assign t1_quote = "My gut was a mess for years. After 30 days on the probiotic stack, bloating gone, energy up, skin clearing. My whole system just reset."
-      assign t1_name = 'Denise K.' assign t1_loc = 'Atlanta, GA' assign t1_avi = 'D'
+      assign t1_name = 'Denise K.'
+      assign t1_loc = 'Atlanta, GA'
+      assign t1_avi = 'D'
       assign t2_quote = "The Sea Moss is now non-negotiable in my morning routine. I can feel the mineral density it adds. Hair thicker, nails stronger, energy steady."
-      assign t2_name = 'Omar H.' assign t2_loc = 'Toronto, CA' assign t2_avi = 'O'
+      assign t2_name = 'Omar H.'
+      assign t2_loc = 'Toronto, CA'
+      assign t2_avi = 'O'
       assign t3_quote = "Black Seed Oil has been used in my family for generations. This is the highest quality I've found. The difference in my immune resilience this winter was remarkable."
-      assign t3_name = 'Fatima A.' assign t3_loc = 'London, UK' assign t3_avi = 'F'
+      assign t3_name = 'Fatima A.'
+      assign t3_loc = 'London, UK'
+      assign t3_avi = 'F'
   endcase
 -%}
 
@@ -68,9 +128,21 @@
     {%- for t in testimonials -%}
       {%- liquid
         case t
-          when '1' assign q = t1_quote assign n = t1_name assign l = t1_loc assign a = t1_avi
-          when '2' assign q = t2_quote assign n = t2_name assign l = t2_loc assign a = t2_avi
-          when '3' assign q = t3_quote assign n = t3_name assign l = t3_loc assign a = t3_avi
+          when '1'
+            assign q = t1_quote
+            assign n = t1_name
+            assign l = t1_loc
+            assign a = t1_avi
+          when '2'
+            assign q = t2_quote
+            assign n = t2_name
+            assign l = t2_loc
+            assign a = t2_avi
+          when '3'
+            assign q = t3_quote
+            assign n = t3_name
+            assign l = t3_loc
+            assign a = t3_avi
         endcase
       -%}
       <div style="background:rgba(255,255,255,0.05);border:1px solid {{ accent }}18;border-radius:12px;padding:28px 26px">
