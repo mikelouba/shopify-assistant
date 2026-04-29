@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "trust_1_icon": "🌿",
+        "trust_1_text": "Certified Organic",
+        "trust_2_icon": "🔬",
+        "trust_2_text": "Clinically Tested",
+        "trust_3_icon": "♻️",
+        "trust_3_text": "Plastic-Free",
+        "trust_4_icon": "🚚",
+        "trust_4_text": "Free Shipping $50+",
+        "stat_1_val": "24,800+",
+        "stat_1_lbl": "Happy Customers",
+        "stat_2_val": "4.9★",
+        "stat_2_lbl": "Average Rating",
+        "stat_3_val": "90-Day",
+        "stat_3_lbl": "Money-Back Guarantee",
+        "stat_4_val": "3rd Party",
+        "stat_4_lbl": "Lab Tested"
+      }
+    }
+  },
+  "order": ["product_detail"]
+}
