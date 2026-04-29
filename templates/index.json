@@ -199,12 +199,8 @@
         "heading": "What our community is saying"
       }
     },
-    "press": {
-      "type": "press-strip",
-      "settings": {}
-    },
     "newsletter": {
-      "type": "newsletter-banner",
+      "type": "newsletter",
       "settings": {
         "eyebrow": "✦ Join the Ritual",
         "heading": "Wellness wisdom, straight to your inbox",
@@ -222,7 +218,6 @@
     "ingredients",
     "quiz_banner",
     "testimonials",
-    "press",
     "newsletter"
   ]
 }
