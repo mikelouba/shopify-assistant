@@ -12,55 +12,51 @@
 
   // Save current product
   let viewed = JSON.parse(localStorage.getItem(KEY) || '[]');
-  viewed = viewed.filter(h => h !== PRODUCT_HANDLE);
+  viewed = viewed.filter(function(h) { return h !== PRODUCT_HANDLE; });
   viewed.unshift(PRODUCT_HANDLE);
   viewed = viewed.slice(0, 8);
   localStorage.setItem(KEY, JSON.stringify(viewed));
 
   // Show other recently viewed products
-  const others = viewed.filter(h => h !== PRODUCT_HANDLE).slice(0, MAX);
+  var others = viewed.filter(function(h) { return h !== PRODUCT_HANDLE; }).slice(0, MAX);
   if (others.length === 0) return;
 
-  const sectionEl = document.getElementById('recentlyViewed');
-  const grid = document.getElementById('recentlyViewedGrid');
+  var sectionEl = document.getElementById('recentlyViewed');
+  var grid = document.getElementById('recentlyViewedGrid');
   sectionEl.style.display = 'block';
 
-  // Fetch each product via Shopify AJAX API and render a card
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
   others.forEach(function(handle) {
     fetch('/products/' + handle + '.js')
       .then(function(r) { return r.json(); })
       .then(function(p) {
-        const variant  = p.variants[0];
-        const img      = p.featured_image
-                           ? '<img src="' + p.featured_image + '" alt="' + p.title.replace(/"/g,"'") + '" loading="lazy" class="p-img">'
-                           : '<div class="p-img-bg" style="background:var(--sand)"><span class="p-icon">🌿</span></div>';
-        const price    = formatMoney(variant.price);
-        const oldPrice = variant.compare_at_price && variant.compare_at_price > variant.price
-                           ? '<span class="p-price-old">' + formatMoney(variant.compare_at_price) + '</span>' : '';
-        const priceCol = variant.compare_at_price && variant.compare_at_price > variant.price
-                           ? 'style="color:var(--terracotta)"' : '';
+        var variant  = p.variants[0];
+        var img      = p.featured_image
+          ? '<img src="' + p.featured_image + '" alt="' + p.title.replace(/"/g, "'") + '" loading="lazy" class="p-img">'
+          : '<div class="p-img-bg" style="background:var(--sand)"><span class="p-icon">🌿</span></div>';
+        var isSale   = variant.compare_at_price && variant.compare_at_price > variant.price;
+        var price    = '<span class="p-price"' + (isSale ? ' style="color:var(--terracotta)"' : '') + '>' + formatMoney(variant.price) + '</span>';
+        var oldPrice = isSale ? '<span class="p-price-old">' + formatMoney(variant.compare_at_price) + '</span>' : '';
 
-        const card = '<div class="product-card">' +
-          '<a href="/products/' + handle + '" class="p-img-wrap" aria-label="' + p.title.replace(/"/g,"'") + '">' +
-            img +
-          '</a>' +
-          '<div class="p-info">' +
-            '<p class="p-cat">' + (p.product_type || 'Wellness') + '</p>' +
-            '<a href="/products/' + handle + '"><p class="p-name">' + p.title + '</p></a>' +
-            '<div class="p-price-row">' +
-              '<span class="p-price" ' + priceCol + '>' + price + '</span>' + oldPrice +
+        var card =
+          '<div class="product-card">' +
+            '<a href="/products/' + handle + '" class="p-img-wrap" aria-label="' + p.title.replace(/"/g, "'") + '">' +
+              img +
+            '</a>' +
+            '<div class="p-info">' +
+              '<p class="p-cat">' + (p.product_type || 'Wellness') + '</p>' +
+              '<a href="/products/' + handle + '"><p class="p-name">' + p.title + '</p></a>' +
+              '<div class="p-price-row">' + price + oldPrice + '</div>' +
             '</div>' +
-          '</div>' +
-        '</div>';
+          '</div>';
 
         grid.insertAdjacentHTML('beforeend', card);
       })
       .catch(function() {});
   });
-
-  function formatMoney(cents) {
-    return '$' + (cents / 100).toFixed(2);
-  }
 })();
 </script>
 
