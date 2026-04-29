@@ -2,7 +2,7 @@
   "sections": {
     "goal_hero":        { "type": "goal-hero",        "settings": { "goal": "energy" } },
     "goal_science":     { "type": "goal-science",     "settings": { "goal": "energy" } },
-    "goal_products":    { "type": "goal-products",    "settings": { "goal": "energy" } },
+    "goal_products":    { "type": "goal-products",    "settings": { "goal": "energy", "collection_override": "energy" } },
     "goal_ingredients": { "type": "goal-ingredients", "settings": { "goal": "energy" } },
     "goal_ritual":      { "type": "goal-ritual",      "settings": { "goal": "energy" } },
     "goal_testimonials":{ "type": "goal-testimonials","settings": { "goal": "energy" } },
