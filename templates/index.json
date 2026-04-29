@@ -72,13 +72,7 @@
           }
         }
       },
-      "block_order": [
-        "goal_1",
-        "goal_2",
-        "goal_3",
-        "goal_4",
-        "goal_5"
-      ],
+      "block_order": ["goal_1", "goal_2", "goal_3", "goal_4", "goal_5"],
       "settings": {
         "eyebrow": "✦ Personalized Wellness",
         "heading": "Shop by Your Goal"
@@ -149,12 +143,7 @@
           }
         }
       },
-      "block_order": [
-        "ing_1",
-        "ing_2",
-        "ing_3",
-        "ing_4"
-      ],
+      "block_order": ["ing_1", "ing_2", "ing_3", "ing_4"],
       "settings": {
         "eyebrow": "✦ Hero Ingredients",
         "heading": "Nature's most powerful botanicals"
@@ -204,5 +193,36 @@
           }
         }
       },
-      "block_order": [
-   
+      "block_order": ["t1", "t2", "t3"],
+      "settings": {
+        "eyebrow": "✦ Real Results",
+        "heading": "What our community is saying"
+      }
+    },
+    "press": {
+      "type": "press-strip",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter-banner",
+      "settings": {
+        "eyebrow": "✦ Join the Ritual",
+        "heading": "Wellness wisdom, straight to your inbox",
+        "subheading": "New formulas, ingredient deep-dives, and 10% off your first order.",
+        "btn_label": "Subscribe"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "marquee",
+    "goals",
+    "featured_products",
+    "feature_split",
+    "ingredients",
+    "quiz_banner",
+    "testimonials",
+    "press",
+    "newsletter"
+  ]
+}
