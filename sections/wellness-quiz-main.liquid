@@ -1,0 +1,348 @@
+{% comment %}── WELLNESS QUIZ PAGE ──{% endcomment %}
+<div class="quiz-page" id="quizPage">
+
+  <!-- Progress bar -->
+  <div class="quiz-progress-bar" aria-hidden="true">
+    <div class="quiz-progress-fill" id="quizProgressFill"></div>
+  </div>
+
+  <!-- ── INTRO ── -->
+  <div class="quiz-screen active" id="quizIntro">
+    <div class="quiz-intro-content">
+      <p class="section-eyebrow">✦ Personalized Wellness</p>
+      <h1 class="quiz-intro-title">Discover your <em>perfect</em><br>wellness protocol</h1>
+      <p class="quiz-intro-sub">Answer 6 quick questions and we'll recommend the exact Solmara formulas built for your body, lifestyle, and goals.</p>
+      <div class="quiz-intro-trust">
+        <span>🕐 60 seconds</span>
+        <span>🎯 Personalized to you</span>
+        <span>🌿 Completely free</span>
+      </div>
+      <button class="btn-fill quiz-start-btn" onclick="quizStart()">
+        Start the Quiz →
+      </button>
+    </div>
+  </div>
+
+  <!-- ── Q1: Primary goal ── -->
+  <div class="quiz-screen" id="q1">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">1 of 6</span>
+      <h2 class="quiz-q-title">What's your primary wellness goal right now?</h2>
+      <div class="quiz-options quiz-options--grid">
+        <button class="quiz-opt" onclick="quizNext('q1','q2',this,'goal','sleep')">
+          <span class="quiz-opt-icon">😴</span>
+          <span class="quiz-opt-label">Better Sleep</span>
+          <span class="quiz-opt-desc">Fall asleep faster, stay asleep longer</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q1','q2',this,'goal','focus')">
+          <span class="quiz-opt-icon">🧠</span>
+          <span class="quiz-opt-label">Focus & Clarity</span>
+          <span class="quiz-opt-desc">Sharpen thinking and memory</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q1','q2',this,'goal','stress')">
+          <span class="quiz-opt-icon">🌿</span>
+          <span class="quiz-opt-label">Stress Relief</span>
+          <span class="quiz-opt-desc">Calm the nervous system naturally</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q1','q2',this,'goal','glow')">
+          <span class="quiz-opt-icon">✨</span>
+          <span class="quiz-opt-label">Skin Glow</span>
+          <span class="quiz-opt-desc">Radiance from the inside out</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q1','q2',this,'goal','energy')">
+          <span class="quiz-opt-icon">⚡</span>
+          <span class="quiz-opt-label">Energy & Vitality</span>
+          <span class="quiz-opt-desc">Sustain natural energy all day</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q2: How long ── -->
+  <div class="quiz-screen" id="q2">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">2 of 6</span>
+      <h2 class="quiz-q-title">How long have you been dealing with this?</h2>
+      <div class="quiz-options quiz-options--list">
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q2','q3',this,'duration','recent')">
+          <span class="quiz-opt-label">Less than a month</span>
+          <span class="quiz-opt-desc">Just starting to notice it</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q2','q3',this,'duration','few_months')">
+          <span class="quiz-opt-label">1 – 6 months</span>
+          <span class="quiz-opt-desc">Building habits to address it</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q2','q3',this,'duration','chronic')">
+          <span class="quiz-opt-label">More than 6 months</span>
+          <span class="quiz-opt-desc">Looking for a real, lasting solution</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q3: Lifestyle ── -->
+  <div class="quiz-screen" id="q3">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">3 of 6</span>
+      <h2 class="quiz-q-title">Which lifestyle description fits you best?</h2>
+      <div class="quiz-options quiz-options--grid">
+        <button class="quiz-opt" onclick="quizNext('q3','q4',this,'lifestyle','professional')">
+          <span class="quiz-opt-icon">💼</span>
+          <span class="quiz-opt-label">High-pressure career</span>
+          <span class="quiz-opt-desc">Long hours, high stakes</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q3','q4',this,'lifestyle','parent')">
+          <span class="quiz-opt-icon">👨‍👩‍👧</span>
+          <span class="quiz-opt-label">Parent / caregiver</span>
+          <span class="quiz-opt-desc">Always putting others first</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q3','q4',this,'lifestyle','active')">
+          <span class="quiz-opt-icon">🏃</span>
+          <span class="quiz-opt-label">Active & athletic</span>
+          <span class="quiz-opt-desc">Fitness is part of daily life</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q3','q4',this,'lifestyle','creative')">
+          <span class="quiz-opt-icon">🎨</span>
+          <span class="quiz-opt-label">Creative or student</span>
+          <span class="quiz-opt-desc">Need mental stamina and flow</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q4: Experience ── -->
+  <div class="quiz-screen" id="q4">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">4 of 6</span>
+      <h2 class="quiz-q-title">Have you tried supplements before?</h2>
+      <div class="quiz-options quiz-options--list">
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q4','q5',this,'exp','new')">
+          <span class="quiz-opt-label">New to supplements</span>
+          <span class="quiz-opt-desc">Starting from scratch — I need guidance</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q4','q5',this,'exp','tried')">
+          <span class="quiz-opt-label">Tried a few things</span>
+          <span class="quiz-opt-desc">Had mixed or inconsistent results</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q4','q5',this,'exp','experienced')">
+          <span class="quiz-opt-label">Regular supplement user</span>
+          <span class="quiz-opt-desc">I know what I'm looking for</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q5: Form preference ── -->
+  <div class="quiz-screen" id="q5">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">5 of 6</span>
+      <h2 class="quiz-q-title">How do you prefer to take supplements?</h2>
+      <div class="quiz-options quiz-options--grid">
+        <button class="quiz-opt" onclick="quizNext('q5','q6',this,'form','capsule')">
+          <span class="quiz-opt-icon">💊</span>
+          <span class="quiz-opt-label">Capsules</span>
+          <span class="quiz-opt-desc">Quick and easy</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q5','q6',this,'form','powder')">
+          <span class="quiz-opt-icon">🥤</span>
+          <span class="quiz-opt-label">Powder / drink</span>
+          <span class="quiz-opt-desc">Blend into smoothie or water</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q5','q6',this,'form','tincture')">
+          <span class="quiz-opt-icon">💧</span>
+          <span class="quiz-opt-label">Liquid / tincture</span>
+          <span class="quiz-opt-desc">Fast absorption under the tongue</span>
+        </button>
+        <button class="quiz-opt" onclick="quizNext('q5','q6',this,'form','any')">
+          <span class="quiz-opt-icon">🌿</span>
+          <span class="quiz-opt-label">No preference</span>
+          <span class="quiz-opt-desc">Whatever works best</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Q6: Budget ── -->
+  <div class="quiz-screen" id="q6">
+    <div class="quiz-q-inner">
+      <span class="quiz-step">6 of 6</span>
+      <h2 class="quiz-q-title">What's your monthly wellness budget?</h2>
+      <div class="quiz-options quiz-options--list">
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q6','quizResult',this,'budget','starter')">
+          <span class="quiz-opt-label">Under $40 / month</span>
+          <span class="quiz-opt-desc">Start with one powerful core product</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q6','quizResult',this,'budget','mid')">
+          <span class="quiz-opt-label">$40 – $80 / month</span>
+          <span class="quiz-opt-desc">Build a targeted 2-product stack</span>
+        </button>
+        <button class="quiz-opt quiz-opt--wide" onclick="quizNext('q6','quizResult',this,'budget','full')">
+          <span class="quiz-opt-label">$80+ / month</span>
+          <span class="quiz-opt-desc">Full protocol for maximum results</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RESULTS ── -->
+  <div class="quiz-screen" id="quizResult">
+    <div class="quiz-result-inner">
+      <div class="quiz-result-header">
+        <p class="section-eyebrow">✦ Your Wellness Protocol</p>
+        <h2 class="quiz-result-title">Your personalized <em>plan</em> is ready</h2>
+        <p class="quiz-result-sub">Based on your answers, here's what we'd recommend to get the best results.</p>
+      </div>
+
+      <div class="quiz-result-card-wrap" id="quizResultCard">
+        <!-- Populated by JS -->
+      </div>
+
+      <div class="quiz-result-actions">
+        <a class="btn-fill quiz-result-cta" id="quizResultCta" href="{{ routes.all_products_collection_url }}">
+          Shop My Protocol →
+        </a>
+        <button class="btn-outline quiz-restart-btn" onclick="quizRestart()">
+          Retake the quiz
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const answers = {};
+  const TOTAL_Q = 6;
+  let currentQ  = 0;
+
+  const GOAL_MAP = {
+    sleep: {
+      emoji: '😴',
+      title: 'Better Sleep Protocol',
+      desc:  'Your answers point to a nervous system that needs help unwinding. We recommend our Ashwagandha Complex paired with the Sleep Ritual blend — non-habit-forming, deeply restorative sleep from night one.',
+      stats: ['+68% sleep quality', '−23 min sleep onset', '0 habit-forming compounds'],
+      url:   '/pages/goal-sleep',
+      accent: '#7B9CC4',
+      bg:    '#E8EDF5'
+    },
+    focus: {
+      emoji: '🧠',
+      title: 'Focus & Cognitive Protocol',
+      desc:  "Your profile points to a need for sustained mental clarity and neuroprotection. We recommend our Lion's Mane Complex with Bacopa Monnieri — the stack that sharpens focus without the caffeine crash.",
+      stats: ['89% better focus', '+42% NGF production', 'Zero stimulants'],
+      url:   '/pages/goal-focus',
+      accent: '#C49B6C',
+      bg:    '#F5EDE0'
+    },
+    stress: {
+      emoji: '🌿',
+      title: 'Calm & Stress Relief Protocol',
+      desc:  'Your cortisol levels need support. We recommend the KSM-66 Ashwagandha + Rhodiola Rosea stack — the gold standard for regulating the HPA-axis and restoring your baseline calm.',
+      stats: ['−28% cortisol', '91% feel calmer in 2 weeks', '0 pharmaceutical compounds'],
+      url:   '/pages/goal-stress',
+      accent: '#7EAA82',
+      bg:    '#E8F0E8'
+    },
+    glow: {
+      emoji: '✨',
+      title: 'Skin Glow Protocol',
+      desc:  'Your skin needs internal nourishment. We recommend our Marine Collagen Peptides + Antioxidant Glow blend — a clinical dose of collagen paired with skin-brightening botanicals.',
+      stats: ['+87% visible improvement', '5g clinical collagen dose', '−24% fine lines at 12 wks'],
+      url:   '/pages/goal-glow',
+      accent: '#C47B8C',
+      bg:    '#F5E8ED'
+    },
+    energy: {
+      emoji: '⚡',
+      title: 'Energy & Vitality Protocol',
+      desc:  'Your body is running on reserves. We recommend our Cordyceps + Adaptogen Vitality blend — 8 hours of clean, sustained energy without stimulants, crashes, or dependency.',
+      stats: ['+84% vitality at 6 weeks', '92% eliminated slumps', '0 synthetic stimulants'],
+      url:   '/pages/goal-energy',
+      accent: '#C4A027',
+      bg:    '#F5EDD8'
+    }
+  };
+
+  window.quizStart = function () {
+    currentQ = 1;
+    updateProgress();
+    showScreen('q1');
+  };
+
+  window.quizNext = function (fromId, toId, btn, key, value) {
+    answers[key] = value;
+
+    // Mark selection
+    btn.closest('.quiz-options').querySelectorAll('.quiz-opt').forEach(function (b) {
+      b.classList.remove('selected');
+    });
+    btn.classList.add('selected');
+
+    if (toId === 'quizResult') {
+      buildResult();
+    } else {
+      currentQ++;
+      updateProgress();
+    }
+
+    setTimeout(function () { showScreen(toId); }, 240);
+  };
+
+  window.quizRestart = function () {
+    Object.keys(answers).forEach(function (k) { delete answers[k]; });
+    currentQ = 0;
+    document.querySelectorAll('.quiz-opt').forEach(function (b) { b.classList.remove('selected'); });
+    var fill = document.getElementById('quizProgressFill');
+    if (fill) fill.style.width = '0%';
+    showScreen('quizIntro');
+  };
+
+  function showScreen(id) {
+    document.querySelectorAll('.quiz-screen').forEach(function (s) { s.classList.remove('active'); });
+    var el = document.getElementById(id);
+    if (el) {
+      el.classList.add('active');
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function updateProgress() {
+    var pct  = Math.round(((currentQ - 1) / TOTAL_Q) * 100);
+    var fill = document.getElementById('quizProgressFill');
+    if (fill) fill.style.width = pct + '%';
+  }
+
+  function buildResult() {
+    var fill = document.getElementById('quizProgressFill');
+    if (fill) fill.style.width = '100%';
+
+    var goal = answers.goal || 'sleep';
+    var g    = GOAL_MAP[goal];
+
+    var statsHtml = g.stats.map(function (s) {
+      return '<span class="quiz-result-stat">' + s + '</span>';
+    }).join('');
+
+    var wrap = document.getElementById('quizResultCard');
+    if (wrap) {
+      wrap.innerHTML =
+        '<div class="quiz-result-card" style="background:' + g.bg + ';border-color:' + g.accent + '33">' +
+          '<div class="quiz-result-emoji">' + g.emoji + '</div>' +
+          '<h3 class="quiz-result-card-title" style="color:' + g.accent + '">' + g.title + '</h3>' +
+          '<p class="quiz-result-card-desc">' + g.desc + '</p>' +
+          '<div class="quiz-result-stats">' + statsHtml + '</div>' +
+        '</div>';
+    }
+
+    var cta = document.getElementById('quizResultCta');
+    if (cta) cta.href = g.url;
+  }
+}());
+</script>
+
+{% schema %}
+{ "name": "Wellness Quiz", "tag": "div", "settings": [], "presets": [{"name":"Wellness Quiz"}] }
+{% endschema %}

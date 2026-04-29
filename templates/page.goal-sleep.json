@@ -1,40 +1,12 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "goal_hero": {
-      "type": "goal-hero",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "goal_science": {
-      "type": "goal-science",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "goal_products": {
-      "type": "goal-products",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "goal_ingredients": {
-      "type": "goal-ingredients",
-      "settings": {
-        "goal": "sleep"
-      }
-    },
-    "goal_ritual": {
-      "type": "goal-ritual",
-      "settings": {
-        "goal": "sleep"
- 
+    "goal_hero":        { "type": "goal-hero",        "settings": { "goal": "sleep" } },
+    "goal_science":     { "type": "goal-science",     "settings": { "goal": "sleep" } },
+    "goal_products":    { "type": "goal-products",    "settings": { "goal": "sleep" } },
+    "goal_ingredients": { "type": "goal-ingredients", "settings": { "goal": "sleep" } },
+    "goal_ritual":      { "type": "goal-ritual",      "settings": { "goal": "sleep" } },
+    "goal_testimonials":{ "type": "goal-testimonials","settings": { "goal": "sleep" } },
+    "goal_cta":         { "type": "goal-cta",         "settings": { "goal": "sleep" } }
+  },
+  "order": ["goal_hero","goal_science","goal_products","goal_ingredients","goal_ritual","goal_testimonials","goal_cta"]
+}

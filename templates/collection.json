@@ -1,41 +1,18 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "goal_hero_r6KP7d": {
-      "type": "goal-hero",
-      "name": "Goal Hero",
-      "settings": {
-        "goal": "sleep"
-      }
+    "collection_banner": {
+      "type": "collection-banner",
+      "settings": {}
     },
     "collection_main": {
       "type": "collection-main",
       "settings": {
-        "products_per_page": 24,
+        "products_per_page": 12,
         "columns": "4",
         "show_filters": true,
         "show_sort": true
       }
-    },
-    "goal_science_E9r8AB": {
-      "type": "goal-science",
-      "name": "Goal Science Stats",
-      "settings": {
-        "goal": "sleep"
-      }
     }
   },
-  "order": [
-    "goal_hero_r6KP7d",
-    "collection_main",
-    "goal_science_E9r8AB"
-  ]
+  "order": ["collection_banner", "collection_main"]
 }

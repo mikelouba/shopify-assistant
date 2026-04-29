@@ -1,0 +1,184 @@
+{% comment %}── OUR STANDARDS PAGE ──{% endcomment %}
+<div class="standards-page">
+
+  <!-- ── HERO ── -->
+  <div class="standards-hero">
+    <p class="section-eyebrow">✦ The Solmara Standard</p>
+    <h1 class="standards-hero-title">What goes into every<br><em>Solmara</em> formula</h1>
+    <p class="standards-hero-sub">We hold ourselves to a standard most brands don't dare publish. Here's exactly what that means — from farm to capsule.</p>
+    <div class="standards-hero-pillars">
+      <span class="standards-pillar">🌱 Certified Organic</span>
+      <span class="standards-pillar">🔬 Clinically Dosed</span>
+      <span class="standards-pillar">🧪 Third-Party Tested</span>
+      <span class="standards-pillar">♻️ Zero Plastic</span>
+    </div>
+  </div>
+
+  <!-- ── 01 SOURCING ── -->
+  <div class="standards-section">
+    <div class="standards-text">
+      <p class="section-eyebrow" style="text-align:left">01 — Sourcing</p>
+      <h2 class="standards-section-title">The earth gives us everything — we protect it in return</h2>
+      <p class="standards-section-body">Every ingredient we use is certified organic and sourced from farms we visit personally. We pay above fair-trade rates, publish every supplier on our transparency page, and if we can't trace it — we don't use it.</p>
+      <ul class="standards-list">
+        <li>✦ Certified organic by USDA and EU Bio standards</li>
+        <li>✦ Third-party verified supply chain, traceable to the farm</li>
+        <li>✦ No synthetic pesticides, herbicides, or GMOs — ever</li>
+        <li>✦ 100% of supplier farms personally visited by our team</li>
+      </ul>
+    </div>
+    <div class="standards-visual">
+      {%- if section.settings.sourcing_image != blank -%}
+        {{ section.settings.sourcing_image | image_url: width: 700 | image_tag:
+            alt: 'Organic sourcing', loading: 'lazy', class: 'standards-img' }}
+      {%- else -%}
+        <div class="standards-img-placeholder">
+          <span>🌱</span>
+          <p>Sourcing photo</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- ── 02 FORMULATION ── -->
+  <div class="standards-section standards-section--flip">
+    <div class="standards-visual">
+      {%- if section.settings.formulation_image != blank -%}
+        {{ section.settings.formulation_image | image_url: width: 700 | image_tag:
+            alt: 'Formulation process', loading: 'lazy', class: 'standards-img' }}
+      {%- else -%}
+        <div class="standards-img-placeholder">
+          <span>🔬</span>
+          <p>Formulation photo</p>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="standards-text">
+      <p class="section-eyebrow" style="text-align:left">02 — Formulation</p>
+      <h2 class="standards-section-title">Therapeutic doses, not marketing doses</h2>
+      <p class="standards-section-body">Most supplement brands use trace amounts of expensive ingredients just to put them on the label. We use the dose that research says actually works — even when that makes our formulas more expensive to produce.</p>
+      <ul class="standards-list">
+        <li>✦ Clinically validated doses in every capsule — no fairy dusting</li>
+        <li>✦ No fillers, binders, or flow agents</li>
+        <li>✦ Bioavailability-enhanced delivery systems throughout</li>
+        <li>✦ Every formula based on peer-reviewed research</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── 03 TESTING ── -->
+  <div class="standards-section">
+    <div class="standards-text">
+      <p class="section-eyebrow" style="text-align:left">03 — Testing</p>
+      <h2 class="standards-section-title">Every batch. Third-party tested. No exceptions.</h2>
+      <p class="standards-section-body">Before any Solmara product ships, it's independently tested for purity, potency, and safety. We publish all our Certificates of Analysis publicly — not because we have to, but because you deserve to know exactly what's in your supplements.</p>
+      <ul class="standards-list">
+        <li>✦ ISO-certified third-party laboratory testing</li>
+        <li>✦ Tests for heavy metals, pesticide residues, and pathogens</li>
+        <li>✦ Full Certificates of Analysis available on request</li>
+        <li>✦ GMP (Good Manufacturing Practice) certified facility</li>
+      </ul>
+    </div>
+    <div class="standards-visual">
+      {%- if section.settings.testing_image != blank -%}
+        {{ section.settings.testing_image | image_url: width: 700 | image_tag:
+            alt: 'Lab testing', loading: 'lazy', class: 'standards-img' }}
+      {%- else -%}
+        <div class="standards-img-placeholder">
+          <span>🧪</span>
+          <p>Testing photo</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <!-- ── 04 PACKAGING ── -->
+  <div class="standards-section standards-section--flip">
+    <div class="standards-visual">
+      {%- if section.settings.packaging_image != blank -%}
+        {{ section.settings.packaging_image | image_url: width: 700 | image_tag:
+            alt: 'Sustainable packaging', loading: 'lazy', class: 'standards-img' }}
+      {%- else -%}
+        <div class="standards-img-placeholder">
+          <span>♻️</span>
+          <p>Packaging photo</p>
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="standards-text">
+      <p class="section-eyebrow" style="text-align:left">04 — Packaging</p>
+      <h2 class="standards-section-title">Zero plastic. Full stop.</h2>
+      <p class="standards-section-body">The supplements industry produces millions of plastic bottles a year. We opted out entirely. Every Solmara product ships in amber glass jars, recycled cardboard boxes, and biodegradable mailers — with refill pouches available to cut packaging waste to near zero.</p>
+      <ul class="standards-list">
+        <li>✦ Amber glass jars — no plastic contact with product, ever</li>
+        <li>✦ Recycled and FSC-certified paper packaging throughout</li>
+        <li>✦ Compostable mailers and paper tape</li>
+        <li>✦ Refill pouches available for all core products</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ── CERTIFICATIONS ── -->
+  <div class="standards-certs">
+    <p class="section-eyebrow">✦ Our Certifications</p>
+    <h2 class="section-title">Verified by people who <em>hold us accountable</em></h2>
+    <div class="certs-grid">
+      {%- for block in section.blocks -%}
+        <div class="cert-card" {{ block.shopify_attributes }}>
+          <div class="cert-icon">{{ block.settings.icon }}</div>
+          <h3 class="cert-name">{{ block.settings.name }}</h3>
+          <p class="cert-body">{{ block.settings.body }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- ── CTA ── -->
+  <div class="standards-cta">
+    <p class="section-eyebrow">✦ Put It to the Test</p>
+    <h2 class="standards-cta-title">The proof is in the formula</h2>
+    <p class="standards-cta-sub">Our standards exist to earn your trust — not just once, but with every single order. Try any Solmara product risk-free for 30 days.</p>
+    <div class="standards-cta-btns">
+      <a href="{{ routes.all_products_collection_url }}" class="btn-fill">Shop All Products</a>
+      <a href="{{ pages['about'].url | default: '/pages/about' }}" class="btn-outline">Our Story →</a>
+    </div>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Our Standards",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "sourcing_image",    "label": "Sourcing section image" },
+    { "type": "image_picker", "id": "formulation_image", "label": "Formulation section image" },
+    { "type": "image_picker", "id": "testing_image",     "label": "Testing section image" },
+    { "type": "image_picker", "id": "packaging_image",   "label": "Packaging section image" }
+  ],
+  "blocks": [
+    {
+      "type": "cert",
+      "name": "Certification",
+      "settings": [
+        { "type": "text",     "id": "icon", "label": "Emoji icon",    "default": "🌿" },
+        { "type": "text",     "id": "name", "label": "Certification name", "default": "USDA Organic" },
+        { "type": "textarea", "id": "body", "label": "Short description" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Our Standards",
+      "blocks": [
+        { "type": "cert", "settings": { "icon": "🌱", "name": "USDA Organic",      "body": "All ingredients meet USDA National Organic Program standards for certification." } },
+        { "type": "cert", "settings": { "icon": "🔬", "name": "GMP Certified",     "body": "Manufactured in a Good Manufacturing Practice certified facility under strict quality controls." } },
+        { "type": "cert", "settings": { "icon": "🧪", "name": "Third-Party Tested","body": "Every batch independently tested by ISO-certified labs for purity, potency, and safety." } },
+        { "type": "cert", "settings": { "icon": "♻️", "name": "B Corp Pending",   "body": "Pursuing B Corporation certification to verify our social and environmental performance." } },
+        { "type": "cert", "settings": { "icon": "🐰", "name": "Cruelty-Free",      "body": "No animal testing at any stage of development, formulation, or quality verification." } },
+        { "type": "cert", "settings": { "icon": "🌍", "name": "Carbon Neutral",    "body": "All operations and shipping offset through rigorously verified carbon reduction projects." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

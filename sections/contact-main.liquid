@@ -1,0 +1,126 @@
+{% comment %}── CONTACT PAGE ──{% endcomment %}
+<div class="contact-page">
+
+  <div class="page-header centered">
+    <p class="section-eyebrow">✦ Get In Touch</p>
+    <h1 class="page-title">We'd love to <em>hear</em> from you</h1>
+    <p class="page-subtitle">Our wellness team responds to every message within 24 hours.</p>
+  </div>
+
+  <div class="contact-layout">
+
+    <!-- ── CONTACT FORM ── -->
+    <div class="contact-form-col">
+      <h2 class="contact-form-title">Send us a message</h2>
+
+      {%- form 'contact', id: 'ContactForm' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="contact-success">
+            <span class="contact-success-icon">🌿</span>
+            <p>Thank you! We'll be in touch within 24 hours.</p>
+          </div>
+        {%- endif -%}
+
+        {%- if form.errors -%}
+          <div class="auth-error">{{ form.errors | default_errors }}</div>
+        {%- endif -%}
+
+        <div class="contact-form-grid">
+          <div class="auth-field">
+            <label for="contactFirst">First name</label>
+            <input class="nl-input" type="text" id="contactFirst" name="contact[first_name]"
+                   autocomplete="given-name" placeholder="First name">
+          </div>
+          <div class="auth-field">
+            <label for="contactLast">Last name</label>
+            <input class="nl-input" type="text" id="contactLast" name="contact[last_name]"
+                   autocomplete="family-name" placeholder="Last name">
+          </div>
+        </div>
+
+        <div class="auth-field">
+          <label for="contactEmail">Email <span class="contact-required">*</span></label>
+          <input class="nl-input" type="email" id="contactEmail" name="contact[email]"
+                 value="{{ form.email }}" autocomplete="email"
+                 placeholder="your@email.com" required>
+        </div>
+
+        <div class="auth-field">
+          <label for="contactSubject">Subject</label>
+          <select class="nl-input" id="contactSubject" name="contact[subject]">
+            <option value="">Select a topic...</option>
+            <option value="Product question">Product question</option>
+            <option value="Order / shipping">Order / shipping issue</option>
+            <option value="Wellness advice">Wellness advice</option>
+            <option value="Returns and refunds">Returns & refunds</option>
+            <option value="Wholesale inquiry">Wholesale inquiry</option>
+            <option value="Press and media">Press & media</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="auth-field">
+          <label for="contactMessage">Message <span class="contact-required">*</span></label>
+          <textarea class="nl-input contact-textarea" id="contactMessage"
+                    name="contact[body]" rows="6"
+                    placeholder="Tell us how we can help..." required>{{ form.body }}</textarea>
+        </div>
+
+        <button type="submit" class="btn-fill contact-submit">Send Message →</button>
+      {%- endform -%}
+    </div>
+
+    <!-- ── INFO SIDEBAR ── -->
+    <aside class="contact-info-col">
+
+      <div class="contact-info-card">
+        <div class="contact-info-icon">📧</div>
+        <h3 class="contact-info-title">Email us directly</h3>
+        <p class="contact-info-body">
+          <a href="mailto:{{ section.settings.email | default: 'hello@solmara.com' }}">
+            {{ section.settings.email | default: 'hello@solmara.com' }}
+          </a>
+        </p>
+        <p class="contact-info-note">We reply within 24 hours</p>
+      </div>
+
+      <div class="contact-info-card">
+        <div class="contact-info-icon">🕐</div>
+        <h3 class="contact-info-title">Support hours</h3>
+        <p class="contact-info-body">Monday – Friday</p>
+        <p class="contact-info-note">9:00 AM – 6:00 PM EST</p>
+      </div>
+
+      <div class="contact-info-card">
+        <div class="contact-info-icon">🌿</div>
+        <h3 class="contact-info-title">Wellness guidance</h3>
+        <p class="contact-info-body">Our certified herbalists are here to help you find the right protocol for your goals.</p>
+      </div>
+
+      <div class="contact-faq-cta">
+        <p class="contact-faq-text">Looking for quick answers?</p>
+        <a href="{{ pages['faq'].url | default: '/pages/faq' }}" class="btn-outline contact-faq-btn">
+          Browse the FAQ →
+        </a>
+      </div>
+
+    </aside>
+  </div>
+
+</div>
+
+{% schema %}
+{
+  "name": "Contact",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Support email address",
+      "default": "hello@solmara.com"
+    }
+  ],
+  "presets": [{ "name": "Contact" }]
+}
+{% endschema %}

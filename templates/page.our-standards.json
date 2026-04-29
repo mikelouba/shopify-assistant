@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "standards_main": { "type": "our-standards-main", "settings": {} }
+  },
+  "order": ["standards_main"]
+}
