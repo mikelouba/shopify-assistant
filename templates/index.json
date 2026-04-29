@@ -50,7 +50,7 @@
             "icon": "🧠",
             "name": "Focus & Clarity",
             "desc": "Sharpen your mind naturally",
-            "url": "shopify://pages/goal-focus"
+            "url": "shopify://pages/focus"
           }
         },
         "goal_3": {
@@ -59,7 +59,7 @@
             "icon": "🌿",
             "name": "Stress Relief",
             "desc": "Calm your nervous system",
-            "url": "shopify://pages/goal-stress"
+            "url": "shopify://pages/stress-1"
           }
         },
         "goal_4": {
