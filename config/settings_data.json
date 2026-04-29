@@ -1,20 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "announcement_text":   "100% Natural Ingredients",
+    "announcement_text": "100% Natural Ingredients",
     "announcement_text_2": "Free Shipping Over $60",
     "announcement_text_3": "Science-Backed Formulas",
-    "main_menu":           "main-menu",
-    "footer_tagline":      "Wellness rooted in nature's wisdom. Every product made with purpose, for people who care about what they put in and on their bodies.",
+    "main_menu": "main-menu",
+    "footer_tagline": "Wellness rooted in nature's wisdom. Every product made with purpose, for people who care about what they put in and on their bodies.",
     "cert_1": "🌱 Organic",
     "cert_2": "🐰 Cruelty-Free",
     "cert_3": "🌍 B Corp",
     "cert_4": "♻️ Zero Plastic",
     "footer_menu_title_1": "Shop",
-    "footer_menu_1":       "footer-shop",
+    "footer_menu_1": "footer-shop",
     "footer_menu_title_2": "Learn",
-    "footer_menu_2":       "footer-learn",
+    "footer_menu_2": "footer-learn",
     "footer_menu_title_3": "Support",
-    "footer_menu_3":       "footer-support",
-    "free_shipping_threshold": 60
+    "footer_menu_3": "footer-support",
+    "free_shipping_threshold": 60,
+    "blocks": {
+      "pagefly-page-builder": {
+        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   }
 }
