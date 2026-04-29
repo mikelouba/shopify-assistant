@@ -1,7 +1,80 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "collection_banner": {
+    "shop_by_goal_z93XbE": {
+      "type": "shop-by-goal",
+      "blocks": {
+        "goal_bc44Ci": {
+          "type": "goal",
+          "settings": {
+            "icon": "😴",
+            "name": "Better Sleep",
+            "desc": "Drift deeper, wake refreshed",
+            "url": ""
+          }
+        },
+        "goal_edeRWT": {
+          "type": "goal",
+          "settings": {
+            "icon": "🧠",
+            "name": "Focus & Clarity",
+            "desc": "Sharpen your mind naturally",
+            "url": ""
+          }
+        },
+        "goal_nczpaQ": {
+          "type": "goal",
+          "settings": {
+            "icon": "🌿",
+            "name": "Stress Relief",
+            "desc": "Calm your nervous system",
+            "url": ""
+          }
+        },
+        "goal_VxkDzQ": {
+          "type": "goal",
+          "settings": {
+            "icon": "✨",
+            "name": "Skin Glow",
+            "desc": "Radiance from within",
+            "url": ""
+          }
+        },
+        "goal_zJPkxJ": {
+          "type": "goal",
+          "settings": {
+            "icon": "⚡",
+            "name": "Energy & Vitality",
+            "desc": "Feel alive all day long",
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "goal_bc44Ci",
+        "goal_edeRWT",
+        "goal_nczpaQ",
+        "goal_VxkDzQ",
+        "goal_zJPkxJ"
+      ],
+      "name": "Shop by Goal",
+      "settings": {
+        "eyebrow": "✦ Personalized Wellness",
+        "heading": "Shop by Your Goal"
+      }
+    },
+    "collection_banner_XceKre": {
       "type": "collection-banner",
+      "disabled": true,
+      "name": "Collection Banner",
       "settings": {}
     },
     "collection_main": {
@@ -12,7 +85,23 @@
         "show_filters": true,
         "show_sort": true
       }
+    },
+    "featured_products_nYYqEY": {
+      "type": "featured-products",
+      "name": "Featured Products",
+      "settings": {
+        "eyebrow": "✦ Most Loved",
+        "heading": "Our Bestsellers",
+        "collection": "",
+        "products_to_show": 4,
+        "view_all_url": ""
+      }
     }
   },
-  "order": ["collection_banner", "collection_main"]
+  "order": [
+    "shop_by_goal_z93XbE",
+    "collection_banner_XceKre",
+    "collection_main",
+    "featured_products_nYYqEY"
+  ]
 }
