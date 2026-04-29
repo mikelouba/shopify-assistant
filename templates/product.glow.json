@@ -1,43 +1,23 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
-    "product_strip": {
-      "type": "product-goal-strip",
-      "settings": { "goal": "glow" }
-    },
-    "product_main": {
-      "type": "product-main",
+    "product_detail": {
+      "type": "product-detail",
       "settings": {
         "show_vendor": true,
-        "show_sku": true,
-        "show_share": true
+        "show_share": true,
+        "ing_1": "Marine Collagen",
+        "ing_2": "Liposomal Vitamin C",
+        "ing_3": "Astaxanthin",
+        "ing_4": "Hyaluronic Acid",
+        "stat_1_val": "+87%",  "stat_1_lbl": "See visible skin improvement in 8 wks",
+        "stat_2_val": "5g",    "stat_2_lbl": "Clinical dose Marine Collagen per serve",
+        "stat_3_val": "−24%",  "stat_3_lbl": "Reduction in fine lines at 12 weeks",
+        "stat_4_val": "3x",    "stat_4_lbl": "Higher bioavailability vs. bovine collagen"
       }
     },
-    "product_tabs": {
-      "type": "product-tabs",
-      "settings": {}
-    },
-    "related_products": {
-      "type": "related-products",
-      "settings": {
-        "heading": "You May Also Like",
-        "products_to_show": 4
-      }
-    },
-    "recently_viewed": {
-      "type": "recently-viewed",
-      "settings": {
-        "heading": "Recently Viewed"
-      }
-    }
+    "product_tabs":     { "type": "product-tabs",     "settings": {} },
+    "related_products": { "type": "related-products", "settings": { "heading": "Complete Your Glow Ritual", "products_to_show": 4 } },
+    "recently_viewed":  { "type": "recently-viewed",  "settings": { "heading": "Recently Viewed" } }
   },
-  "order": ["product_strip", "product_main", "product_tabs", "related_products", "recently_viewed"]
+  "order": ["product_detail","product_tabs","related_products","recently_viewed"]
 }

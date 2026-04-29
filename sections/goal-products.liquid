@@ -1,4 +1,3 @@
-{%- comment -%}re-sync{%- endcomment -%}
 {%- liquid
   assign goal = section.settings.goal | default: 'sleep'
   assign col_handle = section.settings.collection_override | default: goal
@@ -46,6 +45,13 @@
       assign card_bg     = '#FDFAF5'
       assign eyebrow     = '✦ Vitality Collection'
       assign heading     = 'Fuel your full day'
+    when 'wellness'
+      assign accent      = '#6DB88A'
+      assign accent_dark = '#0E2018'
+      assign bg_color    = '#E6F2EC'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Wellness Essentials'
+      assign heading     = 'Your daily health foundation'
   endcase
 -%}
 
@@ -61,7 +67,6 @@
         {%- render 'product-card', product: product -%}
       {%- endfor -%}
     {%- else -%}
-      {%- comment -%}Fallback placeholder cards when no collection is set{%- endcomment -%}
       {%- for i in (1..3) -%}
         <div style="background:{{ card_bg }};border-radius:3px;overflow:hidden">
           <div style="aspect-ratio:3/4;background:{{ bg_color }};display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
@@ -79,12 +84,7 @@
   </div>
 
   <div style="text-align:center;margin-top:40px">
-    <a href="{{ safe_view_all_url }}" style="
-      display:inline-flex;align-items:center;gap:8px;
-      font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;
-      color:{{ accent_dark }};text-decoration:none;
-      border-bottom:1.5px solid {{ accent }};padding-bottom:3px;
-    ">View All {{ goal | replace: '-', ' ' | capitalize }} Products →</a>
+    <a href="{{ safe_view_all_url }}" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;color:{{ accent_dark }};text-decoration:none;border-bottom:1.5px solid {{ accent }};padding-bottom:3px;">View All {{ goal | replace: '-', ' ' | capitalize }} Products →</a>
   </div>
 </div>
 
@@ -98,18 +98,19 @@
       "id": "goal",
       "label": "Goal type",
       "options": [
-        { "value": "sleep",  "label": "Better Sleep" },
-        { "value": "focus",  "label": "Focus & Clarity" },
-        { "value": "stress", "label": "Stress Relief" },
-        { "value": "glow",   "label": "Skin Glow" },
-        { "value": "energy", "label": "Energy & Vitality" }
+        { "value": "sleep",    "label": "Better Sleep" },
+        { "value": "focus",    "label": "Focus & Clarity" },
+        { "value": "stress",   "label": "Stress Relief" },
+        { "value": "glow",     "label": "Skin Glow" },
+        { "value": "energy",   "label": "Energy & Vitality" },
+        { "value": "wellness", "label": "Wellness & Other" }
       ],
       "default": "sleep"
     },
     {
       "type": "collection",
       "id": "collection_override",
-      "label": "Collection to display (overrides auto-detection)"
+      "label": "Collection (overrides goal default)"
     }
   ],
   "presets": [{ "name": "Goal Products" }]
