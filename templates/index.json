@@ -79,6 +79,15 @@
             "desc": "Feel alive all day long",
             "url": "shopify://pages/energy"
           }
+        },
+        "goal_6TPhai": {
+          "type": "goal",
+          "settings": {
+            "icon": "🌿",
+            "name": "Better Sleep",
+            "desc": "Drift deeper, wake refreshed",
+            "url": ""
+          }
         }
       },
       "block_order": [
@@ -86,7 +95,8 @@
         "goal_2",
         "goal_3",
         "goal_4",
-        "goal_5"
+        "goal_5",
+        "goal_6TPhai"
       ],
       "settings": {
         "eyebrow": "✦ Personalized Wellness",
