@@ -1,0 +1,41 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "",
+        "ing_2": "",
+        "ing_3": "",
+        "ing_4": "",
+        "stat_1_val": "",
+        "stat_1_lbl": "",
+        "stat_2_val": "",
+        "stat_2_lbl": "",
+        "stat_3_val": "",
+        "stat_3_lbl": "",
+        "stat_4_val": "",
+        "stat_4_lbl": ""
+      }
+    },
+    "product_tabs": {
+      "type": "product-tabs",
+      "settings": {}
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently Viewed"
+      }
+    }
+  },
+  "order": ["product_detail", "product_tabs", "related_products", "recently_viewed"]
+}
