@@ -27,9 +27,8 @@ function closeCart() {
   document.body.style.overflow = '';
 }
 
-// Close on Escape key
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeCart();
+  if (e.key === 'Escape') { closeCart(); closeMobileNav(); }
 });
 
 /* ═══════════════════════════════════════
@@ -262,6 +261,28 @@ function escapeHtml(str) {
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
+}
+
+/* ═══════════════════════════════════════
+   MOBILE NAVIGATION
+═══════════════════════════════════════ */
+
+function openMobileNav() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.getElementById('mobileNavOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const btn = document.getElementById('hamburgerBtn');
+  if (btn) btn.setAttribute('aria-expanded', 'true');
+}
+
+function closeMobileNav() {
+  const nav = document.getElementById('mobileNav');
+  const overlay = document.getElementById('mobileNavOverlay');
+  if (nav) nav.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  document.body.style.overflow = '';
+  const btn = document.getElementById('hamburgerBtn');
+  if (btn) btn.setAttribute('aria-expanded', 'false');
 }
 
 /* ═══════════════════════════════════════
