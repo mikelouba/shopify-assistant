@@ -3,14 +3,12 @@
     "product_detail": {
       "type": "product-detail",
       "settings": {
-        "trust_1_icon": "🌿",
-        "trust_1_text": "Certified Organic",
-        "trust_2_icon": "🔬",
-        "trust_2_text": "Clinically Tested",
-        "trust_3_icon": "♻️",
-        "trust_3_text": "Plastic-Free",
-        "trust_4_icon": "🚚",
-        "trust_4_text": "Free Shipping $50+",
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "Certified Organic",
+        "ing_2": "Clinically Tested",
+        "ing_3": "Plastic-Free Packaging",
+        "ing_4": "3rd Party Lab Tested",
         "stat_1_val": "24,800+",
         "stat_1_lbl": "Happy Customers",
         "stat_2_val": "4.9★",
@@ -20,7 +18,24 @@
         "stat_4_val": "3rd Party",
         "stat_4_lbl": "Lab Tested"
       }
+    },
+    "product_tabs": {
+      "type": "product-tabs",
+      "settings": {}
+    },
+    "related_products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "You May Also Like",
+        "products_to_show": 4
+      }
+    },
+    "recently_viewed": {
+      "type": "recently-viewed",
+      "settings": {
+        "heading": "Recently Viewed"
+      }
     }
   },
-  "order": ["product_detail"]
+  "order": ["product_detail", "product_tabs", "related_products", "recently_viewed"]
 }
