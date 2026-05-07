@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "KSM-66 Ashwagandha",
+        "ing_2": "Reishi Mushroom",
+        "ing_3": "Holy Basil",
+        "ing_4": "Lemon Balm",
+        "stat_1_val": "−28%", "stat_1_lbl": "Cortisol reduction",
+        "stat_2_val": "91%",  "stat_2_lbl": "Feel calmer within 2 weeks",
+        "stat_3_val": "6wks", "stat_3_lbl": "Avg time to sustained calm",
+        "stat_4_val": "0",    "stat_4_lbl": "Sedatives or pharmaceuticals"
+      }
+    },
+    "product_tabs":     { "type": "product-tabs",     "settings": {} },
+    "related_products": { "type": "related-products", "settings": { "heading": "Build Your Calm Protocol", "products_to_show": 4 } },
+    "recently_viewed":  { "type": "recently-viewed",  "settings": { "heading": "Recently Viewed" } }
+  },
+  "order": ["product_detail","product_tabs","related_products","recently_viewed"]
+}

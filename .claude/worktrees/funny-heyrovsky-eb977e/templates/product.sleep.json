@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "Magnesium Glycinate",
+        "ing_2": "Ashwagandha KSM-66",
+        "ing_3": "L-Theanine",
+        "ing_4": "Passionflower",
+        "stat_1_val": "+68%",  "stat_1_lbl": "Sleep quality improvement",
+        "stat_2_val": "23min", "stat_2_lbl": "Avg reduction in sleep onset",
+        "stat_3_val": "94%",   "stat_3_lbl": "Fall asleep faster in 2 weeks",
+        "stat_4_val": "0",     "stat_4_lbl": "Habit-forming compounds"
+      }
+    },
+    "product_tabs":     { "type": "product-tabs",     "settings": {} },
+    "related_products": { "type": "related-products", "settings": { "heading": "Complete Your Sleep Ritual", "products_to_show": 4 } },
+    "recently_viewed":  { "type": "recently-viewed",  "settings": { "heading": "Recently Viewed" } }
+  },
+  "order": ["product_detail","product_tabs","related_products","recently_viewed"]
+}

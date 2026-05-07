@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "quiz_main": {
+      "type": "wellness-quiz-main",
+      "settings": {}
+    }
+  },
+  "order": [
+    "quiz_main"
+  ]
+}

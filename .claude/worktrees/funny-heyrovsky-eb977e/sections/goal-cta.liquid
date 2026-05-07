@@ -1,0 +1,103 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+  case goal
+    when 'sleep'
+      assign accent = '#7B9CC4'
+      assign bg = '#E8EDF5'
+      assign heading_color = '#2A3A5C'
+      assign eyebrow = '✦ Start Tonight'
+      assign heading = 'Your best sleep is one decision away'
+      assign sub = "Join 12,000+ customers who've reclaimed their nights. 30-day money-back guarantee."
+      assign btn1 = 'Shop Sleep Now'
+      assign col1 = 'sleep'
+      assign btn2 = 'Take the Sleep Quiz'
+    when 'focus'
+      assign accent = '#C49B6C'
+      assign bg = '#F5EDE0'
+      assign heading_color = '#3A2A1E'
+      assign eyebrow = '✦ Upgrade Your Mind'
+      assign heading = 'Your clearest thinking starts here'
+      assign sub = "Join 8,000+ performers who've sharpened their edge. 30-day money-back guarantee."
+      assign btn1 = 'Shop Focus Now'
+      assign col1 = 'focus'
+      assign btn2 = 'Build My Stack'
+    when 'stress'
+      assign accent = '#7EAA82'
+      assign bg = '#E8F0E8'
+      assign heading_color = '#2A3A2E'
+      assign eyebrow = '✦ Find Your Calm'
+      assign heading = 'You deserve to feel at peace'
+      assign sub = '30-day money-back guarantee. Free shipping over $60. Cancel subscriptions anytime.'
+      assign btn1 = 'Shop Calm Now'
+      assign col1 = 'stress'
+      assign btn2 = 'Find My Formula'
+    when 'glow'
+      assign accent = '#C47B8C'
+      assign bg = '#F5E8ED'
+      assign heading_color = '#4A2A38'
+      assign eyebrow = '✦ Your Glow Awaits'
+      assign heading = 'Start your skin transformation today'
+      assign sub = '30-day money-back guarantee. Visible results or your money back. Free shipping over $60.'
+      assign btn1 = 'Shop Skin Glow'
+      assign col1 = 'glow'
+      assign btn2 = 'My Skin Profile'
+    when 'energy'
+      assign accent = '#C4A027'
+      assign bg = '#F5EDD8'
+      assign heading_color = '#3A2E0E'
+      assign eyebrow = '✦ Ignite Your Day'
+      assign heading = 'Your most energized life starts now'
+      assign sub = '30-day money-back guarantee. Free shipping over $60. Cancel anytime.'
+      assign btn1 = 'Shop Energy Now'
+      assign col1 = 'energy'
+      assign btn2 = 'My Vitality Profile'
+    when 'wellness'
+      assign accent = '#6DB88A'
+      assign bg = '#E6F2EC'
+      assign heading_color = '#1A3A28'
+      assign eyebrow = '✦ Build Your Foundation'
+      assign heading = 'Every body deserves a strong baseline'
+      assign sub = 'Gut health, immunity, minerals, and daily essentials — everything your body needs to thrive. 30-day guarantee.'
+      assign btn1 = 'Shop Wellness'
+      assign col1 = 'wellness'
+      assign btn2 = 'Take the Quiz'
+  endcase
+
+  if collections[col1] != empty and collections[col1].id
+    assign safe_col_url = routes.collections_url | append: '/' | append: col1
+  else
+    assign safe_col_url = routes.all_products_collection_url
+  endif
+-%}
+
+<div style="background:{{ bg }};padding:88px 64px;text-align:center">
+  <span style="font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:{{ accent }};display:block;margin-bottom:14px">{{ eyebrow }}</span>
+  <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(32px,5vw,60px);font-weight:400;line-height:1.1;color:{{ heading_color }};margin-bottom:18px">{{ heading }}</h2>
+  <p style="font-size:16px;max-width:460px;margin:0 auto 40px;line-height:1.7;font-weight:300;color:#7A7060">{{ sub }}</p>
+  <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+    <a href="{{ safe_col_url }}" style="background:{{ heading_color }};color:{{ bg }};border:none;border-radius:3px;padding:16px 36px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;">{{ btn1 }}</a>
+    <a href="/pages/wellness-quiz" style="background:transparent;color:{{ heading_color }};border:1.5px solid {{ heading_color }}30;border-radius:3px;padding:15px 34px;font-family:'Jost',sans-serif;font-size:12px;font-weight:500;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:inline-flex;">{{ btn2 }}</a>
+  </div>
+  <p style="font-size:12px;color:{{ heading_color }}55;margin-top:24px">🔒 Secure checkout &nbsp;·&nbsp; ↩️ 30-day guarantee &nbsp;·&nbsp; 🌿 Certified organic</p>
+</div>
+
+{% schema %}
+{
+  "name": "Goal CTA",
+  "tag": "div",
+  "settings": [
+    { "type": "select", "id": "goal", "label": "Goal type",
+      "options": [
+        { "value": "sleep",    "label": "Better Sleep" },
+        { "value": "focus",    "label": "Focus & Clarity" },
+        { "value": "stress",   "label": "Stress Relief" },
+        { "value": "glow",     "label": "Skin Glow" },
+        { "value": "energy",   "label": "Energy & Vitality" },
+        { "value": "wellness", "label": "Wellness & Other" }
+      ],
+      "default": "sleep"
+    }
+  ],
+  "presets": [{ "name": "Goal CTA" }]
+}
+{% endschema %}

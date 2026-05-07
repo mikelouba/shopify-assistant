@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "Lion's Mane",
+        "ing_2": "Bacopa Monnieri",
+        "ing_3": "Rhodiola Rosea",
+        "ing_4": "Alpha-GPC",
+        "stat_1_val": "89%",  "stat_1_lbl": "Measurable focus improvement in 30 days",
+        "stat_2_val": "+42%", "stat_2_lbl": "Nerve Growth Factor increase",
+        "stat_3_val": "3hrs", "stat_3_lbl": "Avg sustained deep focus window",
+        "stat_4_val": "0",    "stat_4_lbl": "Stimulants or jitters"
+      }
+    },
+    "product_tabs":     { "type": "product-tabs",     "settings": {} },
+    "related_products": { "type": "related-products", "settings": { "heading": "Stack Your Cognitive Edge", "products_to_show": 4 } },
+    "recently_viewed":  { "type": "recently-viewed",  "settings": { "heading": "Recently Viewed" } }
+  },
+  "order": ["product_detail","product_tabs","related_products","recently_viewed"]
+}

@@ -1,0 +1,131 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+  case goal
+    when 'sleep'
+      assign bg1 = '#0F1A2E'
+      assign bg2 = '#1A2A4A'
+      assign accent = '#7B9CC4'
+      assign txt = '#E8EDF5'
+      assign s1_val = '94%'
+      assign s1_lbl = 'fall asleep faster within 2 weeks'
+      assign s2_val = '+68%'
+      assign s2_lbl = 'increase in sleep quality score'
+      assign s3_val = '23min'
+      assign s3_lbl = 'average reduction in sleep onset'
+      assign s4_val = '0'
+      assign s4_lbl = 'habit-forming compounds in any formula'
+    when 'focus'
+      assign bg1 = '#1E1208'
+      assign bg2 = '#2E1E0E'
+      assign accent = '#C49B6C'
+      assign txt = '#F5EDE0'
+      assign s1_val = '89%'
+      assign s1_lbl = 'measurable focus improvement in 30 days'
+      assign s2_val = '+42%'
+      assign s2_lbl = "Nerve Growth Factor increase with Lion's Mane"
+      assign s3_val = '3hrs'
+      assign s3_lbl = 'average sustained deep focus window'
+      assign s4_val = '0'
+      assign s4_lbl = 'stimulants, jitters, or crashes'
+    when 'stress'
+      assign bg1 = '#1A2E1C'
+      assign bg2 = '#243626'
+      assign accent = '#7EAA82'
+      assign txt = '#E8F0E8'
+      assign s1_val = '−28%'
+      assign s1_lbl = 'cortisol reduction with KSM-66 Ashwagandha'
+      assign s2_val = '91%'
+      assign s2_lbl = 'feel calmer within the first 2 weeks'
+      assign s3_val = '6wks'
+      assign s3_lbl = 'average time to sustained stress reduction'
+      assign s4_val = '0'
+      assign s4_lbl = 'pharmaceutical compounds or sedatives'
+    when 'glow'
+      assign bg1 = '#2E1420'
+      assign bg2 = '#3A1E2C'
+      assign accent = '#C47B8C'
+      assign txt = '#F5E8ED'
+      assign s1_val = '+87%'
+      assign s1_lbl = 'notice visible skin improvement in 8 weeks'
+      assign s2_val = '5g'
+      assign s2_lbl = 'clinical dose Marine Collagen per serving'
+      assign s3_val = '−24%'
+      assign s3_lbl = 'reduction in fine lines at 12 weeks'
+      assign s4_val = '3x'
+      assign s4_lbl = 'higher bioavailability vs. bovine collagen'
+    when 'energy'
+      assign bg1 = '#1A1200'
+      assign bg2 = '#2A1E06'
+      assign accent = '#C4A027'
+      assign txt = '#F5EDD8'
+      assign s1_val = '+84%'
+      assign s1_lbl = 'increase in vitality and energy at 6 weeks'
+      assign s2_val = '92%'
+      assign s2_lbl = 'eliminated afternoon energy slumps'
+      assign s3_val = '0'
+      assign s3_lbl = 'stimulants or synthetic caffeine compounds'
+      assign s4_val = '8hrs'
+      assign s4_lbl = 'average sustained energy window'
+    when 'wellness'
+      assign bg1 = '#0E2018'
+      assign bg2 = '#163022'
+      assign accent = '#6DB88A'
+      assign txt = '#E6F2EC'
+      assign s1_val = '91%'
+      assign s1_lbl = 'customers report overall health improvement'
+      assign s2_val = '10T+'
+      assign s2_lbl = 'CFU probiotic strains in our gut formulas'
+      assign s3_val = '30+'
+      assign s3_lbl = 'whole-food sourced ingredients across the range'
+      assign s4_val = '0'
+      assign s4_lbl = 'synthetic fillers, binders, or artificial additives'
+  endcase
+-%}
+
+<div style="background:linear-gradient(135deg,{{ bg1 }},{{ bg2 }});padding:64px">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;max-width:1100px;margin:0 auto">
+    {%- for i in (1..4) -%}
+      {%- liquid
+        case i
+          when 1
+            assign val = s1_val
+            assign lbl = s1_lbl
+          when 2
+            assign val = s2_val
+            assign lbl = s2_lbl
+          when 3
+            assign val = s3_val
+            assign lbl = s3_lbl
+          when 4
+            assign val = s4_val
+            assign lbl = s4_lbl
+        endcase
+      -%}
+      <div style="background:rgba(255,255,255,0.04);border:1px solid {{ accent }}20;padding:36px 28px;text-align:center">
+        <span style="font-family:'DM Serif Display',Georgia,serif;font-size:44px;color:{{ accent }};display:block;margin-bottom:6px">{{ val }}</span>
+        <span style="font-size:12px;color:{{ txt }}55;font-weight:300;line-height:1.5">{{ lbl }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Goal Science",
+  "tag": "div",
+  "settings": [
+    { "type": "select", "id": "goal", "label": "Goal type",
+      "options": [
+        { "value": "sleep",    "label": "Better Sleep" },
+        { "value": "focus",    "label": "Focus & Clarity" },
+        { "value": "stress",   "label": "Stress Relief" },
+        { "value": "glow",     "label": "Skin Glow" },
+        { "value": "energy",   "label": "Energy & Vitality" },
+        { "value": "wellness", "label": "Wellness & Other" }
+      ],
+      "default": "sleep"
+    }
+  ],
+  "presets": [{ "name": "Goal Science" }]
+}
+{% endschema %}

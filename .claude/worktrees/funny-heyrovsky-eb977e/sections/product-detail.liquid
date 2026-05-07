@@ -1,0 +1,742 @@
+{% comment %}── PRODUCT DETAIL — Premium template ──{% endcomment %}
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign product_form_id = 'pd-form-' | append: product.id
+  assign has_sub         = false
+  for sg in product.selling_plan_groups
+    assign has_sub = true
+    break
+  endfor
+-%}
+
+<div class="pd" data-product-id="{{ product.id }}">
+
+  <!-- ══ BREADCRUMB ══ -->
+  {%- render 'breadcrumbs' -%}
+
+  <!-- ══ MAIN LAYOUT ══ -->
+  <div class="pd-layout">
+
+    <!-- ═══ LEFT — GALLERY ═══ -->
+    <div class="pd-gallery" id="pdGallery">
+
+      <!-- Thumbnail rail -->
+      <div class="pd-thumbs" id="pdThumbs">
+        {%- for image in product.images -%}
+          <button class="pd-thumb {% if forloop.first %}pd-thumb--active{% endif %}"
+                  onclick="pdSetSlide({{ forloop.index0 }})"
+                  aria-label="View image {{ forloop.index }}">
+            {{ image | image_url: width: 140 | image_tag:
+                alt: image.alt | default: product.title,
+                loading: 'lazy', widths: '80,140', sizes: '70px' }}
+          </button>
+        {%- endfor -%}
+      </div>
+
+      <!-- Main slide -->
+      <div class="pd-slide-wrap">
+        <div class="pd-slides" id="pdSlides">
+          {%- for image in product.images -%}
+            <div class="pd-slide {% if forloop.first %}pd-slide--active{% endif %}" data-index="{{ forloop.index0 }}">
+              {{ image | image_url: width: 1000 | image_tag:
+                  alt: image.alt | default: product.title,
+                  loading: forloop.first | default: 'lazy',
+                  class: 'pd-slide-img',
+                  widths: '500,700,900,1000',
+                  sizes: '(max-width:768px) 100vw, 48vw' }}
+            </div>
+          {%- endfor -%}
+          {%- if product.images.size == 0 -%}
+            <div class="pd-slide pd-slide--active">
+              <div class="pd-placeholder">🌿</div>
+            </div>
+          {%- endif -%}
+        </div>
+
+        <!-- Arrows -->
+        {%- if product.images.size > 1 -%}
+          <button class="pd-arrow pd-arrow--prev" onclick="pdNav(-1)" aria-label="Previous">&#8592;</button>
+          <button class="pd-arrow pd-arrow--next" onclick="pdNav(1)"  aria-label="Next">&#8594;</button>
+        {%- endif -%}
+
+        <!-- Badges -->
+        <div class="pd-badges">
+          {%- if product.tags contains 'bestseller' -%}<span class="pd-badge pd-badge--best">⭐ Bestseller</span>{%- endif -%}
+          {%- if product.tags contains 'new'        -%}<span class="pd-badge pd-badge--new">✦ New</span>{%- endif -%}
+          {%- if product.tags contains 'sale'       -%}<span class="pd-badge pd-badge--sale">Sale</span>{%- endif -%}
+          {%- unless current_variant.available      -%}<span class="pd-badge pd-badge--sold">Sold Out</span>{%- endunless -%}
+        </div>
+
+        <!-- Zoom hint -->
+        <div class="pd-zoom-hint">🔍 Click to zoom</div>
+      </div>
+
+      <!-- Dot nav (mobile) -->
+      {%- if product.images.size > 1 -%}
+        <div class="pd-dots" id="pdDots">
+          {%- for image in product.images -%}
+            <button class="pd-dot {% if forloop.first %}pd-dot--active{% endif %}"
+                    onclick="pdSetSlide({{ forloop.index0 }})"
+                    aria-label="Slide {{ forloop.index }}"></button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- ═══ RIGHT — INFO ═══ -->
+    <div class="pd-info" id="pdInfo">
+
+      <!-- Vendor & goal tag -->
+      <div class="pd-meta-row">
+        {%- if section.settings.show_vendor and product.vendor != blank -%}
+          <span class="pd-vendor">{{ product.vendor }}</span>
+        {%- endif -%}
+        {%- for tag in product.tags -%}
+          {%- if tag contains 'goal:' -%}
+            <span class="pd-goal-tag">{{ tag | remove: 'goal:' | capitalize }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      <h1 class="pd-title">{{ product.title }}</h1>
+
+      <!-- Rating -->
+      {%- if product.metafields.reviews.rating != blank -%}
+        <div class="pd-rating">
+          {%- assign r = product.metafields.reviews.rating.value | times: 1 -%}
+          <span class="pd-stars">
+            {%- for i in (1..5) -%}
+              <span class="pd-star {% if i <= r %}pd-star--filled{% endif %}">★</span>
+            {%- endfor -%}
+          </span>
+          <a href="#pd-reviews" class="pd-rating-link">{{ product.metafields.reviews.rating_count }} reviews</a>
+          <span class="pd-rating-sep">·</span>
+          <a href="#pd-reviews" class="pd-rating-link">Read all</a>
+        </div>
+      {%- endif -%}
+
+      <!-- Price -->
+      <div class="pd-price-wrap" id="pdPriceWrap">
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          <span class="pd-price pd-price--sale">{{ current_variant.price | money }}</span>
+          <span class="pd-price-was">{{ current_variant.compare_at_price | money }}</span>
+          <span class="pd-save-chip">
+            Save {{ current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price }}%
+          </span>
+        {%- else -%}
+          <span class="pd-price">{{ current_variant.price | money }}</span>
+        {%- endif -%}
+      </div>
+
+      <!-- Short description / lede -->
+      {%- if product.metafields.custom.short_description != blank -%}
+        <p class="pd-lede">{{ product.metafields.custom.short_description }}</p>
+      {%- elsif product.description != blank -%}
+        <p class="pd-lede">{{ product.description | strip_html | truncate: 160 }}</p>
+      {%- endif -%}
+
+      <!-- ── SUBSCRIPTION TOGGLE ── -->
+      {%- if has_sub -%}
+        <div class="pd-sub-toggle" id="pdSubToggle">
+          <button class="pd-sub-btn pd-sub-btn--active" id="pdBtnSub" onclick="pdToggleSub('sub')">
+            <span class="pd-sub-btn-label">Subscribe & Save</span>
+            <span class="pd-sub-btn-save">15% off every order</span>
+          </button>
+          <button class="pd-sub-btn" id="pdBtnOtp" onclick="pdToggleSub('otp')">
+            <span class="pd-sub-btn-label">One-Time Purchase</span>
+            <span class="pd-sub-btn-save">Full price</span>
+          </button>
+        </div>
+        <!-- Sub plan options -->
+        <div class="pd-sub-plans" id="pdSubPlans">
+          {%- for group in product.selling_plan_groups -%}
+            {%- for plan in group.selling_plans -%}
+              <label class="pd-plan-opt">
+                <input type="radio" name="selling_plan" value="{{ plan.id }}"
+                       {% if forloop.first %}checked{% endif %}
+                       onchange="pdSelectPlan(this)">
+                <span class="pd-plan-label">{{ plan.name }}</span>
+                {%- for adjustment in plan.price_adjustments -%}
+                  <span class="pd-plan-save">{{ adjustment.value }}% off</span>
+                {%- endfor -%}
+              </label>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      <!-- ── VARIANT OPTIONS ── -->
+      {%- form 'product', product, id: product_form_id, novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" id="pdVariantInput" value="{{ current_variant.id }}">
+        {%- if has_sub -%}
+          <input type="hidden" name="selling_plan" id="pdSellingPlanInput" value="">
+        {%- endif -%}
+
+        {%- for option in product.options_with_values -%}
+          <div class="pd-option-group">
+            <div class="pd-option-label-row">
+              <span class="pd-option-name">{{ option.name }}</span>
+              <span class="pd-option-selected" id="pdOptSel{{ forloop.index }}">{{ current_variant.options[forloop.index0] }}</span>
+            </div>
+
+            {%- if option.name == 'Color' or option.name == 'Colour' -%}
+              <!-- Colour swatches -->
+              <div class="pd-swatches">
+                {%- for value in option.values -%}
+                  <button type="button"
+                          class="pd-swatch {% if current_variant.options[forloop.index0] == value %}pd-swatch--active{% endif %}"
+                          data-option-index="{{ forloop.index0 }}"
+                          data-value="{{ value }}"
+                          onclick="pdSelectOption(this)"
+                          aria-label="{{ value }}"
+                          style="background: {{ value | downcase | replace: ' ', '' }}">
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- else -%}
+              <!-- Pills -->
+              <div class="pd-pills">
+                {%- for value in option.values -%}
+                  <button type="button"
+                          class="pd-pill {% if current_variant.options[forloop.index0] == value %}pd-pill--active{% endif %}"
+                          data-option-index="{{ forloop.index0 }}"
+                          data-value="{{ value }}"
+                          onclick="pdSelectOption(this)">
+                    {{ value }}
+                  </button>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+
+        <!-- ── QUANTITY + ATC ── -->
+        <div class="pd-buy-row">
+          <div class="pd-qty">
+            <button type="button" class="pd-qty-btn" onclick="pdQty(-1)" aria-label="Decrease">−</button>
+            <input type="number" name="quantity" id="pdQtyInput" value="1" min="1" class="pd-qty-val" aria-label="Quantity">
+            <button type="button" class="pd-qty-btn" onclick="pdQty(1)"  aria-label="Increase">+</button>
+          </div>
+          <button type="submit" id="pdAtcBtn" class="pd-atc-btn"
+                  {% unless current_variant.available %}disabled{% endunless %}>
+            {%- if current_variant.available -%}
+              Add to Bag — <span id="pdAtcPrice">{{ current_variant.price | money }}</span>
+            {%- else -%}
+              Sold Out
+            {%- endif -%}
+          </button>
+        </div>
+
+        <!-- Dynamic checkout -->
+        {%- if current_variant.available -%}
+          <div class="pd-dco">{{ form | payment_button }}</div>
+        {%- endif -%}
+
+      {%- endform -%}
+
+      <!-- ── TRUST STRIP ── -->
+      <div class="pd-trust">
+        <div class="pd-trust-item">
+          <span class="pd-trust-icon">🚚</span>
+          <span>Free shipping over $60</span>
+        </div>
+        <div class="pd-trust-item">
+          <span class="pd-trust-icon">↩️</span>
+          <span>30-day money-back guarantee</span>
+        </div>
+        <div class="pd-trust-item">
+          <span class="pd-trust-icon">🔒</span>
+          <span>Secure checkout</span>
+        </div>
+        <div class="pd-trust-item">
+          <span class="pd-trust-icon">🌿</span>
+          <span>Certified organic</span>
+        </div>
+      </div>
+
+      <!-- ── KEY INGREDIENTS INLINE ── -->
+      {%- if product.metafields.custom.key_ingredients != blank or section.settings.ing_1 != blank -%}
+        <div class="pd-ingredients">
+          <h3 class="pd-ing-title">Key Ingredients</h3>
+          <div class="pd-ing-list">
+            {%- if product.metafields.custom.key_ingredients != blank -%}
+              {%- assign ings = product.metafields.custom.key_ingredients | split: ',' -%}
+              {%- for ing in ings -%}
+                <span class="pd-ing-chip">{{ ing | strip }}</span>
+              {%- endfor -%}
+            {%- else -%}
+              {%- if section.settings.ing_1 != blank -%}<span class="pd-ing-chip">{{ section.settings.ing_1 }}</span>{%- endif -%}
+              {%- if section.settings.ing_2 != blank -%}<span class="pd-ing-chip">{{ section.settings.ing_2 }}</span>{%- endif -%}
+              {%- if section.settings.ing_3 != blank -%}<span class="pd-ing-chip">{{ section.settings.ing_3 }}</span>{%- endif -%}
+              {%- if section.settings.ing_4 != blank -%}<span class="pd-ing-chip">{{ section.settings.ing_4 }}</span>{%- endif -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+
+      <!-- ── ACCORDIONS ── -->
+      <div class="pd-accordions">
+
+        <!-- Description -->
+        {%- if product.description != blank -%}
+          <div class="pd-acc">
+            <button class="pd-acc-hd pd-acc-hd--open" onclick="pdToggleAcc(this)">
+              About this product
+              <svg class="pd-acc-icon pd-acc-icon--open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="18 15 12 9 6 15"/></svg>
+            </button>
+            <div class="pd-acc-body pd-acc-body--open">
+              <div class="pd-acc-content rte">{{ product.description }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- How to use -->
+        <div class="pd-acc">
+          <button class="pd-acc-hd" onclick="pdToggleAcc(this)">
+            How to use
+            <svg class="pd-acc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pd-acc-body">
+            <div class="pd-acc-content">
+              {%- if product.metafields.custom.how_to_use != blank -%}
+                <div class="rte">{{ product.metafields.custom.how_to_use }}</div>
+              {%- else -%}
+                <div class="pd-steps">
+                  <div class="pd-step"><span class="pd-step-num">01</span><div><strong>Take daily</strong><p>Consistency is key — take at the same time each day for best results.</p></div></div>
+                  <div class="pd-step"><span class="pd-step-num">02</span><div><strong>With food or water</strong><p>Most formulas absorb best taken with a meal or a full glass of water.</p></div></div>
+                  <div class="pd-step"><span class="pd-step-num">03</span><div><strong>Give it 4 weeks</strong><p>Botanical adaptogens work cumulatively — results typically emerge at 2–4 weeks.</p></div></div>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+
+        <!-- Full ingredients -->
+        {%- if product.metafields.custom.ingredients != blank -%}
+          <div class="pd-acc">
+            <button class="pd-acc-hd" onclick="pdToggleAcc(this)">
+              Full ingredient list
+              <svg class="pd-acc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="pd-acc-body">
+              <div class="pd-acc-content rte">{{ product.metafields.custom.ingredients }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- The Science -->
+        {%- if product.metafields.custom.science != blank -%}
+          <div class="pd-acc">
+            <button class="pd-acc-hd" onclick="pdToggleAcc(this)">
+              The science behind it
+              <svg class="pd-acc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="pd-acc-body">
+              <div class="pd-acc-content rte">{{ product.metafields.custom.science }}</div>
+            </div>
+          </div>
+        {%- endif -%}
+
+        <!-- Shipping -->
+        <div class="pd-acc">
+          <button class="pd-acc-hd" onclick="pdToggleAcc(this)">
+            Shipping & returns
+            <svg class="pd-acc-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="pd-acc-body">
+            <div class="pd-acc-content">
+              <p>🚚 <strong>Free standard shipping</strong> on all orders over $60. Express options available at checkout.</p>
+              <p style="margin-top:10px">↩️ <strong>30-day money-back guarantee.</strong> If it doesn't work for you, we'll refund every penny — no questions, no hoops.</p>
+              <p style="margin-top:10px">📦 Orders typically ship within 1–2 business days. You'll receive tracking by email.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ── GUARANTEE BADGE ── -->
+      <div class="pd-guarantee">
+        <div class="pd-guarantee-icon">🛡️</div>
+        <div class="pd-guarantee-text">
+          <strong>30-Day Money-Back Guarantee</strong>
+          <span>If you're not completely satisfied — for any reason — we'll refund you in full. No questions asked.</span>
+        </div>
+      </div>
+
+      <!-- Share -->
+      {%- if section.settings.show_share -%}
+        <div class="pd-share">
+          <span class="pd-share-label">Share:</span>
+          <a class="pd-share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.origin }}{{ product.url }}" target="_blank" rel="noopener">Facebook</a>
+          <a class="pd-share-btn" href="https://twitter.com/intent/tweet?url={{ request.origin }}{{ product.url }}&text={{ product.title | url_encode }}" target="_blank" rel="noopener">Twitter</a>
+          <a class="pd-share-btn" href="https://pinterest.com/pin/create/button/?url={{ request.origin }}{{ product.url }}&media={{ product.featured_image | image_url: width: 800 }}&description={{ product.title | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
+        </div>
+      {%- endif -%}
+
+    </div><!-- /.pd-info -->
+  </div><!-- /.pd-layout -->
+
+  <!-- ══ STATS BAR ══ -->
+  {%- if section.settings.stat_1_val != blank -%}
+    <div class="pd-stats-bar">
+      {%- if section.settings.stat_1_val != blank -%}
+        <div class="pd-stat"><span class="pd-stat-val">{{ section.settings.stat_1_val }}</span><span class="pd-stat-lbl">{{ section.settings.stat_1_lbl }}</span></div>
+      {%- endif -%}
+      {%- if section.settings.stat_2_val != blank -%}
+        <div class="pd-stat"><span class="pd-stat-val">{{ section.settings.stat_2_val }}</span><span class="pd-stat-lbl">{{ section.settings.stat_2_lbl }}</span></div>
+      {%- endif -%}
+      {%- if section.settings.stat_3_val != blank -%}
+        <div class="pd-stat"><span class="pd-stat-val">{{ section.settings.stat_3_val }}</span><span class="pd-stat-lbl">{{ section.settings.stat_3_lbl }}</span></div>
+      {%- endif -%}
+      {%- if section.settings.stat_4_val != blank -%}
+        <div class="pd-stat"><span class="pd-stat-val">{{ section.settings.stat_4_val }}</span><span class="pd-stat-lbl">{{ section.settings.stat_4_lbl }}</span></div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+</div><!-- /.pd -->
+
+<!-- ══ PRODUCT JS ══ -->
+<script>
+(function () {
+  var productData  = {{ product.variants | json }};
+  var selOptions   = [
+    {%- for option in product.options_with_values -%}
+      "{{ current_variant.options[forloop.index0] }}"
+      {%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+  var galleryIdx   = 0;
+  var slides       = [];
+  var thumbs       = [];
+  var dots         = [];
+  var subMode      = false;
+
+  /* ── init ── */
+  document.addEventListener('DOMContentLoaded', function () {
+    slides = Array.from(document.querySelectorAll('.pd-slide'));
+    thumbs = Array.from(document.querySelectorAll('.pd-thumb'));
+    dots   = Array.from(document.querySelectorAll('.pd-dot'));
+    /* zoom */
+    slides.forEach(function (s) {
+      s.addEventListener('click', function () {
+        s.classList.toggle('pd-slide--zoom');
+      });
+    });
+  });
+
+  /* ── Gallery ── */
+  window.pdSetSlide = function (idx) {
+    galleryIdx = idx;
+    slides.forEach(function (s, i) { s.classList.toggle('pd-slide--active', i === idx); });
+    thumbs.forEach(function (t, i) { t.classList.toggle('pd-thumb--active', i === idx); });
+    dots.forEach(function   (d, i) { d.classList.toggle('pd-dot--active',   i === idx); });
+  };
+  window.pdNav = function (dir) {
+    var next = (galleryIdx + dir + slides.length) % slides.length;
+    pdSetSlide(next);
+  };
+
+  /* ── Variants ── */
+  window.pdSelectOption = function (btn) {
+    var idx = parseInt(btn.dataset.optionIndex);
+    selOptions[idx] = btn.dataset.value;
+    var group = btn.closest('.pd-pills, .pd-swatches');
+    if (group) {
+      group.querySelectorAll('.pd-pill, .pd-swatch').forEach(function (b) {
+        b.classList.remove('pd-pill--active','pd-swatch--active');
+      });
+    }
+    btn.classList.add(btn.classList.contains('pd-swatch') ? 'pd-swatch--active' : 'pd-pill--active');
+    var selEl = document.getElementById('pdOptSel' + (idx + 1));
+    if (selEl) selEl.textContent = btn.dataset.value;
+    var variant = productData.find(function (v) {
+      return v.options.every(function (o, i) { return o === selOptions[i]; });
+    });
+    if (!variant) return;
+    document.getElementById('pdVariantInput').value = variant.id;
+    updatePrice(variant);
+    var atcBtn = document.getElementById('pdAtcBtn');
+    if (atcBtn) {
+      atcBtn.disabled = !variant.available;
+      if (variant.available) {
+        atcBtn.innerHTML = 'Add to Bag — <span id="pdAtcPrice">' + formatMoney(variant.price) + '</span>';
+      } else {
+        atcBtn.textContent = 'Sold Out';
+      }
+    }
+    var url = new URL(window.location.href);
+    url.searchParams.set('variant', variant.id);
+    history.replaceState({}, '', url.toString());
+  };
+
+  function updatePrice(variant) {
+    var wrap = document.getElementById('pdPriceWrap');
+    if (!wrap) return;
+    if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+      var pct = Math.round((variant.compare_at_price - variant.price) * 100 / variant.compare_at_price);
+      wrap.innerHTML =
+        '<span class="pd-price pd-price--sale">' + formatMoney(variant.price) + '</span>' +
+        '<span class="pd-price-was">'            + formatMoney(variant.compare_at_price) + '</span>' +
+        '<span class="pd-save-chip">Save ' + pct + '%</span>';
+    } else {
+      wrap.innerHTML = '<span class="pd-price">' + formatMoney(variant.price) + '</span>';
+    }
+  }
+
+  /* ── Quantity ── */
+  window.pdQty = function (delta) {
+    var input = document.getElementById('pdQtyInput');
+    if (!input) return;
+    input.value = Math.max(1, parseInt(input.value) + delta);
+  };
+
+  /* ── Subscription toggle ── */
+  window.pdToggleSub = function (mode) {
+    subMode = (mode === 'sub');
+    document.getElementById('pdBtnSub').classList.toggle('pd-sub-btn--active', subMode);
+    document.getElementById('pdBtnOtp').classList.toggle('pd-sub-btn--active', !subMode);
+    var plans = document.getElementById('pdSubPlans');
+    if (plans) plans.style.display = subMode ? 'flex' : 'none';
+    var planInput = document.getElementById('pdSellingPlanInput');
+    if (planInput) {
+      if (subMode) {
+        var checked = plans ? plans.querySelector('input[type=radio]:checked') : null;
+        planInput.value = checked ? checked.value : '';
+      } else {
+        planInput.value = '';
+      }
+    }
+  };
+
+  window.pdSelectPlan = function (radio) {
+    var planInput = document.getElementById('pdSellingPlanInput');
+    if (planInput) planInput.value = radio.value;
+  };
+
+  /* ── Accordions ── */
+  window.pdToggleAcc = function (btn) {
+    var body   = btn.nextElementSibling;
+    var isOpen = body.classList.contains('pd-acc-body--open');
+    /* close all */
+    document.querySelectorAll('.pd-acc-body--open').forEach(function (b) { b.classList.remove('pd-acc-body--open'); });
+    document.querySelectorAll('.pd-acc-hd--open').forEach(function (h) {
+      h.classList.remove('pd-acc-hd--open');
+      var icon = h.querySelector('.pd-acc-icon');
+      if (icon) icon.classList.remove('pd-acc-icon--open');
+    });
+    if (!isOpen) {
+      body.classList.add('pd-acc-body--open');
+      btn.classList.add('pd-acc-hd--open');
+      var icon = btn.querySelector('.pd-acc-icon');
+      if (icon) icon.classList.add('pd-acc-icon--open');
+    }
+  };
+
+  /* ── ATC form ── */
+  var form = document.getElementById('{{ product_form_id }}');
+  if (form) {
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('pdAtcBtn');
+      var id  = form.querySelector('[name="id"]').value;
+      var qty = parseInt(form.querySelector('[name="quantity"]').value || 1);
+      await addToCartAjax(id, btn, qty);
+    });
+  }
+
+  function formatMoney(cents) {
+    if (window.Shopify && Shopify.formatMoney) return Shopify.formatMoney(cents, '${{amount}}');
+    return '$' + (cents / 100).toFixed(2);
+  }
+}());
+</script>
+
+<style>
+/* ─── Product Detail Layout ─── */
+.pd { max-width: 1260px; margin: 0 auto; padding: 0 48px 96px; }
+.pd-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; padding-top: 32px; }
+
+/* ─── Gallery ─── */
+.pd-gallery { position: sticky; top: 100px; }
+.pd-slide-wrap { position: relative; border-radius: 18px; overflow: hidden; background: var(--cream); }
+.pd-slides { display: flex; }
+.pd-slide { display: none; width: 100%; cursor: zoom-in; }
+.pd-slide--active { display: block; }
+.pd-slide--zoom .pd-slide-img { transform: scale(1.55); cursor: zoom-out; }
+.pd-slide-img { width: 100%; height: auto; display: block; transition: transform 0.4s ease; }
+.pd-placeholder { height: 520px; display: flex; align-items: center; justify-content: center; font-size: 80px; opacity: 0.2; }
+.pd-thumbs { display: flex; flex-direction: column; gap: 8px; position: absolute; left: -78px; top: 0; width: 64px; }
+.pd-thumb { width: 64px; height: 64px; border-radius: 10px; overflow: hidden; border: 2px solid transparent; cursor: pointer; padding: 0; background: var(--cream); transition: border-color 0.2s; }
+.pd-thumb--active { border-color: var(--forest); }
+.pd-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.pd-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(253,250,245,0.92); border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.pd-arrow--prev { left: 12px; }
+.pd-arrow--next { right: 12px; }
+.pd-arrow:hover { background: var(--forest); color: var(--cream); }
+.pd-badges { position: absolute; top: 14px; left: 14px; display: flex; flex-direction: column; gap: 6px; }
+.pd-badge { font-size: 10.5px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 5px 12px; border-radius: 20px; }
+.pd-badge--best { background: var(--terracotta); color: white; }
+.pd-badge--new  { background: var(--forest);     color: var(--cream); }
+.pd-badge--sale { background: var(--gold);        color: var(--dark); }
+.pd-badge--sold { background: var(--muted);       color: white; }
+.pd-zoom-hint { position: absolute; bottom: 12px; right: 12px; font-size: 10px; color: rgba(0,0,0,0.35); letter-spacing: 0.5px; pointer-events: none; }
+.pd-dots { display: none; justify-content: center; gap: 6px; margin-top: 14px; }
+.pd-dot { width: 7px; height: 7px; border-radius: 50%; border: none; background: var(--sand); cursor: pointer; transition: background 0.2s; padding: 0; }
+.pd-dot--active { background: var(--forest); }
+
+/* ─── Info column ─── */
+.pd-meta-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.pd-vendor { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); font-weight: 500; }
+.pd-goal-tag { font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase; background: rgba(122,158,126,0.1); color: var(--forest); border-radius: 20px; padding: 4px 12px; font-weight: 500; }
+.pd-title { font-family: var(--serif); font-size: clamp(26px, 2.8vw, 40px); font-weight: 400; color: var(--forest); line-height: 1.2; margin-bottom: 14px; }
+.pd-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+.pd-stars { display: flex; gap: 2px; }
+.pd-star { font-size: 14px; color: var(--sand); transition: color 0.2s; }
+.pd-star--filled { color: var(--gold); }
+.pd-rating-link { font-size: 12.5px; color: var(--sage); text-decoration: none; border-bottom: 1px solid rgba(122,158,126,0.3); padding-bottom: 1px; }
+.pd-rating-link:hover { color: var(--forest); }
+.pd-rating-sep { color: var(--muted); font-size: 11px; }
+
+/* Price */
+.pd-price-wrap { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.pd-price { font-size: 28px; font-weight: 500; color: var(--dark); font-family: var(--serif); }
+.pd-price--sale { color: var(--terracotta); }
+.pd-price-was { font-size: 17px; color: var(--muted); text-decoration: line-through; }
+.pd-save-chip { background: rgba(194,113,79,0.12); color: var(--terracotta); font-size: 11.5px; font-weight: 600; letter-spacing: 0.5px; border-radius: 20px; padding: 4px 12px; }
+.pd-lede { font-size: 15px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 24px; }
+
+/* Subscription toggle */
+.pd-sub-toggle { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: var(--cream); border-radius: 12px; padding: 6px; margin-bottom: 12px; }
+.pd-sub-btn { background: transparent; border: none; border-radius: 8px; padding: 12px 14px; cursor: pointer; font-family: var(--sans); text-align: left; transition: all 0.22s; }
+.pd-sub-btn--active { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
+.pd-sub-btn-label { display: block; font-size: 13px; font-weight: 500; color: var(--forest); margin-bottom: 2px; }
+.pd-sub-btn-save { display: block; font-size: 11px; color: var(--sage); }
+.pd-sub-plans { display: none; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.pd-plan-opt { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1.5px solid var(--sand); border-radius: 8px; cursor: pointer; font-size: 13.5px; color: var(--dark); }
+.pd-plan-opt:has(input:checked) { border-color: var(--sage); background: rgba(122,158,126,0.05); }
+.pd-plan-save { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--sage); }
+
+/* Options */
+.pd-option-group { margin-bottom: 20px; }
+.pd-option-label-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.pd-option-name { font-size: 13px; font-weight: 500; color: var(--dark); letter-spacing: 0.5px; text-transform: uppercase; font-size: 11px; letter-spacing: 1.5px; }
+.pd-option-selected { font-size: 13px; color: var(--muted); font-weight: 300; }
+.pd-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.pd-pill { background: var(--cream); border: 1.5px solid var(--sand); border-radius: 6px; padding: 9px 18px; font-size: 13.5px; font-family: var(--sans); color: var(--dark); cursor: pointer; transition: all 0.2s; }
+.pd-pill:hover { border-color: var(--sage); }
+.pd-pill--active { border-color: var(--forest); background: rgba(45,74,48,0.04); color: var(--forest); font-weight: 500; }
+.pd-swatches { display: flex; gap: 8px; }
+.pd-swatch { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; outline: 2px solid transparent; outline-offset: 2px; transition: outline-color 0.2s; padding: 0; }
+.pd-swatch--active { outline-color: var(--forest); }
+
+/* Buy row */
+.pd-buy-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: stretch; }
+.pd-qty { display: flex; align-items: center; background: var(--cream); border-radius: 8px; border: 1.5px solid var(--sand); overflow: hidden; flex-shrink: 0; }
+.pd-qty-btn { background: none; border: none; width: 40px; height: 52px; font-size: 20px; cursor: pointer; color: var(--dark); transition: background 0.15s; display: flex; align-items: center; justify-content: center; }
+.pd-qty-btn:hover { background: var(--sand); }
+.pd-qty-val { width: 44px; text-align: center; font-size: 15px; border: none; background: none; font-family: var(--sans); color: var(--dark); }
+.pd-atc-btn { flex: 1; background: var(--forest); color: var(--cream); border: none; border-radius: 8px; padding: 0 28px; font-family: var(--sans); font-size: 13.5px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.25s; min-height: 52px; }
+.pd-atc-btn:hover:not(:disabled) { background: var(--sage); box-shadow: 0 6px 20px rgba(45,74,48,0.22); }
+.pd-atc-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.pd-dco { margin-bottom: 16px; }
+.pd-dco .shopify-payment-button__button { border-radius: 8px !important; }
+
+/* Trust */
+.pd-trust { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 0; border-top: 1px solid rgba(0,0,0,0.06); border-bottom: 1px solid rgba(0,0,0,0.06); margin-bottom: 24px; }
+.pd-trust-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--muted); font-weight: 300; }
+.pd-trust-icon { font-size: 16px; }
+
+/* Ingredients chips */
+.pd-ingredients { margin-bottom: 20px; }
+.pd-ing-title { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--sage); font-weight: 600; margin-bottom: 10px; }
+.pd-ing-list { display: flex; gap: 8px; flex-wrap: wrap; }
+.pd-ing-chip { background: rgba(122,158,126,0.1); color: var(--forest); font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 20px; letter-spacing: 0.3px; }
+
+/* Accordions */
+.pd-accordions { border-top: 1px solid rgba(0,0,0,0.07); margin-bottom: 24px; }
+.pd-acc { border-bottom: 1px solid rgba(0,0,0,0.07); }
+.pd-acc-hd { width: 100%; background: none; border: none; padding: 18px 0; display: flex; align-items: center; justify-content: space-between; font-family: var(--sans); font-size: 14.5px; font-weight: 400; color: var(--forest); cursor: pointer; text-align: left; transition: color 0.2s; }
+.pd-acc-hd:hover { color: var(--sage); }
+.pd-acc-icon { transition: transform 0.3s; flex-shrink: 0; color: var(--sage); }
+.pd-acc-icon--open { transform: rotate(180deg); }
+.pd-acc-body { display: none; padding-bottom: 20px; }
+.pd-acc-body--open { display: block; }
+.pd-acc-content { font-size: 14px; color: var(--muted); line-height: 1.75; font-weight: 300; }
+.pd-steps { display: flex; flex-direction: column; gap: 14px; }
+.pd-step { display: flex; gap: 16px; align-items: flex-start; }
+.pd-step-num { font-family: var(--serif); font-size: 20px; color: var(--sage-lt); font-weight: 400; min-width: 28px; }
+.pd-step strong { display: block; font-size: 13.5px; color: var(--forest); font-weight: 500; margin-bottom: 3px; }
+.pd-step p { font-size: 13px; color: var(--muted); font-weight: 300; margin: 0; }
+
+/* Guarantee */
+.pd-guarantee { display: flex; gap: 16px; align-items: flex-start; background: rgba(122,158,126,0.07); border: 1px solid rgba(122,158,126,0.2); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; }
+.pd-guarantee-icon { font-size: 28px; flex-shrink: 0; }
+.pd-guarantee-text { display: flex; flex-direction: column; gap: 3px; font-size: 13.5px; }
+.pd-guarantee-text strong { color: var(--forest); font-weight: 500; }
+.pd-guarantee-text span { color: var(--muted); font-weight: 300; }
+
+/* Share */
+.pd-share { display: flex; align-items: center; gap: 12px; }
+.pd-share-label { font-size: 11.5px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+.pd-share-btn { font-size: 12.5px; color: var(--sage); text-decoration: none; border-bottom: 1px solid rgba(122,158,126,0.3); padding-bottom: 1px; transition: color 0.2s; }
+.pd-share-btn:hover { color: var(--forest); }
+
+/* Stats bar */
+.pd-stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid rgba(0,0,0,0.07); border-bottom: 1px solid rgba(0,0,0,0.07); margin: 0 0 48px; }
+.pd-stat { padding: 28px 24px; text-align: center; border-right: 1px solid rgba(0,0,0,0.07); }
+.pd-stat:last-child { border-right: none; }
+.pd-stat-val { display: block; font-family: var(--serif); font-size: 32px; font-weight: 400; color: var(--forest); margin-bottom: 4px; }
+.pd-stat-lbl { display: block; font-size: 12px; color: var(--muted); font-weight: 300; line-height: 1.4; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1100px) {
+  .pd-thumbs { left: -70px; width: 56px; }
+  .pd-thumb  { width: 56px; height: 56px; }
+  .pd-layout { gap: 48px; }
+}
+@media (max-width: 900px) {
+  .pd { padding: 0 24px 72px; }
+  .pd-layout { grid-template-columns: 1fr; gap: 40px; }
+  .pd-gallery { position: static; }
+  .pd-thumbs  { position: static; flex-direction: row; width: auto; margin-bottom: 10px; }
+  .pd-thumb   { width: 56px; height: 56px; }
+  .pd-dots    { display: flex; }
+  .pd-stats-bar { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+  .pd { padding: 0 16px 56px; }
+  .pd-buy-row { flex-direction: column; }
+  .pd-atc-btn { min-height: 56px; }
+  .pd-trust { grid-template-columns: 1fr; }
+  .pd-stats-bar { grid-template-columns: 1fr 1fr; }
+  .pd-sub-toggle { grid-template-columns: 1fr; }
+  .pd-thumbs { display: none; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Product Detail",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor",     "default": true },
+    { "type": "checkbox", "id": "show_share",  "label": "Show share links", "default": true },
+    { "type": "header",   "content": "Key Ingredients (fallback if metafield empty)" },
+    { "type": "text", "id": "ing_1", "label": "Ingredient 1" },
+    { "type": "text", "id": "ing_2", "label": "Ingredient 2" },
+    { "type": "text", "id": "ing_3", "label": "Ingredient 3" },
+    { "type": "text", "id": "ing_4", "label": "Ingredient 4" },
+    { "type": "header", "content": "Science Stats Bar (optional)" },
+    { "type": "text", "id": "stat_1_val", "label": "Stat 1 value", "info": "e.g. −28%" },
+    { "type": "text", "id": "stat_1_lbl", "label": "Stat 1 label" },
+    { "type": "text", "id": "stat_2_val", "label": "Stat 2 value" },
+    { "type": "text", "id": "stat_2_lbl", "label": "Stat 2 label" },
+    { "type": "text", "id": "stat_3_val", "label": "Stat 3 value" },
+    { "type": "text", "id": "stat_3_lbl", "label": "Stat 3 label" },
+    { "type": "text", "id": "stat_4_val", "label": "Stat 4 value" },
+    { "type": "text", "id": "stat_4_lbl", "label": "Stat 4 label" }
+  ],
+  "presets": [{ "name": "Product Detail" }]
+}
+{% endschema %}

@@ -1,0 +1,23 @@
+{
+  "sections": {
+    "product_detail": {
+      "type": "product-detail",
+      "settings": {
+        "show_vendor": true,
+        "show_share": true,
+        "ing_1": "CoQ10 (Ubiquinol)",
+        "ing_2": "Cordyceps Militaris",
+        "ing_3": "Matcha + L-Theanine",
+        "ing_4": "Methylated B Complex",
+        "stat_1_val": "+84%", "stat_1_lbl": "Increase in vitality at 6 weeks",
+        "stat_2_val": "92%",  "stat_2_lbl": "Eliminated afternoon energy slumps",
+        "stat_3_val": "8hrs", "stat_3_lbl": "Avg sustained energy window",
+        "stat_4_val": "0",    "stat_4_lbl": "Stimulants or synthetic caffeine"
+      }
+    },
+    "product_tabs":     { "type": "product-tabs",     "settings": {} },
+    "related_products": { "type": "related-products", "settings": { "heading": "Fuel Your Full Protocol", "products_to_show": 4 } },
+    "recently_viewed":  { "type": "recently-viewed",  "settings": { "heading": "Recently Viewed" } }
+  },
+  "order": ["product_detail","product_tabs","related_products","recently_viewed"]
+}

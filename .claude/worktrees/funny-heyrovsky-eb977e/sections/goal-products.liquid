@@ -1,0 +1,118 @@
+{%- liquid
+  assign goal = section.settings.goal | default: 'sleep'
+  assign col_handle = section.settings.collection_override | default: goal
+  assign goal_collection = collections[col_handle]
+
+  if goal_collection != empty and goal_collection.id
+    assign safe_view_all_url = routes.collections_url | append: '/' | append: col_handle
+  else
+    assign safe_view_all_url = routes.all_products_collection_url
+  endif
+
+  case goal
+    when 'sleep'
+      assign accent      = '#7B9CC4'
+      assign accent_dark = '#0F1A2E'
+      assign bg_color    = '#E8EDF5'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Sleep Arsenal'
+      assign heading     = 'Everything for perfect sleep'
+    when 'focus'
+      assign accent      = '#C49B6C'
+      assign accent_dark = '#1E1208'
+      assign bg_color    = '#F5EDE0'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Cognitive Arsenal'
+      assign heading     = 'Stack your mental edge'
+    when 'stress'
+      assign accent      = '#7EAA82'
+      assign accent_dark = '#1A2E1C'
+      assign bg_color    = '#E8F0E8'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ The Calm Collection'
+      assign heading     = 'Formulas for a quieter mind'
+    when 'glow'
+      assign accent      = '#C47B8C'
+      assign accent_dark = '#2E1420'
+      assign bg_color    = '#F5E8ED'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Glow Edit'
+      assign heading     = 'Your inside-out skin ritual'
+    when 'energy'
+      assign accent      = '#C4A027'
+      assign accent_dark = '#1A1200'
+      assign bg_color    = '#F5EDD8'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Vitality Collection'
+      assign heading     = 'Fuel your full day'
+    when 'wellness'
+      assign accent      = '#6DB88A'
+      assign accent_dark = '#0E2018'
+      assign bg_color    = '#E6F2EC'
+      assign card_bg     = '#FDFAF5'
+      assign eyebrow     = '✦ Wellness Essentials'
+      assign heading     = 'Your daily health foundation'
+  endcase
+-%}
+
+<div style="background:{{ bg_color }};padding:80px 64px">
+  <div style="text-align:center;margin-bottom:52px">
+    <span style="font-size:10.5px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:{{ accent }};display:block;margin-bottom:14px">{{ eyebrow }}</span>
+    <h2 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(28px,3.5vw,48px);color:{{ accent_dark }};font-weight:400">{{ heading }}</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:1100px;margin:0 auto">
+    {%- if goal_collection and goal_collection.products.size > 0 -%}
+      {%- for product in goal_collection.products limit: 3 -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..3) -%}
+        <div style="background:{{ card_bg }};border-radius:3px;overflow:hidden">
+          <div style="aspect-ratio:3/4;background:{{ bg_color }};display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px">
+            <span style="font-size:52px;opacity:0.5">🌿</span>
+            <span style="font-family:'Playfair Display',serif;font-style:italic;font-size:13px;color:{{ accent_dark }}44">Product {{ i }}</span>
+          </div>
+          <div style="padding:18px 20px 24px">
+            <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:{{ accent }};margin-bottom:5px">{{ goal | capitalize }}</p>
+            <p style="font-family:'Playfair Display',serif;font-size:18px;color:{{ accent_dark }};margin-bottom:8px">Your Product Name</p>
+            <p style="font-size:15px;font-weight:500;color:{{ accent_dark }}">$00.00</p>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+
+  <div style="text-align:center;margin-top:40px">
+    <a href="{{ safe_view_all_url }}" style="display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:500;color:{{ accent_dark }};text-decoration:none;border-bottom:1.5px solid {{ accent }};padding-bottom:3px;">View All {{ goal | replace: '-', ' ' | capitalize }} Products →</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Goal Products",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "select",
+      "id": "goal",
+      "label": "Goal type",
+      "options": [
+        { "value": "sleep",    "label": "Better Sleep" },
+        { "value": "focus",    "label": "Focus & Clarity" },
+        { "value": "stress",   "label": "Stress Relief" },
+        { "value": "glow",     "label": "Skin Glow" },
+        { "value": "energy",   "label": "Energy & Vitality" },
+        { "value": "wellness", "label": "Wellness & Other" }
+      ],
+      "default": "sleep"
+    },
+    {
+      "type": "collection",
+      "id": "collection_override",
+      "label": "Collection (overrides goal default)"
+    }
+  ],
+  "presets": [{ "name": "Goal Products" }]
+}
+{% endschema %}
