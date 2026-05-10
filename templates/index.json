@@ -18,7 +18,7 @@
         "btn_primary_label": "Shop the Collection",
         "btn_primary_url": "/collections/all",
         "btn_secondary_label": "Take the Wellness Quiz",
-        "btn_secondary_url": "/pages/wellness-quiz",
+        "btn_secondary_url": "shopify://pages/quiz",
         "trust_1": "Clinically tested",
         "trust_2": "Certified organic",
         "trust_3": "Plastic-free packaging",
@@ -59,7 +59,7 @@
             "icon": "🌿",
             "name": "Stress Relief",
             "desc": "Calm your nervous system",
-            "url": "shopify://pages/stress"
+            "url": "shopify://pages/stress-1"
           }
         },
         "goal_4": {
@@ -68,7 +68,7 @@
             "icon": "✨",
             "name": "Skin Glow",
             "desc": "Radiance from within",
-            "url": "shopify://pages/glow"
+            "url": "shopify://pages/stress"
           }
         },
         "goal_5": {
