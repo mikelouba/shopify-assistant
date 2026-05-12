@@ -1,95 +1,110 @@
 {% comment %}── WELLNESS QUIZ PAGE ──{% endcomment %}
 <style>
-/* ─── Quiz Page: self-contained styles ─────────────────────────────────── */
+/* ─── Wellness Quiz: Self-contained, mobile-first ─────────────────────────────
+   All selectors scoped under #quizPage for specificity over theme CSS.
+   display:none uses !important so no theme rule can override visibility.
+   ─────────────────────────────────────────────────────────────────────────── */
 
-.quiz-page {
-  max-width: 760px;
+#quizPage *,
+#quizPage *::before,
+#quizPage *::after {
+  box-sizing: border-box;
+}
+
+#quizPage {
+  max-width: 680px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
+  padding: 28px 16px 64px;
   font-family: 'Jost', sans-serif;
   min-height: 60vh;
+  color: #1a1a1a;
 }
 
-/* Progress bar */
-.quiz-progress-bar {
+/* ── Progress bar ── */
+#quizPage .quiz-progress-bar {
   width: 100%;
-  height: 4px;
+  height: 5px;
   background: #e8e4de;
-  border-radius: 2px;
-  margin-bottom: 48px;
+  border-radius: 3px;
+  margin-bottom: 28px;
   overflow: hidden;
 }
-.quiz-progress-fill {
+#quizPage .quiz-progress-fill {
   height: 100%;
   width: 0%;
   background: #2D4A30;
-  border-radius: 2px;
+  border-radius: 3px;
   transition: width 0.4s ease;
 }
 
-/* Screens — hidden by default, shown when .active */
-.quiz-screen {
-  display: none;
-  animation: quizFadeIn 0.3s ease;
+/* ── Screen visibility — THE CRITICAL FIX ── */
+/* !important ensures no Shopify theme rule (however specific) can show inactive screens */
+#quizPage .quiz-screen {
+  display: none !important;
 }
-.quiz-screen.active {
-  display: block;
+#quizPage .quiz-screen.active {
+  display: block !important;
+  animation: quizFadeIn 0.28s ease both;
 }
 @keyframes quizFadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Intro ── */
-.quiz-intro-content {
-  text-align: center;
-  max-width: 560px;
-  margin: 0 auto;
-  padding: 32px 0;
-}
-.section-eyebrow {
+/* ── Shared eyebrow label ── */
+#quizPage .section-eyebrow {
   display: inline-block;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   color: #2D4A30;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
-.quiz-intro-title {
+
+/* ────────────────────────────────────────────────────────
+   INTRO SCREEN
+   ──────────────────────────────────────────────────────── */
+#quizPage .quiz-intro-content {
+  text-align: center;
+  padding: 20px 0 28px;
+}
+#quizPage .quiz-intro-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(32px, 5vw, 48px);
+  font-size: 30px;
   font-weight: 500;
   line-height: 1.2;
   color: #1a1a1a;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
 }
-.quiz-intro-title em {
+#quizPage .quiz-intro-title em {
   font-style: italic;
   color: #2D4A30;
 }
-.quiz-intro-sub {
-  font-size: 16px;
+#quizPage .quiz-intro-sub {
+  font-size: 15px;
   color: #666;
-  line-height: 1.6;
-  margin: 0 0 28px;
+  line-height: 1.65;
+  margin: 0 0 22px;
 }
-.quiz-intro-trust {
+#quizPage .quiz-intro-trust {
   display: flex;
-  gap: 24px;
+  gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
   font-size: 13px;
   color: #555;
-  margin-bottom: 36px;
+  margin-bottom: 28px;
 }
-.quiz-start-btn {
+
+/* Self-contained start button — does NOT rely on btn-fill */
+#quizPage .quiz-start-btn {
   display: inline-block;
   padding: 16px 40px;
   background: #2D4A30;
-  color: #fff;
+  color: #fff !important;
   border: none;
-  border-radius: 3px;
+  border-radius: 4px;
   font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -97,195 +112,241 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
+  -webkit-appearance: none;
+  appearance: none;
+  text-decoration: none;
 }
-.quiz-start-btn:hover {
+#quizPage .quiz-start-btn:hover,
+#quizPage .quiz-start-btn:focus {
   background: #1e3320;
   transform: translateY(-1px);
+  outline: none;
+  color: #fff !important;
 }
 
-/* ── Question screens ── */
-.quiz-q-inner {
-  max-width: 640px;
-  margin: 0 auto;
+/* ────────────────────────────────────────────────────────
+   QUESTION CARD (wraps each question screen's content)
+   ──────────────────────────────────────────────────────── */
+#quizPage .quiz-q-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 24px 18px 22px;
 }
-.quiz-step {
+#quizPage .quiz-step {
   display: inline-block;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: #2D4A30;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
-.quiz-q-title {
+#quizPage .quiz-q-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(22px, 3.5vw, 30px);
+  font-size: 22px;
   font-weight: 500;
   color: #1a1a1a;
-  margin: 0 0 32px;
+  margin: 0 0 20px;
   line-height: 1.3;
 }
 
-/* Options containers */
-.quiz-options {
+/* ────────────────────────────────────────────────────────
+   ANSWER OPTION BUTTONS
+   ──────────────────────────────────────────────────────── */
+#quizPage .quiz-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
-.quiz-options--grid {
+/* Grid layout for icon-options (Q1, Q3, Q5) */
+#quizPage .quiz-options--grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+/* List layout for text-only options (Q2, Q4, Q6) — explicit definition */
+#quizPage .quiz-options--list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-/* Option buttons */
-.quiz-opt {
+/* Base pill button — completely self-contained, no theme classes needed */
+#quizPage .quiz-opt {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 4px;
-  padding: 18px 20px;
-  background: #fff;
+  gap: 3px;
+  padding: 14px 16px;
+  background: #fafaf9;
   border: 1.5px solid #e0dbd3;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   text-align: left;
-  transition: border-color 0.2s, background 0.2s, transform 0.15s;
-  font-family: inherit;
+  font-family: 'Jost', sans-serif;
+  width: 100%;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, transform 0.12s;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.quiz-opt:hover {
+#quizPage .quiz-opt:hover,
+#quizPage .quiz-opt:focus {
   border-color: #2D4A30;
-  background: #f5f9f5;
+  background: #f3f8f3;
+  outline: none;
   transform: translateY(-1px);
 }
-.quiz-opt.selected {
+#quizPage .quiz-opt.selected {
   border-color: #2D4A30;
-  background: #f0f6f0;
-  box-shadow: 0 0 0 3px #2D4A3020;
+  background: #eef5ee;
+  box-shadow: 0 0 0 3px rgba(45, 74, 48, 0.14);
 }
-.quiz-opt--wide {
+
+/* Wide (row) variant for list questions */
+#quizPage .quiz-opt--wide {
   flex-direction: row;
   align-items: center;
   gap: 12px;
 }
-.quiz-opt-icon {
-  font-size: 24px;
+
+#quizPage .quiz-opt-icon {
+  font-size: 22px;
   line-height: 1;
   margin-bottom: 4px;
+  flex-shrink: 0;
+  display: block;
 }
-.quiz-opt--wide .quiz-opt-icon {
+#quizPage .quiz-opt--wide .quiz-opt-icon {
   margin-bottom: 0;
   font-size: 20px;
 }
-.quiz-opt-label {
-  font-size: 15px;
+#quizPage .quiz-opt-label {
+  font-size: 14px;
   font-weight: 600;
   color: #1a1a1a;
   display: block;
+  line-height: 1.25;
 }
-.quiz-opt-desc {
-  font-size: 12px;
+#quizPage .quiz-opt-desc {
+  font-size: 11px;
   color: #888;
   display: block;
   line-height: 1.4;
 }
+#quizPage .quiz-opt.selected .quiz-opt-label {
+  color: #2D4A30;
+}
 
-/* ── Results ── */
-.quiz-result-inner {
-  max-width: 640px;
-  margin: 0 auto;
-}
-.quiz-result-header {
+/* ────────────────────────────────────────────────────────
+   RESULTS SCREEN
+   ──────────────────────────────────────────────────────── */
+#quizPage .quiz-result-header {
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
-.quiz-result-title {
+#quizPage .quiz-result-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(24px, 4vw, 36px);
+  font-size: 26px;
   font-weight: 500;
   color: #1a1a1a;
-  margin: 0 0 12px;
+  margin: 10px 0 10px;
+  line-height: 1.2;
 }
-.quiz-result-title em {
+#quizPage .quiz-result-title em {
   font-style: italic;
   color: #2D4A30;
 }
-.quiz-result-sub {
-  font-size: 15px;
+#quizPage .quiz-result-sub {
+  font-size: 14px;
   color: #666;
   line-height: 1.6;
   margin: 0;
 }
-.quiz-result-card-wrap {
-  margin-bottom: 36px;
+#quizPage .quiz-result-card-wrap {
+  margin-bottom: 24px;
 }
-.quiz-result-card {
-  border-radius: 12px;
+#quizPage .quiz-result-card {
+  border-radius: 16px;
   border: 1.5px solid #e0dbd3;
-  padding: 32px 28px;
+  padding: 28px 20px;
   text-align: center;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
 }
-.quiz-result-emoji {
-  font-size: 48px;
-  margin-bottom: 12px;
+#quizPage .quiz-result-emoji {
+  font-size: 44px;
+  margin-bottom: 10px;
+  display: block;
 }
-.quiz-result-card-title {
+#quizPage .quiz-result-card-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 500;
   margin: 0 0 12px;
+  line-height: 1.3;
 }
-.quiz-result-card-desc {
-  font-size: 15px;
+#quizPage .quiz-result-card-desc {
+  font-size: 14px;
   color: #555;
   line-height: 1.7;
-  margin: 0 0 24px;
+  margin: 0 0 20px;
+  text-align: left;
 }
-.quiz-result-stats {
+#quizPage .quiz-result-stats {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   justify-content: center;
   flex-wrap: wrap;
 }
-.quiz-result-stat {
-  background: #fff;
-  border: 1px solid #e0dbd3;
+#quizPage .quiz-result-stat {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 99px;
-  padding: 6px 16px;
-  font-size: 12px;
+  padding: 5px 14px;
+  font-size: 11px;
   font-weight: 600;
   color: #1a1a1a;
   white-space: nowrap;
 }
-.quiz-result-actions {
+
+/* Results CTAs — fully self-contained, no btn-fill / btn-outline */
+#quizPage .quiz-result-actions {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 14px;
+  align-items: stretch;
+  gap: 12px;
 }
-.quiz-result-cta {
-  display: inline-block;
-  padding: 16px 40px;
+#quizPage .quiz-result-cta {
+  display: block;
+  padding: 16px 24px;
   background: #2D4A30;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 3px;
+  color: #fff !important;
+  text-decoration: none !important;
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 1.5px;
   text-transform: uppercase;
+  text-align: center;
   transition: background 0.2s, transform 0.15s;
+  border: none;
 }
-.quiz-result-cta:hover {
+#quizPage .quiz-result-cta:hover,
+#quizPage .quiz-result-cta:focus {
   background: #1e3320;
   transform: translateY(-1px);
+  color: #fff !important;
+  outline: none;
 }
-.quiz-restart-btn {
+#quizPage .quiz-restart-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
   background: transparent;
   border: 1.5px solid #2D4A30;
   color: #2D4A30;
-  padding: 14px 36px;
-  border-radius: 3px;
+  border-radius: 4px;
   font-family: 'Jost', sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -293,20 +354,75 @@
   text-transform: uppercase;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
+  text-align: center;
+  -webkit-appearance: none;
+  appearance: none;
 }
-.quiz-restart-btn:hover {
+#quizPage .quiz-restart-btn:hover,
+#quizPage .quiz-restart-btn:focus {
   background: #2D4A30;
   color: #fff;
+  outline: none;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .quiz-page { padding: 32px 16px 60px; }
-  .quiz-options--grid { grid-template-columns: 1fr 1fr; }
-  .quiz-intro-trust { gap: 14px; }
+/* ────────────────────────────────────────────────────────
+   DESKTOP ENHANCEMENTS (min-width up — mobile is the base)
+   ──────────────────────────────────────────────────────── */
+@media (min-width: 601px) {
+  #quizPage {
+    padding: 48px 24px 80px;
+  }
+  #quizPage .quiz-intro-title {
+    font-size: clamp(32px, 5vw, 48px);
+  }
+  #quizPage .quiz-q-card {
+    padding: 36px 32px 32px;
+  }
+  #quizPage .quiz-q-title {
+    font-size: clamp(22px, 3.5vw, 30px);
+    margin-bottom: 28px;
+  }
+  #quizPage .quiz-opt {
+    padding: 18px 20px;
+  }
+  #quizPage .quiz-opt-label {
+    font-size: 15px;
+  }
+  #quizPage .quiz-opt-desc {
+    font-size: 12px;
+  }
+  #quizPage .quiz-result-title {
+    font-size: clamp(24px, 4vw, 36px);
+  }
+  #quizPage .quiz-result-card {
+    padding: 36px 32px;
+  }
+  #quizPage .quiz-result-card-desc {
+    font-size: 15px;
+    text-align: center;
+  }
+  #quizPage .quiz-result-actions {
+    align-items: center;
+  }
+  #quizPage .quiz-result-cta {
+    display: inline-block;
+    width: auto;
+    padding: 16px 48px;
+  }
+  #quizPage .quiz-restart-btn {
+    width: auto;
+    padding: 14px 36px;
+  }
 }
-@media (max-width: 400px) {
-  .quiz-options--grid { grid-template-columns: 1fr; }
+
+/* ── Very small screens (iPhone SE 375px) ── */
+@media (max-width: 375px) {
+  #quizPage .quiz-options--grid {
+    grid-template-columns: 1fr;
+  }
+  #quizPage .quiz-intro-title {
+    font-size: 26px;
+  }
 }
 </style>
 
@@ -328,7 +444,7 @@
         <span>🎯 Personalized to you</span>
         <span>🌿 Completely free</span>
       </div>
-      <button class="btn-fill quiz-start-btn" onclick="quizStart()">
+      <button class="quiz-start-btn" onclick="quizStart()">
         Start the Quiz →
       </button>
     </div>
@@ -336,7 +452,7 @@
 
   <!-- ── Q1: Primary goal ── -->
   <div class="quiz-screen" id="q1">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">1 of 6</span>
       <h2 class="quiz-q-title">What's your primary wellness goal right now?</h2>
       <div class="quiz-options quiz-options--grid">
@@ -371,7 +487,7 @@
 
   <!-- ── Q2: How long ── -->
   <div class="quiz-screen" id="q2">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">2 of 6</span>
       <h2 class="quiz-q-title">How long have you been dealing with this?</h2>
       <div class="quiz-options quiz-options--list">
@@ -393,7 +509,7 @@
 
   <!-- ── Q3: Lifestyle ── -->
   <div class="quiz-screen" id="q3">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">3 of 6</span>
       <h2 class="quiz-q-title">Which lifestyle description fits you best?</h2>
       <div class="quiz-options quiz-options--grid">
@@ -423,7 +539,7 @@
 
   <!-- ── Q4: Experience ── -->
   <div class="quiz-screen" id="q4">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">4 of 6</span>
       <h2 class="quiz-q-title">Have you tried supplements before?</h2>
       <div class="quiz-options quiz-options--list">
@@ -445,7 +561,7 @@
 
   <!-- ── Q5: Form preference ── -->
   <div class="quiz-screen" id="q5">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">5 of 6</span>
       <h2 class="quiz-q-title">How do you prefer to take supplements?</h2>
       <div class="quiz-options quiz-options--grid">
@@ -475,7 +591,7 @@
 
   <!-- ── Q6: Budget ── -->
   <div class="quiz-screen" id="q6">
-    <div class="quiz-q-inner">
+    <div class="quiz-q-card">
       <span class="quiz-step">6 of 6</span>
       <h2 class="quiz-q-title">What's your monthly wellness budget?</h2>
       <div class="quiz-options quiz-options--list">
@@ -509,10 +625,10 @@
       </div>
 
       <div class="quiz-result-actions">
-        <a class="btn-fill quiz-result-cta" id="quizResultCta" href="{{ routes.all_products_collection_url }}">
+        <a class="quiz-result-cta" id="quizResultCta" href="{{ routes.all_products_collection_url }}">
           Shop My Protocol →
         </a>
-        <button class="btn-outline quiz-restart-btn" onclick="quizRestart()">
+        <button class="quiz-restart-btn" onclick="quizRestart()">
           Retake the quiz
         </button>
       </div>
@@ -525,11 +641,11 @@
 (function () {
   'use strict';
 
-  const answers = {};
-  const TOTAL_Q = 6;
-  let currentQ  = 0;
+  var answers  = {};
+  var TOTAL_Q  = 6;
+  var currentQ = 0;
 
-  const GOAL_MAP = {
+  var GOAL_MAP = {
     sleep: {
       emoji: '😴',
       title: 'Better Sleep Protocol',
@@ -577,6 +693,8 @@
     }
   };
 
+  /* ── Public API ── */
+
   window.quizStart = function () {
     currentQ = 1;
     updateProgress();
@@ -586,10 +704,13 @@
   window.quizNext = function (fromId, toId, btn, key, value) {
     answers[key] = value;
 
-    // Mark selection
-    btn.closest('.quiz-options').querySelectorAll('.quiz-opt').forEach(function (b) {
-      b.classList.remove('selected');
-    });
+    // Highlight selection
+    var container = btn.closest('.quiz-options');
+    if (container) {
+      container.querySelectorAll('.quiz-opt').forEach(function (b) {
+        b.classList.remove('selected');
+      });
+    }
     btn.classList.add('selected');
 
     if (toId === 'quizResult') {
@@ -605,18 +726,29 @@
   window.quizRestart = function () {
     Object.keys(answers).forEach(function (k) { delete answers[k]; });
     currentQ = 0;
-    document.querySelectorAll('.quiz-opt').forEach(function (b) { b.classList.remove('selected'); });
+    document.querySelectorAll('#quizPage .quiz-opt').forEach(function (b) {
+      b.classList.remove('selected');
+    });
     var fill = document.getElementById('quizProgressFill');
     if (fill) fill.style.width = '0%';
     showScreen('quizIntro');
   };
 
+  /* ── Private helpers ── */
+
   function showScreen(id) {
-    document.querySelectorAll('.quiz-screen').forEach(function (s) { s.classList.remove('active'); });
+    // Remove active from all screens
+    document.querySelectorAll('#quizPage .quiz-screen').forEach(function (s) {
+      s.classList.remove('active');
+    });
     var el = document.getElementById(id);
     if (el) {
       el.classList.add('active');
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Scroll quiz top into view on mobile
+      var page = document.getElementById('quizPage');
+      if (page) {
+        page.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     }
   }
 
@@ -631,7 +763,7 @@
     if (fill) fill.style.width = '100%';
 
     var goal = answers.goal || 'sleep';
-    var g    = GOAL_MAP[goal];
+    var g    = GOAL_MAP[goal] || GOAL_MAP['sleep'];
 
     var statsHtml = g.stats.map(function (s) {
       return '<span class="quiz-result-stat">' + s + '</span>';
@@ -640,8 +772,8 @@
     var wrap = document.getElementById('quizResultCard');
     if (wrap) {
       wrap.innerHTML =
-        '<div class="quiz-result-card" style="background:' + g.bg + ';border-color:' + g.accent + '33">' +
-          '<div class="quiz-result-emoji">' + g.emoji + '</div>' +
+        '<div class="quiz-result-card" style="background:' + g.bg + ';border-color:' + g.accent + '44">' +
+          '<span class="quiz-result-emoji">' + g.emoji + '</span>' +
           '<h3 class="quiz-result-card-title" style="color:' + g.accent + '">' + g.title + '</h3>' +
           '<p class="quiz-result-card-desc">' + g.desc + '</p>' +
           '<div class="quiz-result-stats">' + statsHtml + '</div>' +
@@ -651,9 +783,15 @@
     var cta = document.getElementById('quizResultCta');
     if (cta) cta.href = g.url;
   }
+
 }());
 </script>
 
 {% schema %}
-{ "name": "Wellness Quiz", "tag": "div", "settings": [], "presets": [{"name":"Wellness Quiz"}] }
+{
+  "name": "Wellness Quiz",
+  "tag": "div",
+  "settings": [],
+  "presets": [{ "name": "Wellness Quiz" }]
+}
 {% endschema %}
