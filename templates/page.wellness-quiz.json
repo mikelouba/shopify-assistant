@@ -9,12 +9,12 @@
  */
 {
   "sections": {
-    "quiz_main": {
-      "type": "wellness-quiz-main",
+    "page_main": {
+      "type": "page-main",
       "settings": {}
     }
   },
   "order": [
-    "quiz_main"
+    "page_main"
   ]
 }
