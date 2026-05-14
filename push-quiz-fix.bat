@@ -51,4 +51,9 @@ if %ERRORLEVEL% equ 0 (
   echo If not, open the theme code editor and manually replace
   echo sections/wellness-quiz-main.liquid with the file in this folder.
 ) else (
-  echo.
+  echo.
+  echo PUSH FAILED - see error above.
+)
+
+echo.
+pause

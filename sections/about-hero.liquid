@@ -16,4 +16,99 @@
     {%- if eyebrow != blank -%}<p class="section-eyebrow">{{ eyebrow }}</p>{%- endif -%}
     <h1 class="about-hero-title">
       {%- if section.settings.heading != blank -%}
-        {{ section.s
+        {{ section.settings.heading }}
+      {%- else -%}
+        Born from a belief that<br><em>nature knows best</em>
+      {%- endif -%}
+    </h1>
+    {%- if subhead != blank -%}
+      <p class="about-hero-sub">{{ subhead }}</p>
+    {%- endif -%}
+  </div>
+  <div class="about-hero-stats">
+    {%- if s1v != blank -%}<div class="about-stat"><span class="about-stat-num">{{ s1v }}</span><span class="about-stat-label">{{ s1l }}</span></div>{%- endif -%}
+    {%- if s2v != blank -%}<div class="about-stat"><span class="about-stat-num">{{ s2v }}</span><span class="about-stat-label">{{ s2l }}</span></div>{%- endif -%}
+    {%- if s3v != blank -%}<div class="about-stat"><span class="about-stat-num">{{ s3v }}</span><span class="about-stat-label">{{ s3l }}</span></div>{%- endif -%}
+    {%- if s4v != blank -%}<div class="about-stat"><span class="about-stat-num">{{ s4v }}</span><span class="about-stat-label">{{ s4l }}</span></div>{%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Hero",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "✦ Our Story"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Born from a belief that <em>nature knows best</em></p>"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Solmara was founded on one simple idea: the most powerful medicines on earth have been growing in the ground for thousands of years. We just needed to listen."
+    },
+    {
+      "type": "header",
+      "content": "Stats"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_val",
+      "label": "Stat 1 value",
+      "default": "2019"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Founded"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_val",
+      "label": "Stat 2 value",
+      "default": "24K+"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Happy customers"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_val",
+      "label": "Stat 3 value",
+      "default": "40+"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Formulas"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_val",
+      "label": "Stat 4 value",
+      "default": "12"
+    },
+    {
+      "type": "text",
+      "id": "stat_4_label",
+      "label": "Stat 4 label",
+      "default": "Countries"
+    }
+  ],
+  "presets": [{ "name": "About Hero" }]
+}
+{% endschema %}
