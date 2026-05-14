@@ -4,7 +4,7 @@
 
   <div class="products-grid related-grid">
     {%- assign related = recommendations.products -%}
-    {%- if related.size > 0 -%}
+    {%- if related != empty -%}
       {%- for product in related limit: section.settings.products_to_show -%}
         {%- render 'product-card', product: product -%}
       {%- endfor -%}

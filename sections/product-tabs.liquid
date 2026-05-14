@@ -45,10 +45,12 @@
 
     <div class="ptab-panel" id="tab-ingredients">
       <div class="ptab-content">
-        {%- if product.metafields.custom.ingredients != blank -%}
-          <div class="rte">{{ product.metafields.custom.ingredients }}</div>
+        {%- if product.metafields.custom.detailed_ingredients != blank -%}
+          <div class="rte">{{ product.metafields.custom.detailed_ingredients | metafield_tag }}</div>
+        {%- elsif product.metafields.custom.ingredients != blank -%}
+          <div class="rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div>
         {%- else -%}
-          <p class="ptab-placeholder">Ingredient information will be listed here. Add them via product metafields in your Shopify admin.</p>
+          <p>No ingredient information available.</p>
         {%- endif -%}
       </div>
     </div>
