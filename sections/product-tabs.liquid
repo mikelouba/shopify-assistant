@@ -1,9 +1,21 @@
+{%- liquid
+  assign lbl_details     = section.settings.tab_details_label     | default: 'Details'
+  assign lbl_howto       = section.settings.tab_howto_label       | default: 'How to Use'
+  assign lbl_ingredients = section.settings.tab_ingredients_label | default: 'Ingredients'
+  assign lbl_reviews     = section.settings.tab_reviews_label     | default: 'Reviews'
+  assign show_reviews    = section.settings.show_reviews_tab
+  if show_reviews == blank
+    assign show_reviews = true
+  endif
+-%}
 <div class="product-tabs-section">
   <div class="product-tabs-nav">
-    <button class="ptab active" onclick="switchTab(this,'tab-details')"   >Details</button>
-    <button class="ptab"        onclick="switchTab(this,'tab-howto')"     >How to Use</button>
-    <button class="ptab"        onclick="switchTab(this,'tab-ingredients')">Ingredients</button>
-    <button class="ptab"        onclick="switchTab(this,'tab-reviews')"   >Reviews</button>
+    <button class="ptab active" onclick="switchTab(this,'tab-details')"    >{{ lbl_details }}</button>
+    <button class="ptab"        onclick="switchTab(this,'tab-howto')"      >{{ lbl_howto }}</button>
+    <button class="ptab"        onclick="switchTab(this,'tab-ingredients')">{{ lbl_ingredients }}</button>
+    {%- if show_reviews -%}
+    <button class="ptab"        onclick="switchTab(this,'tab-reviews')"    >{{ lbl_reviews }}</button>
+    {%- endif -%}
   </div>
 
   <div class="product-tabs-body">
@@ -41,6 +53,7 @@
       </div>
     </div>
 
+    {%- if show_reviews -%}
     <div class="ptab-panel" id="tab-reviews">
       <div class="ptab-content" id="tab-reviews-content">
         <!-- If using a reviews app like Judge.me or Okendo, their widget renders here -->
@@ -60,6 +73,7 @@
         <div id="shopify-product-reviews" data-id="{{ product.id }}"></div>
       </div>
     </div>
+    {%- endif -%}
   </div>
 </div>
 
@@ -76,7 +90,38 @@ window.switchTab = function(btn, panelId) {
 {
   "name": "Product Tabs",
   "tag": "div",
-  "settings": [],
+  "settings": [
+    {
+      "type": "text",
+      "id": "tab_details_label",
+      "label": "Tab 1 label",
+      "default": "Details"
+    },
+    {
+      "type": "text",
+      "id": "tab_howto_label",
+      "label": "Tab 2 label",
+      "default": "How to Use"
+    },
+    {
+      "type": "text",
+      "id": "tab_ingredients_label",
+      "label": "Tab 3 label",
+      "default": "Ingredients"
+    },
+    {
+      "type": "text",
+      "id": "tab_reviews_label",
+      "label": "Tab 4 label",
+      "default": "Reviews"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_reviews_tab",
+      "label": "Show Reviews tab",
+      "default": true
+    }
+  ],
   "presets": [{ "name": "Product Tabs" }]
 }
 {% endschema %}

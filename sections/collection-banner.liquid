@@ -24,7 +24,47 @@
 {
   "name": "Collection Banner",
   "tag": "div",
-  "settings": [],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_breadcrumbs",
+      "label": "Show breadcrumbs",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40,
+      "info": "Darkens the banner image so text stays readable"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Text alignment",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    }
+  ],
   "presets": [{ "name": "Collection Banner" }]
 }
 {% endschema %}

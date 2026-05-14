@@ -3,7 +3,7 @@
 
   <!-- Header -->
   <header class="article-header">
-    {%- if article.tags.size > 0 -%}
+    {%- if section.settings.show_tags and article.tags.size > 0 -%}
       <div class="article-tags">
         {%- for tag in article.tags -%}
           <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="blog-card-tag">{{ tag }}</a>
@@ -13,17 +13,21 @@
 
     <h1 class="article-title">{{ article.title }}</h1>
 
+    {%- if section.settings.show_author or section.settings.show_date -%}
     <div class="article-meta">
-      <span>By {{ article.author }}</span>
-      <span>·</span>
+      {%- if section.settings.show_author -%}<span>By {{ article.author }}</span>{%- endif -%}
+      {%- if section.settings.show_author and section.settings.show_date -%}<span>·</span>{%- endif -%}
+      {%- if section.settings.show_date -%}
       <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
         {{ article.published_at | date: '%B %d, %Y' }}
       </time>
+      {%- endif -%}
       {%- if article.comments_count > 0 -%}
         <span>·</span>
         <span>{{ article.comments_count }} comments</span>
       {%- endif -%}
     </div>
+    {%- endif -%}
 
     {%- if article.image -%}
       <div class="article-hero-img">
@@ -43,14 +47,17 @@
   </div>
 
   <!-- Share -->
+  {%- if section.settings.show_share -%}
   <div class="article-share">
     <span class="share-label">Share this article:</span>
     <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u={{ request.origin }}{{ article.url }}" target="_blank" rel="noopener">Facebook</a>
     <a class="share-btn" href="https://twitter.com/intent/tweet?url={{ request.origin }}{{ article.url }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">Twitter</a>
     <a class="share-btn" href="https://pinterest.com/pin/create/button/?url={{ request.origin }}{{ article.url }}&description={{ article.title | url_encode }}" target="_blank" rel="noopener">Pinterest</a>
   </div>
+  {%- endif -%}
 
   <!-- Prev / Next -->
+  {%- if section.settings.show_prev_next -%}
   <nav class="article-nav">
     {%- if blog.previous_article -%}
       <a href="{{ blog.previous_article }}" class="article-nav-link prev">← Previous Article</a>
@@ -60,6 +67,7 @@
       <a href="{{ blog.next_article }}" class="article-nav-link next">Next Article →</a>
     {%- endif -%}
   </nav>
+  {%- endif -%}
 
   <!-- Comments -->
   {%- if blog.comments_enabled? -%}
@@ -96,5 +104,41 @@
 </article>
 
 {% schema %}
-{ "name": "Article", "tag": "div", "settings": [], "presets": [{"name":"Article"}] }
+{
+  "name": "Article",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "Show author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "Show publish date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "Show article tags",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show share buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_prev_next",
+      "label": "Show previous / next navigation",
+      "default": true
+    }
+  ],
+  "presets": [{ "name": "Article" }]
+}
 {% endschema %}
