@@ -45,13 +45,13 @@
 
     <div class="ptab-panel" id="tab-ingredients">
       <div class="ptab-content">
-        {%- if product.metafields.custom.detailed_ingredients != blank -%}
-          <div class="rte">{{ product.metafields.custom.detailed_ingredients | metafield_tag }}</div>
-        {%- elsif product.metafields.custom.ingredients != blank -%}
-          <div class="rte">{{ product.metafields.custom.ingredients | metafield_tag }}</div>
-        {%- else -%}
+        {% if product.metafields.custom.detailed_ingredients != blank %}
+          {{ product.metafields.custom.detailed_ingredients | metafield_tag }}
+        {% elsif product.metafields.custom.ingredients != blank %}
+          {{ product.metafields.custom.ingredients | metafield_tag }}
+        {% else %}
           <p>No ingredient information available.</p>
-        {%- endif -%}
+        {% endif %}
       </div>
     </div>
 
