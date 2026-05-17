@@ -1,8 +1,16 @@
-<section class="testimonials-section">
+{%- liquid
+  assign bg_color      = section.settings.bg_color      | default: '#F8F5F0'
+  assign cols          = section.settings.cols          | default: '3'
+  assign show_verified = section.settings.show_verified | default: true
+  assign pad           = section.settings.section_padding | default: 60
+-%}
+
+<section class="testimonials-section"
+  style="background-color: {{ bg_color }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
   <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
   <h2 class="section-title">{{ section.settings.heading | replace: 'feels', '<em>feels</em>' }}</h2>
 
-  <div class="testimonials-grid">
+  <div class="testimonials-grid" style="grid-template-columns: repeat({{ cols }}, 1fr);">
     {%- for block in section.blocks -%}
       <div class="testimonial-card" {{ block.shopify_attributes }}>
         <div class="t-stars">
@@ -17,7 +25,9 @@
           <div>
             <div class="t-author">{{ block.settings.author }}</div>
             <div class="t-meta">Verified Customer · {{ block.settings.location }}</div>
-            <div class="t-verified">✓ Verified Purchase</div>
+            {%- if show_verified -%}
+              <div class="t-verified">✓ Verified Purchase</div>
+            {%- endif -%}
           </div>
         </div>
       </div>
@@ -30,20 +40,11 @@
   "name": "Testimonials",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "✦ Real Results" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "What our community feels" }
-  ],
-  "blocks": [{
-    "type": "testimonial",
-    "name": "Testimonial",
-    "settings": [
-      { "type": "range",    "id": "stars",    "label": "Stars",    "min": 1, "max": 5, "step": 1, "default": 5 },
-      { "type": "textarea", "id": "text",     "label": "Review text" },
-      { "type": "text",     "id": "author",   "label": "Customer name", "default": "Happy Customer" },
-      { "type": "text",     "id": "location", "label": "Location",      "default": "United States" },
-      { "type": "text",     "id": "avatar",   "label": "Avatar emoji",  "default": "🌿" }
-    ]
-  }],
-  "presets": [{ "name": "Testimonials" }]
-}
-{% endschema %}
+    { "type": "header", "content": "Content" },
+    { "type": "text",   "id": "eyebrow", "label": "Eyebrow", "default": "✦ Real Results" },
+    { "type": "text",   "id": "heading", "label": "Heading", "default": "What our community feels" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "cols",
+      "label": "Co

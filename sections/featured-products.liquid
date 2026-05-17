@@ -1,24 +1,32 @@
 {%- liquid
-  assign collection = collections[section.settings.collection]
+  assign collection     = collections[section.settings.collection]
   assign products_to_show = section.settings.products_to_show | default: 8
+  assign grid_cols      = section.settings.grid_cols      | default: '4'
+  assign heading_align  = section.settings.heading_align  | default: 'left'
+  assign bg_color       = section.settings.bg_color       | default: '#ffffff'
+  assign view_all_label = section.settings.view_all_label | default: 'View All →'
+  assign pad            = section.settings.section_padding | default: 60
+  assign show_quick_add = section.settings.show_quick_add
 -%}
 
-<section class="products-section" id="products">
+<section class="products-section" id="products"
+  style="background-color: {{ bg_color }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
+
   <div class="section-header-row">
     <div>
-      <p class="section-eyebrow" style="text-align:left">{{ section.settings.eyebrow }}</p>
-      <h2 class="section-title" style="text-align:left;margin-bottom:0">{{ section.settings.heading }}</h2>
+      <p class="section-eyebrow" style="text-align: {{ heading_align }}">{{ section.settings.eyebrow }}</p>
+      <h2 class="section-title" style="text-align: {{ heading_align }}; margin-bottom: 0">{{ section.settings.heading }}</h2>
     </div>
-    <a class="view-all-link" href="{{ section.settings.view_all_url | default: routes.collections_url }}">View All →</a>
+    <a class="view-all-link" href="{{ section.settings.view_all_url | default: routes.collections_url }}">{{ view_all_label }}</a>
   </div>
 
-  <div class="products-grid">
+  <div class="products-grid" style="grid-template-columns: repeat({{ grid_cols }}, 1fr);">
     {%- if collection != blank and collection.products.size > 0 -%}
       {%- for product in collection.products limit: products_to_show -%}
-        {%- render 'product-card', product: product -%}
+        {%- render 'product-card', product: product, show_quick_add: show_quick_add -%}
       {%- endfor -%}
     {%- else -%}
-      {%- comment -%} Fallback: show placeholder cards in the theme editor {%- endcomment -%}
+      {%- comment -%} Fallback placeholder cards for the theme editor {%- endcomment -%}
       {%- for i in (1..8) -%}
         <div class="product-card">
           <div class="p-img-wrap">
@@ -41,14 +49,4 @@
 {% schema %}
 {
   "name": "Featured Products",
-  "tag": "div",
-  "settings": [
-    { "type": "text",       "id": "eyebrow",         "label": "Eyebrow text",   "default": "✦ Most Loved" },
-    { "type": "text",       "id": "heading",          "label": "Section heading","default": "Our Bestsellers" },
-    { "type": "collection", "id": "collection",       "label": "Collection to display" },
-    { "type": "range",      "id": "products_to_show", "label": "Products to show", "min": 4, "max": 12, "step": 4, "default": 8 },
-    { "type": "url",        "id": "view_all_url",     "label": "View all link"  }
-  ],
-  "presets": [{ "name": "Featured Products" }]
-}
-{% endschema %}
+  "tag

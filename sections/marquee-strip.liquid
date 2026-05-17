@@ -1,10 +1,27 @@
-<div class="marquee-strip">
-  <div class="m-track" aria-hidden="true">
+{%- liquid
+  assign bg_color   = section.settings.bg_color   | default: '#2D4A30'
+  assign text_color = section.settings.text_color | default: '#ffffff'
+  assign speed      = section.settings.speed      | default: 30
+  assign font_size  = section.settings.font_size  | default: 14
+  assign separator  = section.settings.separator  | default: 'leaf'
+  case separator
+    when 'dot'
+      assign sep_char = '·'
+    when 'dash'
+      assign sep_char = '—'
+    else
+      assign sep_char = '🌿'
+  endcase
+-%}
+
+<div class="marquee-strip"
+  style="background-color: {{ bg_color }}; color: {{ text_color }}; font-size: {{ font_size }}px;">
+  <div class="m-track" style="animation-duration: {{ speed }}s" aria-hidden="true">
     {%- assign items = section.settings.items | split: ',' -%}
     {%- comment -%} Duplicate for seamless loop {%- endcomment -%}
     {%- for pass in (1..2) -%}
       {%- for item in items -%}
-        <span class="m-item">{{ item | strip }} <span class="m-sep"></span></span>
+        <span class="m-item">{{ item | strip }} <span class="m-sep">{{ sep_char }}</span></span>
       {%- endfor -%}
     {%- endfor -%}
   </div>
@@ -15,36 +32,8 @@
   "name": "Marquee Strip",
   "tag": "div",
   "settings": [
+    { "type": "header", "content": "Content" },
     {
       "type": "text",
       "id": "items",
-      "label": "Items (comma-separated)",
-      "default": "Gut Health,Sleep Support,Stress Relief,Immune Boost,Energy & Focus,Skin Glow,Hormonal Balance"
-    },
-    {
-      "type": "range",
-      "id": "speed",
-      "label": "Scroll speed",
-      "min": 10,
-      "max": 60,
-      "step": 5,
-      "unit": "s",
-      "default": 30,
-      "info": "Lower = faster"
-    },
-    {
-      "type": "color",
-      "id": "bg_color",
-      "label": "Background colour",
-      "default": "#2D4A30"
-    },
-    {
-      "type": "color",
-      "id": "text_color",
-      "label": "Text colour",
-      "default": "#ffffff"
-    }
-  ],
-  "presets": [{ "name": "Marquee Strip" }]
-}
-{% endschema %}
+      "label": "

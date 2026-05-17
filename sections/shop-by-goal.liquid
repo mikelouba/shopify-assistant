@@ -1,10 +1,18 @@
-<section class="goals-section" id="goals">
+{%- liquid
+  assign bg_color   = section.settings.bg_color  | default: '#F8F5F0'
+  assign col_count  = section.settings.col_count  | default: '5'
+  assign card_style = section.settings.card_style | default: 'card'
+  assign pad        = section.settings.section_padding | default: 60
+-%}
+
+<section class="goals-section" id="goals"
+  style="background-color: {{ bg_color }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
   <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
   <h2 class="section-title">{{ section.settings.heading | replace: 'Your Goal', '<em>Your Goal</em>' }}</h2>
 
-  <div class="goals-grid">
+  <div class="goals-grid" style="grid-template-columns: repeat({{ col_count }}, 1fr);">
     {%- for block in section.blocks -%}
-      <a class="goal-card" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+      <a class="goal-card goal-card--{{ card_style }}" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
         <div class="goal-icon-wrap">{{ block.settings.icon }}</div>
         <div class="goal-name">{{ block.settings.name }}</div>
         <div class="goal-desc">{{ block.settings.desc }}</div>
@@ -18,32 +26,32 @@
   "name": "Shop by Goal",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow",  "default": "✦ Personalized Wellness" },
-    { "type": "text", "id": "heading", "label": "Heading",  "default": "Shop by Your Goal" }
-  ],
-  "blocks": [
+    { "type": "header", "content": "Content" },
+    { "type": "text",   "id": "eyebrow", "label": "Eyebrow", "default": "✦ Personalized Wellness" },
+    { "type": "text",   "id": "heading", "label": "Heading", "default": "Shop by Your Goal" },
+    { "type": "header", "content": "Layout" },
     {
-      "type": "goal",
-      "name": "Goal Card",
-      "limit": 6,
-      "settings": [
-        { "type": "text", "id": "icon", "label": "Emoji icon",   "default": "🌿" },
-        { "type": "text", "id": "name", "label": "Goal name",    "default": "Better Sleep" },
-        { "type": "text", "id": "desc", "label": "Description",  "default": "Drift deeper, wake refreshed" },
-        { "type": "url",  "id": "url",  "label": "Collection link" }
-      ]
-    }
-  ],
-  "max_blocks": 6,
-  "presets": [{
-    "name": "Shop by Goal",
-    "blocks": [
-      { "type": "goal", "settings": { "icon": "😴", "name": "Better Sleep",    "desc": "Drift deeper, wake refreshed" } },
-      { "type": "goal", "settings": { "icon": "🧠", "name": "Focus & Clarity", "desc": "Sharpen your mind naturally" } },
-      { "type": "goal", "settings": { "icon": "🌿", "name": "Stress Relief",   "desc": "Calm your nervous system" } },
-      { "type": "goal", "settings": { "icon": "✨", "name": "Skin Glow",       "desc": "Radiance from within" } },
-      { "type": "goal", "settings": { "icon": "⚡", "name": "Energy & Vitality","desc": "Feel alive all day long" } }
-    ]
-  }]
-}
-{% endschema %}
+      "type": "select",
+      "id": "col_count",
+      "label": "Columns per row",
+      "options": [
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" },
+        { "value": "5", "label": "5 columns" }
+      ],
+      "default": "5",
+      "info": "Collapses to 2 columns on mobile automatically."
+    },
+    {
+      "type": "select",
+      "id": "card_style",
+      "label": "Card style",
+      "options": [
+        { "value": "card",    "label": "Card (boxed with shadow)" },
+        { "value": "minimal", "label": "Minimal (icon + text only)" }
+      ],
+      "default": "card"
+    },
+    {
+      "type": "range",
+      "id": "

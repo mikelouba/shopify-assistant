@@ -59,7 +59,7 @@
             "icon": "🌿",
             "name": "Stress Relief",
             "desc": "Calm your nervous system",
-            "url": "shopify://pages/stress-1"
+            "url": "shopify://pages/stress"
           }
         },
         "goal_4": {
@@ -68,7 +68,7 @@
             "icon": "✨",
             "name": "Skin Glow",
             "desc": "Radiance from within",
-            "url": "shopify://pages/stress"
+            "url": "shopify://pages/glow"
           }
         },
         "goal_5": {
@@ -80,23 +80,13 @@
             "url": "shopify://pages/energy"
           }
         },
-        "goal_6TPhai": {
-          "type": "goal",
-          "settings": {
-            "icon": "🌿",
-            "name": "Better Sleep",
-            "desc": "Drift deeper, wake refreshed",
-            "url": ""
-          }
-        }
       },
       "block_order": [
         "goal_1",
         "goal_2",
         "goal_3",
         "goal_4",
-        "goal_5",
-        "goal_6TPhai"
+        "goal_5"
       ],
       "settings": {
         "eyebrow": "✦ Personalized Wellness",
@@ -108,7 +98,7 @@
       "settings": {
         "eyebrow": "✦ Most Loved",
         "heading": "Our Bestsellers",
-        "collection": "bestsellers",
+        "collection": "best-sellers",
         "products_to_show": 8,
         "view_all_url": "/collections/all"
       }
@@ -254,3 +244,4 @@
     "newsletter"
   ]
 }
+                                                                                                                                                                                                                                                                               

@@ -1,6 +1,22 @@
+{%- liquid
+  assign layout     = section.settings.layout     | default: 'image-left'
+  assign section_bg = section.settings.section_bg | default: '#ffffff'
+  assign visual_bg  = section.settings.visual_bg  | default: '#F0EBE3'
+  assign pad        = section.settings.section_padding | default: 60
+  if layout == 'image-right'
+    assign visual_order = 2
+    assign content_order = 1
+  else
+    assign visual_order = 1
+    assign content_order = 2
+  endif
+-%}
+
 {% comment %}─── FEATURE SPLIT ───{% endcomment %}
-<section class="feature-section">
-  <div class="feature-visual">
+<section class="feature-section"
+  style="background-color: {{ section_bg }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
+
+  <div class="feature-visual" style="order: {{ visual_order }}; background-color: {{ visual_bg }}">
     {%- if section.settings.feature_image != blank -%}
       {{ section.settings.feature_image | image_url: width: 800 | image_tag:
           alt: section.settings.heading,
@@ -20,7 +36,7 @@
     {%- endif -%}
   </div>
 
-  <div class="feature-content">
+  <div class="feature-content" style="order: {{ content_order }}">
     <p class="section-eyebrow">{{ section.settings.eyebrow }}</p>
     <h2 class="feature-title">{{ section.settings.heading | replace: "nature's", "<em>nature's</em>" }}</h2>
     <p class="feature-body">{{ section.settings.body }}</p>
@@ -42,7 +58,9 @@
       {%- endfor -%}
     </div>
 
-    <a class="btn-fill" href="{{ section.settings.btn_url }}">{{ section.settings.btn_label }}</a>
+    {%- if section.settings.btn_label != blank -%}
+      <a class="btn-fill" href="{{ section.settings.btn_url }}">{{ section.settings.btn_label }}</a>
+    {%- endif -%}
   </div>
 </section>
 
@@ -51,26 +69,15 @@
   "name": "Feature Split",
   "tag": "div",
   "settings": [
-    { "type": "image_picker", "id": "feature_image", "label": "Left image (optional)" },
-    { "type": "text",     "id": "eyebrow",       "label": "Eyebrow",  "default": "✦ The Solmara Difference" },
-    { "type": "text",     "id": "heading",        "label": "Heading",  "default": "Science meets nature's intelligence" },
-    { "type": "textarea", "id": "body",           "label": "Body text" },
-    { "type": "header",   "content": "Pillar 1" },
-    { "type": "text",     "id": "pillar_1_icon",  "label": "Icon",     "default": "🔬" },
-    { "type": "text",     "id": "pillar_1_title", "label": "Title",    "default": "Clinically Validated" },
-    { "type": "textarea", "id": "pillar_1_body",  "label": "Body" },
-    { "type": "header",   "content": "Pillar 2" },
-    { "type": "text",     "id": "pillar_2_icon",  "label": "Icon",     "default": "🌿" },
-    { "type": "text",     "id": "pillar_2_title", "label": "Title",    "default": "Certified Organic Sourcing" },
-    { "type": "textarea", "id": "pillar_2_body",  "label": "Body" },
-    { "type": "header",   "content": "Pillar 3" },
-    { "type": "text",     "id": "pillar_3_icon",  "label": "Icon",     "default": "♻️" },
-    { "type": "text",     "id": "pillar_3_title", "label": "Title",    "default": "Zero-Plastic Packaging" },
-    { "type": "textarea", "id": "pillar_3_body",  "label": "Body" },
-    { "type": "header",   "content": "Button" },
-    { "type": "text",     "id": "btn_label",      "label": "Button text", "default": "Our Standards →" },
-    { "type": "url",      "id": "btn_url",        "label": "Button link" }
-  ],
-  "presets": [{ "name": "Feature Split" }]
-}
-{% endschema %}
+    { "type": "header",       "content": "Content" },
+    { "type": "image_picker", "id": "feature_image",   "label": "Image (optional — replaces graphic)" },
+    { "type": "text",         "id": "eyebrow",         "label": "Eyebrow",  "default": "✦ The Solmara Difference" },
+    { "type": "text",         "id": "heading",          "label": "Heading",  "default": "Science meets nature's intelligence" },
+    { "type": "textarea",     "id": "body",             "label": "Body text" },
+    { "type": "header",       "content": "Pillar 1" },
+    { "type": "text",         "id": "pillar_1_icon",    "label": "Icon",     "default": "🔬" },
+    { "type": "text",         "id": "pillar_1_title",   "label": "Title",    "default": "Clinically Validated" },
+    { "type": "textarea",     "id": "pillar_1_body",    "label": "Body" },
+    { "type": "header",       "content": "Pillar 2" },
+    { "type": "text",         "id": "pillar_2_icon",    "label": "Icon",     "default": "🌿" },
+    { "type": "text",  
