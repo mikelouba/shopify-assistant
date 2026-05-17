@@ -651,7 +651,7 @@
       title: 'Better Sleep Protocol',
       desc:  'Your answers point to a nervous system that needs help unwinding. We recommend our Ashwagandha Complex paired with the Sleep Ritual blend — non-habit-forming, deeply restorative sleep from night one.',
       stats: ['+68% sleep quality', '−23 min sleep onset', '0 habit-forming compounds'],
-      url:   '/pages/sleep',
+      url:   '/pages/goal-sleep',
       accent: '#7B9CC4',
       bg:    '#E8EDF5'
     },
@@ -660,7 +660,7 @@
       title: 'Focus & Cognitive Protocol',
       desc:  "Your profile points to a need for sustained mental clarity and neuroprotection. We recommend our Lion's Mane Complex with Bacopa Monnieri — the stack that sharpens focus without the caffeine crash.",
       stats: ['89% better focus', '+42% NGF production', 'Zero stimulants'],
-      url:   '/pages/focus',
+      url:   '/pages/goal-focus',
       accent: '#C49B6C',
       bg:    '#F5EDE0'
     },
@@ -669,7 +669,7 @@
       title: 'Calm & Stress Relief Protocol',
       desc:  'Your cortisol levels need support. We recommend the KSM-66 Ashwagandha + Rhodiola Rosea stack — the gold standard for regulating the HPA-axis and restoring your baseline calm.',
       stats: ['−28% cortisol', '91% feel calmer in 2 weeks', '0 pharmaceutical compounds'],
-      url:   '/pages/stress',
+      url:   '/pages/goal-stress',
       accent: '#7EAA82',
       bg:    '#E8F0E8'
     },
@@ -678,7 +678,7 @@
       title: 'Skin Glow Protocol',
       desc:  'Your skin needs internal nourishment. We recommend our Marine Collagen Peptides + Antioxidant Glow blend — a clinical dose of collagen paired with skin-brightening botanicals.',
       stats: ['+87% visible improvement', '5g clinical collagen dose', '−24% fine lines at 12 wks'],
-      url:   '/pages/glow',
+      url:   '/pages/goal-glow',
       accent: '#C47B8C',
       bg:    '#F5E8ED'
     },
@@ -687,9 +687,18 @@
       title: 'Energy & Vitality Protocol',
       desc:  'Your body is running on reserves. We recommend our Cordyceps + Adaptogen Vitality blend — 8 hours of clean, sustained energy without stimulants, crashes, or dependency.',
       stats: ['+84% vitality at 6 weeks', '92% eliminated slumps', '0 synthetic stimulants'],
-      url:   '/pages/energy',
+      url:   '/pages/goal-energy',
       accent: '#C4A027',
       bg:    '#F5EDD8'
+    },
+    wellness: {
+      emoji: '🌱',
+      title: 'Complete Wellness Protocol',
+      desc:  'Your answers point to an opportunity for a full-spectrum wellness upgrade. We recommend our Solmara Daily Essentials stack — a foundational protocol covering immunity, energy, mood, and longevity.',
+      stats: ['Comprehensive daily support', 'All-natural formula', '90-day results guarantee'],
+      url:   '/pages/goal-wellness',
+      accent: '#2D4A30',
+      bg:    '#EAF0EA'
     }
   };
 
@@ -762,8 +771,8 @@
     var fill = document.getElementById('quizProgressFill');
     if (fill) fill.style.width = '100%';
 
-    var goal = answers.goal || 'sleep';
-    var g    = GOAL_MAP[goal] || GOAL_MAP['sleep'];
+    var goal = answers.goal || 'wellness';
+    var g    = GOAL_MAP[goal] || GOAL_MAP['wellness'];
 
     var statsHtml = g.stats.map(function (s) {
       return '<span class="quiz-result-stat">' + s + '</span>';
