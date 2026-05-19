@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#081C15",
+        "hero_overlay_opacity": 55,
         "hero_badge": "COGNITIVE SUPPORT",
-        "hero_badge_color": "#C49B6C",
+        "hero_badge_color": "#52B788",
         "hero_heading": "Unlock Your Sharpest Mind",
         "hero_subheading": "Precision nootropics formulated to sustain deep focus, protect memory, and elevate mental clarity — without the crash.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Focus Collection",
-        "cta_primary_url": "/collections/focus",
         "cta_secondary_text": "Build My Stack",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "🍄",
-        "benefit_1_text": "Lion's Mane NGF +42%",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically studied",
-        "benefit_3_icon": "⚡",
-        "benefit_3_text": "Zero jitters or crash",
+        "benefit_1_title": "Neural Growth",
+        "benefit_1_desc": "Lion's Mane boosts NGF by up to 42% for lasting cognitive support.",
+        "benefit_2_icon": "⚡",
+        "benefit_2_title": "Sustained Clarity",
+        "benefit_2_desc": "Zero jitters, zero crash — just clean, extended mental focus all day.",
+        "benefit_3_icon": "🧬",
+        "benefit_3_title": "Neuroprotective",
+        "benefit_3_desc": "Antioxidant-rich adaptogens protect your brain from oxidative stress.",
         "products_heading": "Recommended for Focus & Clarity",
+        "products_subheading": "Nootropic formulas for sustained deep work and mental performance",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I'm a software engineer and the Lion's Mane has been transformative. I go into flow states faster and stay there longer.",
-        "testimonial_author": "James K. — London, UK · Verified Customer",
+        "testimonial_author": "James K.",
+        "testimonial_author_subtitle": "London, UK · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1E1208",
-        "text_color": "#F5EDE0",
-        "accent_color": "#C49B6C"
+        "testimonial_bg_color": "#1B4332",
+        "cta_bottom_heading": "Build Your Focus Protocol",
+        "cta_bottom_subtext": "Performance starts in the mind. Fuel yours with Solmara.",
+        "cta_bottom_btn_text": "Start My Focus Stack",
+        "cta_bottom_bg_color": "#52B788",
+        "cta_bottom_text_color": "#1B4332",
+        "bg_color": "#1B4332",
+        "text_color": "#E6F4EE",
+        "accent_color": "#52B788"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }

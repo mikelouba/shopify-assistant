@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#1A2A4A",
+        "hero_overlay_opacity": 55,
         "hero_badge": "SLEEP SUPPORT",
-        "hero_badge_color": "#7B9CC4",
+        "hero_badge_color": "#8B9DC3",
         "hero_heading": "Better Sleep Starts Here",
         "hero_subheading": "Scientifically formulated to ease your nervous system into restorative, uninterrupted sleep — naturally, without habit-forming ingredients.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Sleep Collection",
-        "cta_primary_url": "/collections/sleep",
         "cta_secondary_text": "Find My Protocol",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "🌙",
-        "benefit_1_text": "Non-habit forming",
+        "benefit_1_title": "Deep Sleep Science",
+        "benefit_1_desc": "Non-habit forming formula targets REM cycles for restorative, uninterrupted rest.",
         "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically studied",
+        "benefit_2_title": "Clinically Studied",
+        "benefit_2_desc": "Every ingredient backed by peer-reviewed sleep and neuroscience research.",
         "benefit_3_icon": "🌿",
-        "benefit_3_text": "No melatonin dependency",
+        "benefit_3_title": "Zero Dependency",
+        "benefit_3_desc": "Wake refreshed with no melatonin hangover and no next-day fog.",
         "products_heading": "Recommended for Better Sleep",
+        "products_subheading": "Precision formulas for deeper, more restorative nights",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I've struggled with sleep for 6 years. After 2 weeks on the Sleep Kit, I'm consistently getting 7–8 hours and waking without an alarm.",
-        "testimonial_author": "Lauren T. — Chicago, IL · Verified Customer",
+        "testimonial_author": "Lauren T.",
+        "testimonial_author_subtitle": "Chicago, IL · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#0F1A2E",
+        "testimonial_bg_color": "#2C3E6B",
+        "cta_bottom_heading": "Ready to Sleep Better Tonight?",
+        "cta_bottom_subtext": "Join thousands who've transformed their sleep with Solmara.",
+        "cta_bottom_btn_text": "Start Your Sleep Protocol",
+        "cta_bottom_bg_color": "#8B9DC3",
+        "cta_bottom_text_color": "#2C3E6B",
+        "bg_color": "#2C3E6B",
         "text_color": "#E8EDF5",
-        "accent_color": "#7B9CC4"
+        "accent_color": "#8B9DC3"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }

@@ -3,259 +3,600 @@
   ║  GOAL PAGE HERO  —  Solmara Wellness                                 ║
   ║  sections/goal-page-hero.liquid                                      ║
   ║                                                                      ║
-  ║  A fully customisable goal landing section for the Shopify           ║
-  ║  Theme Editor.  Three visual blocks:                                 ║
-  ║    1. HERO  — background image, badge, heading, CTAs, benefits       ║
-  ║    2. FEATURED PRODUCTS  — auto-pulled from any collection picker    ║
-  ║    3. TESTIMONIAL  — optional quote + star rating                    ║
+  ║  Five fully-customisable sections for every goal landing page.       ║
+  ║  All settings exposed in the Theme Editor right-hand panel.          ║
   ║                                                                      ║
-  ║  Earthy Solmara palette · DM Serif Display + Jost typefaces          ║
+  ║    §1  HERO        — image, overlay, badge, heading, CTAs           ║
+  ║    §2  BENEFITS    — 3-column icon / title / description cards      ║
+  ║    §3  PRODUCTS    — collection grid, card style, columns           ║
+  ║    §4  TESTIMONIAL — quote, stars, author                           ║
+  ║    §5  BOTTOM CTA  — full-width call-to-action banner               ║
+  ║                                                                      ║
+  ║  Solmara palette · DM Serif Display + Jost · CSS-variable themed    ║
   ╚══════════════════════════════════════════════════════════════════════╝
 {% endcomment %}
 
 {%- liquid
-  assign s      = section.settings
-  assign bg     = s.bg_color     | default: '#0F1A2E'
-  assign txt    = s.text_color   | default: '#E8EDF5'
-  assign accent = s.accent_color | default: '#7B9CC4'
-  assign overlay_dec = s.hero_overlay_opacity | default: 40 | divided_by: 100.0
-  assign rating = s.testimonial_rating | default: 5
+  assign s        = section.settings
+  assign bg       = s.bg_color
+  assign txt      = s.text_color
+  assign accent   = s.accent_color
+  assign ovl_clr  = s.hero_overlay_color
+  assign ovl_dec  = s.hero_overlay_opacity | divided_by: 100.0
+  assign rating   = s.testimonial_rating
   assign feat_col = s.collection
+  assign p_cols   = s.product_columns    | default: '3'
+  assign p_style  = s.product_card_style | default: 'card'
+  assign p_limit  = s.products_to_show   | default: 6
+  assign card_btn = s.card_btn_text      | default: 'Shop Now'
+  assign test_bg  = s.testimonial_bg_color
+  assign btm_bg   = s.cta_bottom_bg_color
+  assign btm_txt  = s.cta_bottom_text_color
 -%}
 
-{%- comment %} ── Scoped styles ── keep all rules inside the section ID so
-    they never bleed into other sections on the same page.           {% endcomment -%}
+{%- comment %} ── Scoped styles: every rule is namespaced to this section ID ── {% endcomment -%}
 <style>
-  /* ── reset ─────────────────────────────────────────────────────── */
-  #shopify-section-{{ section.id }} *,
-  #shopify-section-{{ section.id }} *::before,
-  #shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; }
+/* ── RESET ─────────────────────────────────────────────────────────── */
+#shopify-section-{{ section.id }} *,
+#shopify-section-{{ section.id }} *::before,
+#shopify-section-{{ section.id }} *::after { box-sizing: border-box; margin: 0; }
 
-  /* ── HERO ────────────────────────────────────────────────────────── */
-  #shopify-section-{{ section.id }} .gph-hero {
-    position: relative;
-    overflow: hidden;
-    background: {{ bg }};
-    min-height: 88vh;
-    display: flex;
-    align-items: center;
+/* ── CSS CUSTOM PROPERTIES (goal color cascade) ─────────────────── */
+#shopify-section-{{ section.id }} {
+  --gph-bg:       {{ bg }};
+  --gph-txt:      {{ txt }};
+  --gph-accent:   {{ accent }};
+  --gph-ovl:      {{ ovl_clr }};
+  --gph-test-bg:  {{ test_bg }};
+  --gph-btm-bg:   {{ btm_bg }};
+  --gph-btm-txt:  {{ btm_txt }};
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §1  HERO
+═══════════════════════════════════════════════════════════════════ */
+#shopify-section-{{ section.id }} .gph-hero {
+  position: relative;
+  overflow: hidden;
+  background: var(--gph-bg);
+  min-height: 88vh;
+  display: flex;
+  align-items: center;
+}
+#shopify-section-{{ section.id }} .gph-hero__img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+#shopify-section-{{ section.id }} .gph-hero__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+#shopify-section-{{ section.id }} .gph-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--gph-ovl);
+  opacity: {{ ovl_dec }};
+  pointer-events: none;
+  z-index: 1;
+}
+#shopify-section-{{ section.id }} .gph-hero__grad {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, {{ bg }}, {{ accent }}44, {{ bg }});
+  z-index: 0;
+}
+#shopify-section-{{ section.id }} .gph-hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 96px 64px;
+  width: 100%;
+}
+
+/* Badge */
+#shopify-section-{{ section.id }} .gph-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 18px;
+  border-radius: 3px;
+  margin-bottom: 28px;
+  background: {{ s.hero_badge_color }};
+}
+#shopify-section-{{ section.id }} .gph-badge__label {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--gph-bg);
+}
+
+/* Heading & sub */
+#shopify-section-{{ section.id }} .gph-h1 {
+  font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
+  font-size: clamp(44px, 6vw, 84px);
+  font-weight: 400;
+  color: var(--gph-txt);
+  line-height: 1.05;
+  max-width: 700px;
+  margin-bottom: 22px;
+  letter-spacing: -0.5px;
+}
+#shopify-section-{{ section.id }} .gph-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  color: {{ txt }}bb;
+  line-height: 1.8;
+  max-width: 520px;
+  margin-bottom: 44px;
+}
+
+/* CTA buttons */
+#shopify-section-{{ section.id }} .gph-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+#shopify-section-{{ section.id }} .gph-btn {
+  border-radius: 3px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: opacity 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+}
+#shopify-section-{{ section.id }} .gph-btn--primary {
+  background: var(--gph-accent);
+  color: var(--gph-bg);
+  padding: 16px 40px;
+}
+#shopify-section-{{ section.id }} .gph-btn--primary:hover {
+  opacity: 0.86;
+  transform: translateY(-2px);
+}
+#shopify-section-{{ section.id }} .gph-btn--secondary {
+  background: transparent;
+  color: var(--gph-txt);
+  border: 1.5px solid {{ accent }}55;
+  padding: 15px 38px;
+}
+#shopify-section-{{ section.id }} .gph-btn--secondary:hover {
+  border-color: var(--gph-accent);
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §2  BENEFITS BAR
+═══════════════════════════════════════════════════════════════════ */
+#shopify-section-{{ section.id }} .gph-benefits {
+  background: {{ bg }}ee;
+  padding: 76px 64px;
+  border-top: 1px solid {{ accent }}22;
+  border-bottom: 1px solid {{ accent }}22;
+}
+#shopify-section-{{ section.id }} .gph-benefits__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 52px;
+}
+#shopify-section-{{ section.id }} .gph-benefit-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+#shopify-section-{{ section.id }} .gph-benefit-card__accent-line {
+  width: 36px;
+  height: 2px;
+  background: var(--gph-accent);
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+#shopify-section-{{ section.id }} .gph-benefit-card__icon {
+  font-size: 30px;
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+}
+#shopify-section-{{ section.id }} .gph-benefit-card__title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--gph-txt);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+#shopify-section-{{ section.id }} .gph-benefit-card__desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  color: {{ txt }}88;
+  line-height: 1.75;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §3  PRODUCTS GRID
+═══════════════════════════════════════════════════════════════════ */
+#shopify-section-{{ section.id }} .gph-products {
+  background: #f7f4ef;
+  padding: 96px 64px;
+}
+#shopify-section-{{ section.id }} .gph-products__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+#shopify-section-{{ section.id }} .gph-products__hd {
+  text-align: center;
+  margin-bottom: 64px;
+}
+#shopify-section-{{ section.id }} .gph-products__heading {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(26px, 3vw, 44px);
+  font-weight: 400;
+  color: {{ bg }};
+  margin-bottom: 14px;
+  letter-spacing: -0.3px;
+}
+#shopify-section-{{ section.id }} .gph-products__subheading {
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  color: {{ bg }}99;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+#shopify-section-{{ section.id }} .gph-products__grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat({{ p_cols }}, 1fr);
+}
+#shopify-section-{{ section.id }} .gph-products__footer {
+  text-align: center;
+  margin-top: 56px;
+}
+#shopify-section-{{ section.id }} .gph-products__view-all {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: {{ bg }};
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--gph-accent);
+  padding-bottom: 3px;
+  transition: color 0.2s, border-color 0.2s;
+}
+#shopify-section-{{ section.id }} .gph-products__view-all:hover {
+  color: var(--gph-accent);
+  border-color: var(--gph-accent);
+}
+
+/* ── Product Cards ────────────────────────────────────────────────── */
+#shopify-section-{{ section.id }} .gph-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#shopify-section-{{ section.id }} .gph-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Card style: card (shadow) */
+#shopify-section-{{ section.id }} .gph-card--card {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 18px rgba(0,0,0,0.07);
+}
+#shopify-section-{{ section.id }} .gph-card--card:hover {
+  box-shadow: 0 10px 44px rgba(0,0,0,0.13);
+}
+
+/* Card style: minimal */
+#shopify-section-{{ section.id }} .gph-card--minimal {
+  background: transparent;
+  border-radius: 0;
+}
+
+/* Card style: bordered */
+#shopify-section-{{ section.id }} .gph-card--bordered {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1.5px solid {{ accent }}44;
+}
+#shopify-section-{{ section.id }} .gph-card--bordered:hover {
+  border-color: var(--gph-accent);
+  box-shadow: 0 6px 28px rgba(0,0,0,0.08);
+}
+
+/* Image */
+#shopify-section-{{ section.id }} .gph-card__img-link {
+  display: block;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+#shopify-section-{{ section.id }} .gph-card__img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: #f2f0ec;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#shopify-section-{{ section.id }} .gph-card--minimal .gph-card__img-wrap {
+  background: {{ accent }}12;
+}
+#shopify-section-{{ section.id }} .gph-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.45s ease;
+  display: block;
+}
+#shopify-section-{{ section.id }} .gph-card:hover .gph-card__img-wrap img {
+  transform: scale(1.05);
+}
+#shopify-section-{{ section.id }} .gph-card__sale-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: var(--gph-accent);
+  color: var(--gph-bg);
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+/* Card body */
+#shopify-section-{{ section.id }} .gph-card__body {
+  padding: 20px 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+#shopify-section-{{ section.id }} .gph-card--minimal .gph-card__body {
+  padding: 16px 0 8px;
+}
+#shopify-section-{{ section.id }} .gph-card__title {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #1a2520;
+  line-height: 1.35;
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s;
+}
+#shopify-section-{{ section.id }} .gph-card__title:hover {
+  color: {{ bg }};
+}
+#shopify-section-{{ section.id }} .gph-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+#shopify-section-{{ section.id }} .gph-card__price {
+  font-family: 'Jost', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: {{ bg }};
+}
+#shopify-section-{{ section.id }} .gph-card__compare {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #aaa;
+  text-decoration: line-through;
+}
+
+/* Card footer / CTA */
+#shopify-section-{{ section.id }} .gph-card__footer {
+  padding: 0 20px 20px;
+}
+#shopify-section-{{ section.id }} .gph-card--minimal .gph-card__footer {
+  padding: 4px 0 0;
+}
+#shopify-section-{{ section.id }} .gph-card__cta-form { margin: 0; }
+#shopify-section-{{ section.id }} .gph-card__btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: var(--gph-bg);
+  color: var(--gph-txt);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 16px;
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  line-height: 1;
+}
+#shopify-section-{{ section.id }} .gph-card__btn:hover {
+  opacity: 0.84;
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §4  TESTIMONIAL
+═══════════════════════════════════════════════════════════════════ */
+#shopify-section-{{ section.id }} .gph-testimonial {
+  background: var(--gph-test-bg);
+  padding: 96px 64px;
+  border-top: 1px solid {{ accent }}22;
+}
+#shopify-section-{{ section.id }} .gph-testimonial__inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+#shopify-section-{{ section.id }} .gph-testimonial__stars {
+  color: var(--gph-accent);
+  font-size: 20px;
+  letter-spacing: 5px;
+  display: block;
+  margin-bottom: 32px;
+}
+#shopify-section-{{ section.id }} .gph-testimonial__quote {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.5vw, 27px);
+  line-height: 1.65;
+  color: var(--gph-txt);
+  display: block;
+  margin-bottom: 32px;
+}
+#shopify-section-{{ section.id }} .gph-testimonial__author {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gph-accent);
+  font-style: normal;
+  display: block;
+}
+#shopify-section-{{ section.id }} .gph-testimonial__subtitle {
+  font-family: 'Jost', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: {{ txt }}66;
+  font-style: normal;
+  display: block;
+  margin-top: 6px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   §5  BOTTOM CTA BANNER
+═══════════════════════════════════════════════════════════════════ */
+#shopify-section-{{ section.id }} .gph-cta-bottom {
+  background: var(--gph-btm-bg);
+  padding: 88px 64px;
+  text-align: center;
+}
+#shopify-section-{{ section.id }} .gph-cta-bottom__inner {
+  max-width: 660px;
+  margin: 0 auto;
+}
+#shopify-section-{{ section.id }} .gph-cta-bottom__heading {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 400;
+  color: var(--gph-btm-txt);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+#shopify-section-{{ section.id }} .gph-cta-bottom__subtext {
+  font-family: 'Jost', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  color: {{ btm_txt }}bb;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+#shopify-section-{{ section.id }} .gph-cta-bottom__btn {
+  display: inline-flex;
+  align-items: center;
+  background: var(--gph-btm-txt);
+  color: var(--gph-btm-bg);
+  border: none;
+  border-radius: 3px;
+  padding: 18px 52px;
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+#shopify-section-{{ section.id }} .gph-cta-bottom__btn:hover {
+  opacity: 0.86;
+  transform: translateY(-2px);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  #shopify-section-{{ section.id }} .gph-benefits__inner {
+    gap: 36px;
   }
-  #shopify-section-{{ section.id }} .gph-hero__img-wrap {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-  }
-  #shopify-section-{{ section.id }} .gph-hero__img-wrap img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  #shopify-section-{{ section.id }} .gph-hero__overlay {
-    position: absolute;
-    inset: 0;
-    background: {{ bg }};
-    opacity: {{ overlay_dec }};
-    pointer-events: none;
-  }
+}
+@media (max-width: 768px) {
   #shopify-section-{{ section.id }} .gph-hero__content {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 96px 64px;
-    width: 100%;
+    padding: 72px 24px 64px;
   }
-
-  /* ── Badge ────────────────────────────────────────────────────── */
-  #shopify-section-{{ section.id }} .gph-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 6px 18px;
-    border-radius: 3px;
-    margin-bottom: 28px;
-  }
-  #shopify-section-{{ section.id }} .gph-badge__label {
-    font-family: 'Jost', sans-serif;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 3.5px;
-    text-transform: uppercase;
-  }
-
-  /* ── Heading + sub ────────────────────────────────────────────── */
-  #shopify-section-{{ section.id }} .gph-h1 {
-    font-family: 'DM Serif Display', Georgia, 'Times New Roman', serif;
-    font-size: clamp(44px, 6vw, 84px);
-    font-weight: 400;
-    color: {{ txt }};
-    line-height: 1.05;
-    max-width: 700px;
-    margin-bottom: 22px;
-    letter-spacing: -0.5px;
-  }
-  #shopify-section-{{ section.id }} .gph-sub {
-    font-family: 'Jost', sans-serif;
-    font-size: 17px;
-    font-weight: 300;
-    color: {{ txt }}bb;
-    line-height: 1.8;
-    max-width: 520px;
-    margin-bottom: 44px;
-  }
-
-  /* ── CTA Buttons ──────────────────────────────────────────────── */
-  #shopify-section-{{ section.id }} .gph-btns {
-    display: flex;
-    gap: 14px;
-    flex-wrap: wrap;
-    margin-bottom: 56px;
-  }
-  #shopify-section-{{ section.id }} .gph-btn {
-    border-radius: 3px;
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    transition: opacity 0.2s ease, border-color 0.2s ease;
-  }
-  #shopify-section-{{ section.id }} .gph-btn--primary {
-    background: {{ accent }};
-    color: {{ bg }};
-    padding: 16px 40px;
-  }
-  #shopify-section-{{ section.id }} .gph-btn--primary:hover { opacity: 0.86; }
-  #shopify-section-{{ section.id }} .gph-btn--secondary {
-    background: transparent;
-    color: {{ txt }}cc;
-    border: 1.5px solid {{ accent }}66;
-    padding: 15px 38px;
-  }
-  #shopify-section-{{ section.id }} .gph-btn--secondary:hover {
-    border-color: {{ accent }};
-    color: {{ txt }};
-  }
-
-  /* ── Benefits strip ───────────────────────────────────────────── */
   #shopify-section-{{ section.id }} .gph-benefits {
-    display: flex;
-    gap: 28px;
-    flex-wrap: wrap;
-    padding-top: 8px;
-    border-top: 1px solid {{ accent }}22;
+    padding: 56px 24px;
   }
-  #shopify-section-{{ section.id }} .gph-benefit {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: 'Jost', sans-serif;
-    font-size: 13px;
-    color: {{ txt }}66;
-    font-weight: 400;
+  #shopify-section-{{ section.id }} .gph-benefits__inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
   }
-  #shopify-section-{{ section.id }} .gph-benefit__icon { font-size: 15px; line-height: 1; }
-
-  /* ── FEATURED PRODUCTS ────────────────────────────────────────── */
   #shopify-section-{{ section.id }} .gph-products {
-    background: {{ accent }}11;
-    padding: 88px 64px;
-  }
-  #shopify-section-{{ section.id }} .gph-products__inner {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  #shopify-section-{{ section.id }} .gph-products__heading {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: clamp(26px, 3vw, 44px);
-    font-weight: 400;
-    color: {{ bg }};
-    text-align: center;
-    margin-bottom: 52px;
+    padding: 64px 24px;
   }
   #shopify-section-{{ section.id }} .gph-products__grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(2, 1fr) !important;
   }
-  #shopify-section-{{ section.id }} .gph-products__footer {
-    text-align: center;
-    margin-top: 44px;
-  }
-  #shopify-section-{{ section.id }} .gph-products__link {
-    font-family: 'Jost', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    color: {{ bg }};
-    text-decoration: none;
-    border-bottom: 1.5px solid {{ accent }};
-    padding-bottom: 3px;
-    transition: border-color 0.2s;
-  }
-  #shopify-section-{{ section.id }} .gph-products__link:hover {
-    border-color: {{ bg }};
-  }
-
-  /* ── TESTIMONIAL ──────────────────────────────────────────────── */
   #shopify-section-{{ section.id }} .gph-testimonial {
-    background: {{ bg }};
-    padding: 88px 64px;
-    border-top: 1px solid {{ accent }}22;
+    padding: 64px 24px;
   }
-  #shopify-section-{{ section.id }} .gph-testimonial__inner {
-    max-width: 720px;
-    margin: 0 auto;
-    text-align: center;
+  #shopify-section-{{ section.id }} .gph-cta-bottom {
+    padding: 64px 24px;
   }
-  #shopify-section-{{ section.id }} .gph-testimonial__stars {
-    color: {{ accent }};
-    font-size: 20px;
-    letter-spacing: 5px;
-    display: block;
-    margin-bottom: 28px;
+}
+@media (max-width: 480px) {
+  #shopify-section-{{ section.id }} .gph-btns {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  #shopify-section-{{ section.id }} .gph-testimonial__quote {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(18px, 2.5vw, 27px);
-    line-height: 1.65;
-    color: {{ txt }};
-    display: block;
-    margin-bottom: 28px;
+  #shopify-section-{{ section.id }} .gph-btn--primary,
+  #shopify-section-{{ section.id }} .gph-btn--secondary {
+    justify-content: center;
+    width: 100%;
   }
-  #shopify-section-{{ section.id }} .gph-testimonial__author {
-    font-family: 'Jost', sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: {{ accent }};
-    font-style: normal;
+  #shopify-section-{{ section.id }} .gph-products__grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px;
   }
-
-  /* ── MOBILE ───────────────────────────────────────────────────── */
-  @media (max-width: 768px) {
-    #shopify-section-{{ section.id }} .gph-hero__content {
-      padding: 72px 24px 64px;
-    }
-    #shopify-section-{{ section.id }} .gph-products,
-    #shopify-section-{{ section.id }} .gph-testimonial {
-      padding: 60px 24px;
-    }
-    #shopify-section-{{ section.id }} .gph-products__grid {
-      grid-template-columns: 1fr;
-    }
-  }
+}
 </style>
 
-{%- comment %} ════════════════════════════════════════════════════════
-    BLOCK 1 · HERO
-════════════════════════════════════════════════════════ {% endcomment -%}
+{%- comment %} ═══════════════════════════════════════════════════════════
+    §1  HERO
+═══════════════════════════════════════════════════════════ {% endcomment -%}
 <div class="gph-hero">
 
   {%- if s.hero_image != blank -%}
@@ -267,80 +608,39 @@
         width="{{ s.hero_image.width }}"
         height="{{ s.hero_image.height }}"
       >
-      <div class="gph-hero__overlay"></div>
     </div>
+    <div class="gph-hero__overlay"></div>
   {%- else -%}
-    {%- comment %} Gradient fallback when no image is uploaded -%}
-    <div style="position:absolute;inset:0;z-index:0;background:linear-gradient(145deg,{{ bg }},{{ accent }}44,{{ bg }});opacity:0.9;"></div>
+    <div class="gph-hero__grad"></div>
   {%- endif -%}
 
   <div class="gph-hero__content">
 
-    {%- comment %} ── Badge ── {% endcomment -%}
     {%- if s.hero_badge != blank -%}
-      <div class="gph-badge" style="background:{{ s.hero_badge_color }};">
-        <span class="gph-badge__label" style="color:{{ bg }};">{{ s.hero_badge }}</span>
+      <div class="gph-badge">
+        <span class="gph-badge__label">{{ s.hero_badge }}</span>
       </div>
     {%- endif -%}
 
-    {%- comment %} ── Heading ── {% endcomment -%}
     {%- if s.hero_heading != blank -%}
       <h1 class="gph-h1">{{ s.hero_heading }}</h1>
     {%- endif -%}
 
-    {%- comment %} ── Subheading ── {% endcomment -%}
     {%- if s.hero_subheading != blank -%}
       <p class="gph-sub">{{ s.hero_subheading }}</p>
     {%- endif -%}
 
-    {%- comment %} ── CTA Buttons ── {% endcomment -%}
     {%- if s.cta_primary_text != blank or s.cta_secondary_text != blank -%}
       <div class="gph-btns">
         {%- if s.cta_primary_text != blank -%}
-          <a
-            href="{{ s.cta_primary_url | default: '#' }}"
-            class="gph-btn gph-btn--primary"
-          >{{ s.cta_primary_text }}</a>
+          <a href="{{ s.cta_primary_url | default: '#' }}" class="gph-btn gph-btn--primary">
+            {{ s.cta_primary_text }}
+          </a>
         {%- endif -%}
         {%- if s.cta_secondary_text != blank -%}
-          <a
-            href="{{ s.cta_secondary_url | default: '#' }}"
-            class="gph-btn gph-btn--secondary"
-          >{{ s.cta_secondary_text }}</a>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {%- comment %} ── Benefits Strip ── {% endcomment -%}
-    {%- assign any_benefit = false -%}
-    {%- if s.benefit_1_text != blank or s.benefit_2_text != blank or s.benefit_3_text != blank -%}
-      {%- assign any_benefit = true -%}
-    {%- endif -%}
-    {%- if any_benefit -%}
-      <div class="gph-benefits">
-        {%- if s.benefit_1_text != blank -%}
-          <span class="gph-benefit">
-            {%- if s.benefit_1_icon != blank -%}
-              <span class="gph-benefit__icon" aria-hidden="true">{{ s.benefit_1_icon }}</span>
-            {%- endif -%}
-            {{ s.benefit_1_text }}
-          </span>
-        {%- endif -%}
-        {%- if s.benefit_2_text != blank -%}
-          <span class="gph-benefit">
-            {%- if s.benefit_2_icon != blank -%}
-              <span class="gph-benefit__icon" aria-hidden="true">{{ s.benefit_2_icon }}</span>
-            {%- endif -%}
-            {{ s.benefit_2_text }}
-          </span>
-        {%- endif -%}
-        {%- if s.benefit_3_text != blank -%}
-          <span class="gph-benefit">
-            {%- if s.benefit_3_icon != blank -%}
-              <span class="gph-benefit__icon" aria-hidden="true">{{ s.benefit_3_icon }}</span>
-            {%- endif -%}
-            {{ s.benefit_3_text }}
-          </span>
+          <a href="{{ s.cta_secondary_url | default: '#' }}" class="gph-btn gph-btn--secondary">
+            {{ s.cta_secondary_text }}
+          </a>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -348,28 +648,132 @@
   </div>
 </div>
 
-{%- comment %} ════════════════════════════════════════════════════════
-    BLOCK 2 · FEATURED PRODUCTS
-    Renders 3 products from the selected collection.
-    Falls back gracefully if no collection is set or is empty.
-════════════════════════════════════════════════════════ {% endcomment -%}
+{%- comment %} ═══════════════════════════════════════════════════════════
+    §2  BENEFITS BAR
+═══════════════════════════════════════════════════════════ {% endcomment -%}
+{%- assign has_benefits = false -%}
+{%- if s.benefit_1_title != blank or s.benefit_2_title != blank or s.benefit_3_title != blank -%}
+  {%- assign has_benefits = true -%}
+{%- endif -%}
+{%- if has_benefits -%}
+  <div class="gph-benefits">
+    <div class="gph-benefits__inner">
+
+      {%- if s.benefit_1_title != blank -%}
+        <div class="gph-benefit-card">
+          <div class="gph-benefit-card__accent-line"></div>
+          {%- if s.benefit_1_icon != blank -%}
+            <span class="gph-benefit-card__icon" aria-hidden="true">{{ s.benefit_1_icon }}</span>
+          {%- endif -%}
+          <h3 class="gph-benefit-card__title">{{ s.benefit_1_title }}</h3>
+          {%- if s.benefit_1_desc != blank -%}
+            <p class="gph-benefit-card__desc">{{ s.benefit_1_desc }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.benefit_2_title != blank -%}
+        <div class="gph-benefit-card">
+          <div class="gph-benefit-card__accent-line"></div>
+          {%- if s.benefit_2_icon != blank -%}
+            <span class="gph-benefit-card__icon" aria-hidden="true">{{ s.benefit_2_icon }}</span>
+          {%- endif -%}
+          <h3 class="gph-benefit-card__title">{{ s.benefit_2_title }}</h3>
+          {%- if s.benefit_2_desc != blank -%}
+            <p class="gph-benefit-card__desc">{{ s.benefit_2_desc }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if s.benefit_3_title != blank -%}
+        <div class="gph-benefit-card">
+          <div class="gph-benefit-card__accent-line"></div>
+          {%- if s.benefit_3_icon != blank -%}
+            <span class="gph-benefit-card__icon" aria-hidden="true">{{ s.benefit_3_icon }}</span>
+          {%- endif -%}
+          <h3 class="gph-benefit-card__title">{{ s.benefit_3_title }}</h3>
+          {%- if s.benefit_3_desc != blank -%}
+            <p class="gph-benefit-card__desc">{{ s.benefit_3_desc }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment %} ═══════════════════════════════════════════════════════════
+    §3  PRODUCTS GRID
+    Renders products from the selected collection.
+    Fully configurable: columns, count, card style, price, ATC button.
+═══════════════════════════════════════════════════════════ {% endcomment -%}
 {%- if feat_col != blank and feat_col.products_count > 0 -%}
   <div class="gph-products">
     <div class="gph-products__inner">
 
-      {%- if s.products_heading != blank -%}
-        <h2 class="gph-products__heading">{{ s.products_heading }}</h2>
-      {%- endif -%}
+      <div class="gph-products__hd">
+        {%- if s.products_heading != blank -%}
+          <h2 class="gph-products__heading">{{ s.products_heading }}</h2>
+        {%- endif -%}
+        {%- if s.products_subheading != blank -%}
+          <p class="gph-products__subheading">{{ s.products_subheading }}</p>
+        {%- endif -%}
+      </div>
 
       <div class="gph-products__grid">
-        {%- for product in feat_col.products limit: 3 -%}
-          {%- render 'product-card', product: product -%}
+        {%- for product in collections[feat_col.handle].products limit: p_limit -%}
+          <article class="gph-card gph-card--{{ p_style }}">
+
+            <a href="{{ product.url }}" class="gph-card__img-link" aria-label="{{ product.title | escape }}">
+              <div class="gph-card__img-wrap">
+                {%- if product.featured_image != blank -%}
+                  <img
+                    src="{{ product.featured_image | image_url: width: 600 }}"
+                    alt="{{ product.featured_image.alt | escape | default: product.title }}"
+                    loading="lazy"
+                    width="600"
+                    height="600"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'gph-card__placeholder' }}
+                {%- endif -%}
+              </div>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="gph-card__sale-badge">Sale</span>
+              {%- endif -%}
+            </a>
+
+            <div class="gph-card__body">
+              <a href="{{ product.url }}" class="gph-card__title">{{ product.title }}</a>
+              {%- if s.show_price -%}
+                <div class="gph-card__price-row">
+                  <span class="gph-card__price">{{ product.price | money }}</span>
+                  {%- if product.compare_at_price > product.price -%}
+                    <span class="gph-card__compare">{{ product.compare_at_price | money }}</span>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+
+            <div class="gph-card__footer">
+              {%- if s.show_add_to_cart and product.first_available_variant != blank -%}
+                <form action="/cart/add" method="post" class="gph-card__cta-form">
+                  <input type="hidden" name="id" value="{{ product.first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="gph-card__btn">{{ card_btn }}</button>
+                </form>
+              {%- else -%}
+                <a href="{{ product.url }}" class="gph-card__btn">{{ card_btn }}</a>
+              {%- endif -%}
+            </div>
+
+          </article>
         {%- endfor -%}
       </div>
 
       <div class="gph-products__footer">
-        <a href="{{ feat_col.url }}" class="gph-products__link">
-          View Full Collection →
+        <a href="{{ feat_col.url }}" class="gph-products__view-all">
+          View Full Collection &rarr;
         </a>
       </div>
 
@@ -377,20 +781,16 @@
   </div>
 {%- endif -%}
 
-{%- comment %} ════════════════════════════════════════════════════════
-    BLOCK 3 · TESTIMONIAL / SOCIAL PROOF
-    Toggle on/off with the "Show Testimonial" checkbox.
-════════════════════════════════════════════════════════ {% endcomment -%}
+{%- comment %} ═══════════════════════════════════════════════════════════
+    §4  TESTIMONIAL
+═══════════════════════════════════════════════════════════ {% endcomment -%}
 {%- if s.show_testimonial and s.testimonial_text != blank -%}
   <div class="gph-testimonial">
     <div class="gph-testimonial__inner">
 
-      <span
-        class="gph-testimonial__stars"
-        aria-label="{{ rating }} out of 5 stars"
-      >
+      <span class="gph-testimonial__stars" aria-label="{{ rating }} out of 5 stars">
         {%- for i in (1..5) -%}
-          {%- if i <= rating -%}★{%- else -%}☆{%- endif -%}
+          {%- if i <= rating -%}&#9733;{%- else -%}&#9734;{%- endif -%}
         {%- endfor -%}
       </span>
 
@@ -401,14 +801,44 @@
       {%- if s.testimonial_author != blank -%}
         <cite class="gph-testimonial__author">— {{ s.testimonial_author }}</cite>
       {%- endif -%}
+      {%- if s.testimonial_author_subtitle != blank -%}
+        <span class="gph-testimonial__subtitle">{{ s.testimonial_author_subtitle }}</span>
+      {%- endif -%}
 
     </div>
   </div>
 {%- endif -%}
 
-{% comment %} ══════════════════════════════════════════════════════════
+{%- comment %} ═══════════════════════════════════════════════════════════
+    §5  BOTTOM CTA BANNER
+═══════════════════════════════════════════════════════════ {% endcomment -%}
+{%- if s.cta_bottom_heading != blank or s.cta_bottom_btn_text != blank -%}
+  <div class="gph-cta-bottom">
+    <div class="gph-cta-bottom__inner">
+
+      {%- if s.cta_bottom_heading != blank -%}
+        <h2 class="gph-cta-bottom__heading">{{ s.cta_bottom_heading }}</h2>
+      {%- endif -%}
+
+      {%- if s.cta_bottom_subtext != blank -%}
+        <p class="gph-cta-bottom__subtext">{{ s.cta_bottom_subtext }}</p>
+      {%- endif -%}
+
+      {%- if s.cta_bottom_btn_text != blank -%}
+        <a
+          href="{{ s.cta_bottom_btn_url | default: '#' }}"
+          class="gph-cta-bottom__btn"
+        >{{ s.cta_bottom_btn_text }}</a>
+      {%- endif -%}
+
+    </div>
+  </div>
+{%- endif -%}
+
+
+{% comment %} ═══════════════════════════════════════════════════════════
     SCHEMA
-══════════════════════════════════════════════════════════ {% endcomment %}
+═══════════════════════════════════════════════════════════ {% endcomment %}
 {% schema %}
 {
   "name": "Goal Page Hero",
@@ -422,39 +852,46 @@
       "type": "image_picker",
       "id": "hero_image",
       "label": "Background Image",
-      "info": "Optional — leave empty to use the Background Color below."
+      "info": "Leave blank to use a gradient derived from the section colors."
+    },
+    {
+      "type": "color",
+      "id": "hero_overlay_color",
+      "label": "Overlay Color",
+      "default": "#000000",
+      "info": "Color tinted over the hero image. Use a dark tone for legibility."
     },
     {
       "type": "range",
       "id": "hero_overlay_opacity",
-      "label": "Image Overlay Darkness",
-      "min": 0, "max": 80, "step": 5, "default": 40,
+      "label": "Overlay Opacity",
+      "min": 0, "max": 80, "step": 5, "default": 45,
       "unit": "%",
-      "info": "Darkens the image so text stays readable."
+      "info": "Darkens the hero image so text stays readable."
     },
     {
       "type": "text",
       "id": "hero_badge",
-      "label": "Badge Label",
+      "label": "Badge Text",
       "placeholder": "e.g. SLEEP SUPPORT",
-      "info": "Small pill label displayed above the heading."
+      "info": "Small pill label shown above the heading."
     },
     {
       "type": "color",
       "id": "hero_badge_color",
-      "label": "Badge Color",
-      "default": "#7B9CC4"
+      "label": "Badge Background Color",
+      "default": "#8B9DC3"
     },
     {
       "type": "text",
       "id": "hero_heading",
-      "label": "Hero Heading",
+      "label": "Heading (H1)",
       "default": "Better Sleep Starts Here"
     },
     {
       "type": "textarea",
       "id": "hero_subheading",
-      "label": "Hero Subheading / Description",
+      "label": "Subheading / Description",
       "default": "Scientifically formulated to ease your nervous system into restorative, uninterrupted sleep — naturally, without habit-forming ingredients."
     },
 
@@ -483,47 +920,65 @@
       "label": "Secondary Button Link"
     },
 
-    { "type": "header", "content": "✅ Benefits Strip" },
+    { "type": "header", "content": "✅ Benefits Bar" },
 
     {
       "type": "text",
       "id": "benefit_1_icon",
-      "label": "Benefit 1 — Icon",
+      "label": "Benefit 1 — Icon / Emoji",
       "default": "🌙",
-      "info": "Paste an emoji or leave blank to hide the icon."
+      "info": "Paste an emoji or short symbol."
     },
     {
       "type": "text",
-      "id": "benefit_1_text",
-      "label": "Benefit 1 — Label",
-      "default": "Non-habit forming"
+      "id": "benefit_1_title",
+      "label": "Benefit 1 — Title",
+      "default": "Deep Sleep Science"
+    },
+    {
+      "type": "textarea",
+      "id": "benefit_1_desc",
+      "label": "Benefit 1 — Description",
+      "default": "Non-habit forming formula targets REM cycles for restorative rest."
     },
     {
       "type": "text",
       "id": "benefit_2_icon",
-      "label": "Benefit 2 — Icon",
+      "label": "Benefit 2 — Icon / Emoji",
       "default": "🧪"
     },
     {
       "type": "text",
-      "id": "benefit_2_text",
-      "label": "Benefit 2 — Label",
-      "default": "Clinically studied"
+      "id": "benefit_2_title",
+      "label": "Benefit 2 — Title",
+      "default": "Clinically Studied"
+    },
+    {
+      "type": "textarea",
+      "id": "benefit_2_desc",
+      "label": "Benefit 2 — Description",
+      "default": "Every ingredient backed by peer-reviewed sleep research."
     },
     {
       "type": "text",
       "id": "benefit_3_icon",
-      "label": "Benefit 3 — Icon",
+      "label": "Benefit 3 — Icon / Emoji",
       "default": "🌿"
     },
     {
       "type": "text",
-      "id": "benefit_3_text",
-      "label": "Benefit 3 — Label",
-      "default": "No melatonin dependency"
+      "id": "benefit_3_title",
+      "label": "Benefit 3 — Title",
+      "default": "Zero Dependency"
+    },
+    {
+      "type": "textarea",
+      "id": "benefit_3_desc",
+      "label": "Benefit 3 — Description",
+      "default": "Wake refreshed — no melatonin hangover, no next-day fog."
     },
 
-    { "type": "header", "content": "🛍 Featured Products" },
+    { "type": "header", "content": "🛍 Products Section" },
 
     {
       "type": "text",
@@ -532,10 +987,64 @@
       "default": "Recommended for You"
     },
     {
+      "type": "text",
+      "id": "products_subheading",
+      "label": "Section Subheading",
+      "default": "Precision formulas curated for this goal"
+    },
+    {
       "type": "collection",
       "id": "collection",
       "label": "Product Collection",
-      "info": "Select a collection — up to 3 products are shown automatically."
+      "info": "Select which collection to display in the product grid below."
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Number of Products",
+      "min": 2, "max": 12, "step": 1, "default": 6
+    },
+    {
+      "type": "select",
+      "id": "product_columns",
+      "label": "Desktop Columns",
+      "default": "3",
+      "options": [
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "product_card_style",
+      "label": "Card Style",
+      "default": "card",
+      "options": [
+        { "value": "card",     "label": "Card (Shadow)" },
+        { "value": "minimal",  "label": "Minimal (Clean)" },
+        { "value": "bordered", "label": "Bordered" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Product Price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_add_to_cart",
+      "label": "Show Add to Cart Button",
+      "default": false,
+      "info": "When enabled, the button adds directly to cart. When disabled, it links to the product page."
+    },
+    {
+      "type": "text",
+      "id": "card_btn_text",
+      "label": "Card Button Text",
+      "default": "Shop Now",
+      "info": "Label for the button on each product card."
     },
 
     { "type": "header", "content": "💬 Testimonial" },
@@ -549,14 +1058,20 @@
     {
       "type": "textarea",
       "id": "testimonial_text",
-      "label": "Testimonial Quote",
+      "label": "Quote",
       "default": "I've struggled with sleep for 6 years. After 2 weeks on the Sleep Kit, I'm consistently getting 7–8 hours and waking without an alarm."
     },
     {
       "type": "text",
       "id": "testimonial_author",
-      "label": "Author Name & Location",
-      "default": "Lauren T. — Chicago, IL · Verified Customer"
+      "label": "Author Name",
+      "default": "Lauren T."
+    },
+    {
+      "type": "text",
+      "id": "testimonial_author_subtitle",
+      "label": "Author Subtitle / Location",
+      "default": "Chicago, IL · Verified Customer"
     },
     {
       "type": "range",
@@ -564,15 +1079,59 @@
       "label": "Star Rating",
       "min": 1, "max": 5, "step": 1, "default": 5
     },
+    {
+      "type": "color",
+      "id": "testimonial_bg_color",
+      "label": "Testimonial Background Color",
+      "default": "#2C3E6B"
+    },
 
-    { "type": "header", "content": "🎨 Section Colors" },
+    { "type": "header", "content": "📣 Bottom CTA Banner" },
+
+    {
+      "type": "text",
+      "id": "cta_bottom_heading",
+      "label": "Heading",
+      "default": "Ready to Sleep Better Tonight?"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_bottom_subtext",
+      "label": "Subtext",
+      "default": "Join thousands who've transformed their sleep with Solmara."
+    },
+    {
+      "type": "text",
+      "id": "cta_bottom_btn_text",
+      "label": "Button Label",
+      "default": "Start Your Sleep Protocol"
+    },
+    {
+      "type": "url",
+      "id": "cta_bottom_btn_url",
+      "label": "Button Link"
+    },
+    {
+      "type": "color",
+      "id": "cta_bottom_bg_color",
+      "label": "Banner Background Color",
+      "default": "#8B9DC3"
+    },
+    {
+      "type": "color",
+      "id": "cta_bottom_text_color",
+      "label": "Banner Text Color",
+      "default": "#2C3E6B"
+    },
+
+    { "type": "header", "content": "🎨 Global Colors" },
 
     {
       "type": "color",
       "id": "bg_color",
       "label": "Background Color",
-      "default": "#0F1A2E",
-      "info": "Used for the hero background and testimonial strip."
+      "default": "#2C3E6B",
+      "info": "Primary dark color used for hero background, text tints, and card accents."
     },
     {
       "type": "color",
@@ -584,8 +1143,8 @@
       "type": "color",
       "id": "accent_color",
       "label": "Accent / Highlight Color",
-      "default": "#7B9CC4",
-      "info": "Used for the badge, buttons, stars, links, and subtle tints."
+      "default": "#8B9DC3",
+      "info": "Used for badge, buttons, stars, borders, and subtle tints."
     }
 
   ],
@@ -593,157 +1152,265 @@
     {
       "name": "Goal Hero — Sleep",
       "settings": {
+        "hero_overlay_color": "#1A2A4A",
+        "hero_overlay_opacity": 55,
         "hero_badge": "SLEEP SUPPORT",
-        "hero_badge_color": "#7B9CC4",
+        "hero_badge_color": "#8B9DC3",
         "hero_heading": "Better Sleep Starts Here",
         "hero_subheading": "Scientifically formulated to ease your nervous system into restorative, uninterrupted sleep — naturally, without habit-forming ingredients.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Sleep Collection",
         "cta_secondary_text": "Find My Protocol",
         "benefit_1_icon": "🌙",
-        "benefit_1_text": "Non-habit forming",
+        "benefit_1_title": "Deep Sleep Science",
+        "benefit_1_desc": "Non-habit forming formula targets REM cycles for restorative, uninterrupted rest.",
         "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically studied",
+        "benefit_2_title": "Clinically Studied",
+        "benefit_2_desc": "Every ingredient backed by peer-reviewed sleep and neuroscience research.",
         "benefit_3_icon": "🌿",
-        "benefit_3_text": "No melatonin dependency",
+        "benefit_3_title": "Zero Dependency",
+        "benefit_3_desc": "Wake refreshed with no melatonin hangover and no next-day fog.",
         "products_heading": "Recommended for Better Sleep",
+        "products_subheading": "Precision formulas for deeper, more restorative nights",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I've struggled with sleep for 6 years. After 2 weeks on the Sleep Kit, I'm consistently getting 7–8 hours and waking without an alarm.",
-        "testimonial_author": "Lauren T. — Chicago, IL · Verified Customer",
+        "testimonial_author": "Lauren T.",
+        "testimonial_author_subtitle": "Chicago, IL · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#0F1A2E",
+        "testimonial_bg_color": "#2C3E6B",
+        "cta_bottom_heading": "Ready to Sleep Better Tonight?",
+        "cta_bottom_subtext": "Join thousands who've transformed their sleep with Solmara.",
+        "cta_bottom_btn_text": "Start Your Sleep Protocol",
+        "cta_bottom_bg_color": "#8B9DC3",
+        "cta_bottom_text_color": "#2C3E6B",
+        "bg_color": "#2C3E6B",
         "text_color": "#E8EDF5",
-        "accent_color": "#7B9CC4"
+        "accent_color": "#8B9DC3"
       }
     },
     {
       "name": "Goal Hero — Focus",
       "settings": {
+        "hero_overlay_color": "#081C15",
+        "hero_overlay_opacity": 55,
         "hero_badge": "COGNITIVE SUPPORT",
-        "hero_badge_color": "#C49B6C",
+        "hero_badge_color": "#52B788",
         "hero_heading": "Unlock Your Sharpest Mind",
         "hero_subheading": "Precision nootropics formulated to sustain deep focus, protect memory, and elevate mental clarity — without the crash.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Focus Collection",
         "cta_secondary_text": "Build My Stack",
         "benefit_1_icon": "🍄",
-        "benefit_1_text": "Lion's Mane NGF +42%",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically studied",
-        "benefit_3_icon": "⚡",
-        "benefit_3_text": "Zero jitters or crash",
+        "benefit_1_title": "Neural Growth",
+        "benefit_1_desc": "Lion's Mane boosts NGF by up to 42% for lasting cognitive support.",
+        "benefit_2_icon": "⚡",
+        "benefit_2_title": "Sustained Clarity",
+        "benefit_2_desc": "Zero jitters, zero crash — just clean, extended mental focus all day.",
+        "benefit_3_icon": "🧬",
+        "benefit_3_title": "Neuroprotective",
+        "benefit_3_desc": "Antioxidant-rich adaptogens protect your brain from oxidative stress.",
         "products_heading": "Recommended for Focus & Clarity",
+        "products_subheading": "Nootropic formulas for sustained deep work and mental performance",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I'm a software engineer and the Lion's Mane has been transformative. I go into flow states faster and stay there longer.",
-        "testimonial_author": "James K. — London, UK · Verified Customer",
+        "testimonial_author": "James K.",
+        "testimonial_author_subtitle": "London, UK · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1E1208",
-        "text_color": "#F5EDE0",
-        "accent_color": "#C49B6C"
+        "testimonial_bg_color": "#1B4332",
+        "cta_bottom_heading": "Build Your Focus Protocol",
+        "cta_bottom_subtext": "Performance starts in the mind. Fuel yours with Solmara.",
+        "cta_bottom_btn_text": "Start My Focus Stack",
+        "cta_bottom_bg_color": "#52B788",
+        "cta_bottom_text_color": "#1B4332",
+        "bg_color": "#1B4332",
+        "text_color": "#E6F4EE",
+        "accent_color": "#52B788"
       }
     },
     {
       "name": "Goal Hero — Stress",
       "settings": {
+        "hero_overlay_color": "#3B1F0F",
+        "hero_overlay_opacity": 55,
         "hero_badge": "CALM SUPPORT",
-        "hero_badge_color": "#7EAA82",
+        "hero_badge_color": "#C8956C",
         "hero_heading": "Breathe. Release. Restore.",
         "hero_subheading": "Botanical adaptogens that work at the root of stress — your cortisol levels, your nervous system, your baseline.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Calm Collection",
         "cta_secondary_text": "Find My Formula",
         "benefit_1_icon": "🌿",
-        "benefit_1_text": "Adaptogen-rich",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Cortisol tested",
+        "benefit_1_title": "Adaptogen-Rich",
+        "benefit_1_desc": "Ashwagandha & Rhodiola balance cortisol and build stress resilience naturally.",
+        "benefit_2_icon": "💚",
+        "benefit_2_title": "Cortisol Support",
+        "benefit_2_desc": "Clinically validated formulas that measurably reduce stress biomarkers.",
         "benefit_3_icon": "🌙",
-        "benefit_3_text": "Non-sedating",
+        "benefit_3_title": "Non-Sedating",
+        "benefit_3_desc": "Stay calm and fully functional — no drowsiness or mental fog.",
         "products_heading": "Recommended for Stress Relief",
+        "products_subheading": "Adaptogens and botanicals for a calmer, steadier nervous system",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I was on anxiety medication for 3 years. Under my doctor's supervision I transitioned to the calm stack. I feel more myself than I have in a decade.",
-        "testimonial_author": "Maya R. — Austin, TX · Verified Customer",
+        "testimonial_author": "Maya R.",
+        "testimonial_author_subtitle": "Austin, TX · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1A2E1C",
-        "text_color": "#E8F0E8",
-        "accent_color": "#7EAA82"
+        "testimonial_bg_color": "#5C3D2E",
+        "cta_bottom_heading": "Your Calm Is Waiting",
+        "cta_bottom_subtext": "Stress is inevitable. Your response to it doesn't have to be.",
+        "cta_bottom_btn_text": "Start My Calm Protocol",
+        "cta_bottom_bg_color": "#C8956C",
+        "cta_bottom_text_color": "#5C3D2E",
+        "bg_color": "#5C3D2E",
+        "text_color": "#F5EDE5",
+        "accent_color": "#C8956C"
       }
     },
     {
       "name": "Goal Hero — Glow",
       "settings": {
+        "hero_overlay_color": "#3D0E34",
+        "hero_overlay_opacity": 55,
         "hero_badge": "SKIN RITUAL",
-        "hero_badge_color": "#C47B8C",
+        "hero_badge_color": "#E8A0BF",
         "hero_heading": "Radiance That Starts Within",
         "hero_subheading": "True skin health is cellular. Our inside-out formulas rebuild your skin's architecture from the collagen layer up.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Skin Glow",
         "cta_secondary_text": "My Skin Profile",
         "benefit_1_icon": "🐟",
-        "benefit_1_text": "Marine Collagen 5g",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically trialed",
-        "benefit_3_icon": "✨",
-        "benefit_3_text": "Results in 4–8 weeks",
+        "benefit_1_title": "Marine Collagen",
+        "benefit_1_desc": "5g of bioavailable marine collagen per serving for skin density and elasticity.",
+        "benefit_2_icon": "✨",
+        "benefit_2_title": "Visible Results",
+        "benefit_2_desc": "Clinically trialed formulas — visible glow measurable in just 4–8 weeks.",
+        "benefit_3_icon": "🌸",
+        "benefit_3_title": "Inside-Out Beauty",
+        "benefit_3_desc": "Targets skin renewal at the cellular level for lasting, real radiance.",
         "products_heading": "Recommended for Skin Glow",
+        "products_subheading": "Inside-out beauty formulas for luminous, healthy skin",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "My esthetician asked what I'd changed in my routine. She was genuinely impressed by the improvement in my skin density.",
-        "testimonial_author": "Isabelle R. — Paris, France · Verified Customer",
+        "testimonial_author": "Isabelle R.",
+        "testimonial_author_subtitle": "Paris, France · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#2E1420",
-        "text_color": "#F5E8ED",
-        "accent_color": "#C47B8C"
+        "testimonial_bg_color": "#6B2D5E",
+        "cta_bottom_heading": "Begin Your Glow From Within",
+        "cta_bottom_subtext": "The skin you want starts with the formula you take daily.",
+        "cta_bottom_btn_text": "Start My Skin Ritual",
+        "cta_bottom_bg_color": "#E8A0BF",
+        "cta_bottom_text_color": "#6B2D5E",
+        "bg_color": "#6B2D5E",
+        "text_color": "#FAF0F5",
+        "accent_color": "#E8A0BF"
       }
     },
     {
       "name": "Goal Hero — Energy",
       "settings": {
+        "hero_overlay_color": "#4A1900",
+        "hero_overlay_opacity": 55,
         "hero_badge": "VITALITY PROTOCOL",
-        "hero_badge_color": "#C4A027",
+        "hero_badge_color": "#F4A261",
         "hero_heading": "Ignite Your Full Potential Daily",
         "hero_subheading": "Clean, sustained energy without the caffeine crash. Mitochondria-level vitality that makes you feel powerfully alive all day long.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Energy Collection",
         "cta_secondary_text": "My Vitality Profile",
         "benefit_1_icon": "⚡",
-        "benefit_1_text": "Zero stimulants",
+        "benefit_1_title": "Zero Stimulants",
+        "benefit_1_desc": "Sustained energy sourced from mitochondrial support — no caffeine, no crash.",
         "benefit_2_icon": "🍄",
-        "benefit_2_text": "Cordyceps-powered",
+        "benefit_2_title": "Cordyceps-Powered",
+        "benefit_2_desc": "Adaptogenic mushrooms proven to enhance oxygen utilisation and vitality.",
         "benefit_3_icon": "🔬",
-        "benefit_3_text": "Mitochondrial support",
+        "benefit_3_title": "Cellular Energy",
+        "benefit_3_desc": "CoQ10 and B-complex complex fuel ATP production at a cellular level.",
         "products_heading": "Recommended for Energy & Vitality",
+        "products_subheading": "Stimulant-free formulas for all-day clean energy and drive",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I'm 52 and I have more energy than I did at 35. I'm training for my second marathon and people keep asking if I've done something different.",
-        "testimonial_author": "David M. — Denver, CO · Verified Customer",
+        "testimonial_author": "David M.",
+        "testimonial_author_subtitle": "Denver, CO · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1A1200",
-        "text_color": "#F5EDD8",
-        "accent_color": "#C4A027"
+        "testimonial_bg_color": "#7A3100",
+        "cta_bottom_heading": "Fuel Your Best Day, Every Day",
+        "cta_bottom_subtext": "Real energy isn't a spike. It's a foundation.",
+        "cta_bottom_btn_text": "Start My Energy Protocol",
+        "cta_bottom_bg_color": "#F4A261",
+        "cta_bottom_text_color": "#7A3100",
+        "bg_color": "#7A3100",
+        "text_color": "#FAF0E6",
+        "accent_color": "#F4A261"
       }
     },
     {
       "name": "Goal Hero — Wellness",
       "settings": {
+        "hero_overlay_color": "#162A08",
+        "hero_overlay_opacity": 55,
         "hero_badge": "WHOLE-BODY WELLNESS",
-        "hero_badge_color": "#6DB88A",
+        "hero_badge_color": "#8DB87A",
         "hero_heading": "Health That Goes Deeper Than a Goal",
         "hero_subheading": "Gut health, immunity, longevity, and daily foundations — products that build the bedrock of a truly well life.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Wellness",
         "cta_secondary_text": "Take the Quiz",
         "benefit_1_icon": "🦠",
-        "benefit_1_text": "Gut & microbiome support",
+        "benefit_1_title": "Gut & Microbiome",
+        "benefit_1_desc": "50B CFU multi-strain probiotics for digestive balance and gut integrity.",
         "benefit_2_icon": "🧬",
-        "benefit_2_text": "Longevity formulas",
+        "benefit_2_title": "Longevity Science",
+        "benefit_2_desc": "NAD+ precursors and resveratrol for cellular renewal and healthy ageing.",
         "benefit_3_icon": "🌿",
-        "benefit_3_text": "Whole-food sourced",
+        "benefit_3_title": "Whole-Food Sourced",
+        "benefit_3_desc": "Bioavailable ingredients sourced from nature for maximum absorption.",
         "products_heading": "Recommended for Whole-Body Wellness",
+        "products_subheading": "Foundational formulas for gut health, immunity, and longevity",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "My gut was a mess for years. After 30 days on the probiotic stack, bloating gone, energy up, skin clearing. My whole system just reset.",
-        "testimonial_author": "Denise K. — Atlanta, GA · Verified Customer",
+        "testimonial_author": "Denise K.",
+        "testimonial_author_subtitle": "Atlanta, GA · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#0E2018",
-        "text_color": "#E6F2EC",
-        "accent_color": "#6DB88A"
+        "testimonial_bg_color": "#2D5016",
+        "cta_bottom_heading": "Begin Your Wellness Foundation",
+        "cta_bottom_subtext": "Every system in your body benefits when the foundation is right.",
+        "cta_bottom_btn_text": "Start My Wellness Protocol",
+        "cta_bottom_bg_color": "#8DB87A",
+        "cta_bottom_text_color": "#2D5016",
+        "bg_color": "#2D5016",
+        "text_color": "#EAF4E6",
+        "accent_color": "#8DB87A"
       }
     }
   ]

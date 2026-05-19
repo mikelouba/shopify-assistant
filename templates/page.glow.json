@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#3D0E34",
+        "hero_overlay_opacity": 55,
         "hero_badge": "SKIN RITUAL",
-        "hero_badge_color": "#C47B8C",
+        "hero_badge_color": "#E8A0BF",
         "hero_heading": "Radiance That Starts Within",
         "hero_subheading": "True skin health is cellular. Our inside-out formulas rebuild your skin's architecture from the collagen layer up.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Skin Glow",
-        "cta_primary_url": "/collections/glow",
         "cta_secondary_text": "My Skin Profile",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "🐟",
-        "benefit_1_text": "Marine Collagen 5g",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Clinically trialed",
-        "benefit_3_icon": "✨",
-        "benefit_3_text": "Results in 4–8 weeks",
+        "benefit_1_title": "Marine Collagen",
+        "benefit_1_desc": "5g of bioavailable marine collagen per serving for skin density and elasticity.",
+        "benefit_2_icon": "✨",
+        "benefit_2_title": "Visible Results",
+        "benefit_2_desc": "Clinically trialed formulas — visible glow measurable in just 4–8 weeks.",
+        "benefit_3_icon": "🌸",
+        "benefit_3_title": "Inside-Out Beauty",
+        "benefit_3_desc": "Targets skin renewal at the cellular level for lasting, real radiance.",
         "products_heading": "Recommended for Skin Glow",
+        "products_subheading": "Inside-out beauty formulas for luminous, healthy skin",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "My esthetician asked what I'd changed in my routine. She was genuinely impressed by the improvement in my skin density.",
-        "testimonial_author": "Isabelle R. — Paris, France · Verified Customer",
+        "testimonial_author": "Isabelle R.",
+        "testimonial_author_subtitle": "Paris, France · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#2E1420",
-        "text_color": "#F5E8ED",
-        "accent_color": "#C47B8C"
+        "testimonial_bg_color": "#6B2D5E",
+        "cta_bottom_heading": "Begin Your Glow From Within",
+        "cta_bottom_subtext": "The skin you want starts with the formula you take daily.",
+        "cta_bottom_btn_text": "Start My Skin Ritual",
+        "cta_bottom_bg_color": "#E8A0BF",
+        "cta_bottom_text_color": "#6B2D5E",
+        "bg_color": "#6B2D5E",
+        "text_color": "#FAF0F5",
+        "accent_color": "#E8A0BF"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }

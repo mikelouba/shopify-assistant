@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#3B1F0F",
+        "hero_overlay_opacity": 55,
         "hero_badge": "CALM SUPPORT",
-        "hero_badge_color": "#7EAA82",
+        "hero_badge_color": "#C8956C",
         "hero_heading": "Breathe. Release. Restore.",
         "hero_subheading": "Botanical adaptogens that work at the root of stress — your cortisol levels, your nervous system, your baseline.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Calm Collection",
-        "cta_primary_url": "/collections/stress",
         "cta_secondary_text": "Find My Formula",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "🌿",
-        "benefit_1_text": "Adaptogen-rich",
-        "benefit_2_icon": "🧪",
-        "benefit_2_text": "Cortisol tested",
+        "benefit_1_title": "Adaptogen-Rich",
+        "benefit_1_desc": "Ashwagandha & Rhodiola balance cortisol and build stress resilience naturally.",
+        "benefit_2_icon": "💚",
+        "benefit_2_title": "Cortisol Support",
+        "benefit_2_desc": "Clinically validated formulas that measurably reduce stress biomarkers.",
         "benefit_3_icon": "🌙",
-        "benefit_3_text": "Non-sedating",
+        "benefit_3_title": "Non-Sedating",
+        "benefit_3_desc": "Stay calm and fully functional — no drowsiness or mental fog.",
         "products_heading": "Recommended for Stress Relief",
+        "products_subheading": "Adaptogens and botanicals for a calmer, steadier nervous system",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I was on anxiety medication for 3 years. Under my doctor's supervision I transitioned to the calm stack. I feel more myself than I have in a decade.",
-        "testimonial_author": "Maya R. — Austin, TX · Verified Customer",
+        "testimonial_author": "Maya R.",
+        "testimonial_author_subtitle": "Austin, TX · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1A2E1C",
-        "text_color": "#E8F0E8",
-        "accent_color": "#7EAA82"
+        "testimonial_bg_color": "#5C3D2E",
+        "cta_bottom_heading": "Your Calm Is Waiting",
+        "cta_bottom_subtext": "Stress is inevitable. Your response to it doesn't have to be.",
+        "cta_bottom_btn_text": "Start My Calm Protocol",
+        "cta_bottom_bg_color": "#C8956C",
+        "cta_bottom_text_color": "#5C3D2E",
+        "bg_color": "#5C3D2E",
+        "text_color": "#F5EDE5",
+        "accent_color": "#C8956C"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }

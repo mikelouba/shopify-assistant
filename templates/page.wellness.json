@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#162A08",
+        "hero_overlay_opacity": 55,
         "hero_badge": "WHOLE-BODY WELLNESS",
-        "hero_badge_color": "#6DB88A",
+        "hero_badge_color": "#8DB87A",
         "hero_heading": "Health That Goes Deeper Than a Goal",
         "hero_subheading": "Gut health, immunity, longevity, and daily foundations — products that build the bedrock of a truly well life.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Wellness",
-        "cta_primary_url": "/collections/wellness",
         "cta_secondary_text": "Take the Quiz",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "🦠",
-        "benefit_1_text": "Gut & microbiome support",
+        "benefit_1_title": "Gut & Microbiome",
+        "benefit_1_desc": "50B CFU multi-strain probiotics for digestive balance and gut integrity.",
         "benefit_2_icon": "🧬",
-        "benefit_2_text": "Longevity formulas",
+        "benefit_2_title": "Longevity Science",
+        "benefit_2_desc": "NAD+ precursors and resveratrol for cellular renewal and healthy ageing.",
         "benefit_3_icon": "🌿",
-        "benefit_3_text": "Whole-food sourced",
+        "benefit_3_title": "Whole-Food Sourced",
+        "benefit_3_desc": "Bioavailable ingredients sourced from nature for maximum absorption.",
         "products_heading": "Recommended for Whole-Body Wellness",
+        "products_subheading": "Foundational formulas for gut health, immunity, and longevity",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "My gut was a mess for years. After 30 days on the probiotic stack, bloating gone, energy up, skin clearing. My whole system just reset.",
-        "testimonial_author": "Denise K. — Atlanta, GA · Verified Customer",
+        "testimonial_author": "Denise K.",
+        "testimonial_author_subtitle": "Atlanta, GA · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#0E2018",
-        "text_color": "#E6F2EC",
-        "accent_color": "#6DB88A"
+        "testimonial_bg_color": "#2D5016",
+        "cta_bottom_heading": "Begin Your Wellness Foundation",
+        "cta_bottom_subtext": "Every system in your body benefits when the foundation is right.",
+        "cta_bottom_btn_text": "Start My Wellness Protocol",
+        "cta_bottom_bg_color": "#8DB87A",
+        "cta_bottom_text_color": "#2D5016",
+        "bg_color": "#2D5016",
+        "text_color": "#EAF4E6",
+        "accent_color": "#8DB87A"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }

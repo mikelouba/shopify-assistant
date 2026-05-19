@@ -1,33 +1,49 @@
 {
   "sections": {
-    "goal_page_hero": {
+    "main": {
       "type": "goal-page-hero",
       "settings": {
+        "hero_overlay_color": "#4A1900",
+        "hero_overlay_opacity": 55,
         "hero_badge": "VITALITY PROTOCOL",
-        "hero_badge_color": "#C4A027",
+        "hero_badge_color": "#F4A261",
         "hero_heading": "Ignite Your Full Potential Daily",
         "hero_subheading": "Clean, sustained energy without the caffeine crash. Mitochondria-level vitality that makes you feel powerfully alive all day long.",
-        "hero_overlay_opacity": 40,
         "cta_primary_text": "Shop Energy Collection",
-        "cta_primary_url": "/collections/energy",
         "cta_secondary_text": "My Vitality Profile",
-        "cta_secondary_url": "/pages/wellness-quiz",
         "benefit_1_icon": "⚡",
-        "benefit_1_text": "Zero stimulants",
+        "benefit_1_title": "Zero Stimulants",
+        "benefit_1_desc": "Sustained energy sourced from mitochondrial support — no caffeine, no crash.",
         "benefit_2_icon": "🍄",
-        "benefit_2_text": "Cordyceps-powered",
+        "benefit_2_title": "Cordyceps-Powered",
+        "benefit_2_desc": "Adaptogenic mushrooms proven to enhance oxygen utilisation and vitality.",
         "benefit_3_icon": "🔬",
-        "benefit_3_text": "Mitochondrial support",
+        "benefit_3_title": "Cellular Energy",
+        "benefit_3_desc": "CoQ10 and B-complex fuel ATP production at a cellular level.",
         "products_heading": "Recommended for Energy & Vitality",
+        "products_subheading": "Stimulant-free formulas for all-day clean energy and drive",
+        "products_to_show": 6,
+        "product_columns": "3",
+        "product_card_style": "card",
+        "show_price": true,
+        "show_add_to_cart": false,
+        "card_btn_text": "Shop Now",
         "show_testimonial": true,
         "testimonial_text": "I'm 52 and I have more energy than I did at 35. I'm training for my second marathon and people keep asking if I've done something different.",
-        "testimonial_author": "David M. — Denver, CO · Verified Customer",
+        "testimonial_author": "David M.",
+        "testimonial_author_subtitle": "Denver, CO · Verified Customer",
         "testimonial_rating": 5,
-        "bg_color": "#1A1200",
-        "text_color": "#F5EDD8",
-        "accent_color": "#C4A027"
+        "testimonial_bg_color": "#7A3100",
+        "cta_bottom_heading": "Fuel Your Best Day, Every Day",
+        "cta_bottom_subtext": "Real energy isn't a spike. It's a foundation.",
+        "cta_bottom_btn_text": "Start My Energy Protocol",
+        "cta_bottom_bg_color": "#F4A261",
+        "cta_bottom_text_color": "#7A3100",
+        "bg_color": "#7A3100",
+        "text_color": "#FAF0E6",
+        "accent_color": "#F4A261"
       }
     }
   },
-  "order": ["goal_page_hero"]
+  "order": ["main"]
 }
