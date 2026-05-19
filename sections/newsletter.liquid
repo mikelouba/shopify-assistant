@@ -26,4 +26,44 @@
              required
              aria-label="Email address">
       <button type="submit" class="nl-btn"
-        style="backg
+        style="background-color: {{ text_color }}; color: {{ bg_color }}">
+        {{ section.settings.btn_label | default: 'Join Free' }}
+      </button>
+    </div>
+    {%- if form.posted_successfully? -%}
+      <p class="nl-success">{{ success_msg }}</p>
+    {%- endif -%}
+  {%- endform -%}
+
+  {%- if privacy_text != blank -%}
+    <p class="nl-privacy" style="color: {{ text_color }}; opacity: 0.6">{{ privacy_text }}</p>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "tag": "div",
+  "settings": [
+    { "type": "header",   "content": "Content" },
+    { "type": "text",     "id": "heading",          "label": "Heading",          "default": "Join the Solmara Circle" },
+    { "type": "textarea", "id": "subheading",       "label": "Subheading" },
+    { "type": "text",     "id": "btn_label",        "label": "Button text",      "default": "Join Free" },
+    { "type": "text",     "id": "input_placeholder","label": "Input placeholder","default": "your@email.com" },
+    { "type": "text",     "id": "privacy_text",     "label": "Privacy note",     "default": "🔒 No spam, ever. Unsubscribe anytime." },
+    { "type": "text",     "id": "success_msg",      "label": "Success message",  "default": "🌿 Welcome to the Solmara Circle!" },
+    { "type": "header",   "content": "Layout" },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 40, "max": 120, "step": 10, "unit": "px",
+      "default": 80
+    },
+    { "type": "header", "content": "Style" },
+    { "type": "color",  "id": "bg_color",   "label": "Background colour", "default": "#1A2B1E" },
+    { "type": "color",  "id": "text_color", "label": "Text & button colour", "default": "#ffffff" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

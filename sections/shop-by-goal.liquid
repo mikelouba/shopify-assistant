@@ -54,4 +54,37 @@
     },
     {
       "type": "range",
-      "id": "
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20, "max": 100, "step": 10, "unit": "px",
+      "default": 60
+    },
+    { "type": "header", "content": "Style" },
+    { "type": "color",  "id": "bg_color", "label": "Background colour", "default": "#F8F5F0" }
+  ],
+  "blocks": [
+    {
+      "type": "goal",
+      "name": "Goal Card",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Emoji icon",    "default": "🌿" },
+        { "type": "text", "id": "name", "label": "Goal name",     "default": "Better Sleep" },
+        { "type": "text", "id": "desc", "label": "Description",   "default": "Drift deeper, wake refreshed" },
+        { "type": "url",  "id": "url",  "label": "Collection or page link" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [{
+    "name": "Shop by Goal",
+    "blocks": [
+      { "type": "goal", "settings": { "icon": "😴", "name": "Better Sleep",     "desc": "Drift deeper, wake refreshed" } },
+      { "type": "goal", "settings": { "icon": "🧠", "name": "Focus & Clarity",  "desc": "Sharpen your mind naturally" } },
+      { "type": "goal", "settings": { "icon": "🌿", "name": "Stress Relief",    "desc": "Calm your nervous system" } },
+      { "type": "goal", "settings": { "icon": "✨", "name": "Skin Glow",        "desc": "Radiance from within" } },
+      { "type": "goal", "settings": { "icon": "⚡", "name": "Energy & Vitality", "desc": "Feel alive all day long" } }
+    ]
+  }]
+}
+{% endschema %}

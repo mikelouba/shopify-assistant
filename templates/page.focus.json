@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "goal_page_hero": {
+      "type": "goal-page-hero",
+      "settings": {
+        "hero_badge": "COGNITIVE SUPPORT",
+        "hero_badge_color": "#C49B6C",
+        "hero_heading": "Unlock Your Sharpest Mind",
+        "hero_subheading": "Precision nootropics formulated to sustain deep focus, protect memory, and elevate mental clarity — without the crash.",
+        "hero_overlay_opacity": 40,
+        "cta_primary_text": "Shop Focus Collection",
+        "cta_primary_url": "/collections/focus",
+        "cta_secondary_text": "Build My Stack",
+        "cta_secondary_url": "/pages/wellness-quiz",
+        "benefit_1_icon": "🍄",
+        "benefit_1_text": "Lion's Mane NGF +42%",
+        "benefit_2_icon": "🧪",
+        "benefit_2_text": "Clinically studied",
+        "benefit_3_icon": "⚡",
+        "benefit_3_text": "Zero jitters or crash",
+        "products_heading": "Recommended for Focus & Clarity",
+        "show_testimonial": true,
+        "testimonial_text": "I'm a software engineer and the Lion's Mane has been transformative. I go into flow states faster and stay there longer.",
+        "testimonial_author": "James K. — London, UK · Verified Customer",
+        "testimonial_rating": 5,
+        "bg_color": "#1E1208",
+        "text_color": "#F5EDE0",
+        "accent_color": "#C49B6C"
+      }
+    }
+  },
+  "order": ["goal_page_hero"]
+}

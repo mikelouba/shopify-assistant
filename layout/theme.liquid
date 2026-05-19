@@ -68,10 +68,29 @@
 
     <nav aria-label="Main navigation">
       {%- for link in linklists[settings.main_menu].links -%}
-        <a href="{{ link.url }}"
-           {% if link.active %}aria-current="page"{% endif %}>
-          {{ link.title }}
-        </a>
+        {%- if link.links.size > 0 -%}
+          <div class="nav-item has-dropdown">
+            <a href="{{ link.url }}"
+               {% if link.active %}aria-current="page"{% endif %}>
+              {{ link.title }}<span class="nav-chevron" aria-hidden="true">▾</span>
+            </a>
+            <div class="nav-dropdown" role="menu">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}"
+                   class="dropdown-link"
+                   {% if child.active %}aria-current="page"{% endif %}
+                   role="menuitem">
+                  {{ child.title }}
+                </a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <a href="{{ link.url }}"
+             {% if link.active %}aria-current="page"{% endif %}>
+            {{ link.title }}
+          </a>
+        {%- endif -%}
       {%- endfor -%}
     </nav>
 

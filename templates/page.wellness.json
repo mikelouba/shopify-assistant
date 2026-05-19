@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "goal_page_hero": {
+      "type": "goal-page-hero",
+      "settings": {
+        "hero_badge": "WHOLE-BODY WELLNESS",
+        "hero_badge_color": "#6DB88A",
+        "hero_heading": "Health That Goes Deeper Than a Goal",
+        "hero_subheading": "Gut health, immunity, longevity, and daily foundations — products that build the bedrock of a truly well life.",
+        "hero_overlay_opacity": 40,
+        "cta_primary_text": "Shop Wellness",
+        "cta_primary_url": "/collections/wellness",
+        "cta_secondary_text": "Take the Quiz",
+        "cta_secondary_url": "/pages/wellness-quiz",
+        "benefit_1_icon": "🦠",
+        "benefit_1_text": "Gut & microbiome support",
+        "benefit_2_icon": "🧬",
+        "benefit_2_text": "Longevity formulas",
+        "benefit_3_icon": "🌿",
+        "benefit_3_text": "Whole-food sourced",
+        "products_heading": "Recommended for Whole-Body Wellness",
+        "show_testimonial": true,
+        "testimonial_text": "My gut was a mess for years. After 30 days on the probiotic stack, bloating gone, energy up, skin clearing. My whole system just reset.",
+        "testimonial_author": "Denise K. — Atlanta, GA · Verified Customer",
+        "testimonial_rating": 5,
+        "bg_color": "#0E2018",
+        "text_color": "#E6F2EC",
+        "accent_color": "#6DB88A"
+      }
+    }
+  },
+  "order": ["goal_page_hero"]
+}

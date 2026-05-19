@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "goal_page_hero": {
+      "type": "goal-page-hero",
+      "settings": {
+        "hero_badge": "SKIN RITUAL",
+        "hero_badge_color": "#C47B8C",
+        "hero_heading": "Radiance That Starts Within",
+        "hero_subheading": "True skin health is cellular. Our inside-out formulas rebuild your skin's architecture from the collagen layer up.",
+        "hero_overlay_opacity": 40,
+        "cta_primary_text": "Shop Skin Glow",
+        "cta_primary_url": "/collections/glow",
+        "cta_secondary_text": "My Skin Profile",
+        "cta_secondary_url": "/pages/wellness-quiz",
+        "benefit_1_icon": "🐟",
+        "benefit_1_text": "Marine Collagen 5g",
+        "benefit_2_icon": "🧪",
+        "benefit_2_text": "Clinically trialed",
+        "benefit_3_icon": "✨",
+        "benefit_3_text": "Results in 4–8 weeks",
+        "products_heading": "Recommended for Skin Glow",
+        "show_testimonial": true,
+        "testimonial_text": "My esthetician asked what I'd changed in my routine. She was genuinely impressed by the improvement in my skin density.",
+        "testimonial_author": "Isabelle R. — Paris, France · Verified Customer",
+        "testimonial_rating": 5,
+        "bg_color": "#2E1420",
+        "text_color": "#F5E8ED",
+        "accent_color": "#C47B8C"
+      }
+    }
+  },
+  "order": ["goal_page_hero"]
+}

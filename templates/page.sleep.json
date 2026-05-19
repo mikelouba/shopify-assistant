@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "goal_page_hero": {
+      "type": "goal-page-hero",
+      "settings": {
+        "hero_badge": "SLEEP SUPPORT",
+        "hero_badge_color": "#7B9CC4",
+        "hero_heading": "Better Sleep Starts Here",
+        "hero_subheading": "Scientifically formulated to ease your nervous system into restorative, uninterrupted sleep — naturally, without habit-forming ingredients.",
+        "hero_overlay_opacity": 40,
+        "cta_primary_text": "Shop Sleep Collection",
+        "cta_primary_url": "/collections/sleep",
+        "cta_secondary_text": "Find My Protocol",
+        "cta_secondary_url": "/pages/wellness-quiz",
+        "benefit_1_icon": "🌙",
+        "benefit_1_text": "Non-habit forming",
+        "benefit_2_icon": "🧪",
+        "benefit_2_text": "Clinically studied",
+        "benefit_3_icon": "🌿",
+        "benefit_3_text": "No melatonin dependency",
+        "products_heading": "Recommended for Better Sleep",
+        "show_testimonial": true,
+        "testimonial_text": "I've struggled with sleep for 6 years. After 2 weeks on the Sleep Kit, I'm consistently getting 7–8 hours and waking without an alarm.",
+        "testimonial_author": "Lauren T. — Chicago, IL · Verified Customer",
+        "testimonial_rating": 5,
+        "bg_color": "#0F1A2E",
+        "text_color": "#E8EDF5",
+        "accent_color": "#7B9CC4"
+      }
+    }
+  },
+  "order": ["goal_page_hero"]
+}

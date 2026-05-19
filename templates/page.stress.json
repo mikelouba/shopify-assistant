@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "goal_page_hero": {
+      "type": "goal-page-hero",
+      "settings": {
+        "hero_badge": "CALM SUPPORT",
+        "hero_badge_color": "#7EAA82",
+        "hero_heading": "Breathe. Release. Restore.",
+        "hero_subheading": "Botanical adaptogens that work at the root of stress — your cortisol levels, your nervous system, your baseline.",
+        "hero_overlay_opacity": 40,
+        "cta_primary_text": "Shop Calm Collection",
+        "cta_primary_url": "/collections/stress",
+        "cta_secondary_text": "Find My Formula",
+        "cta_secondary_url": "/pages/wellness-quiz",
+        "benefit_1_icon": "🌿",
+        "benefit_1_text": "Adaptogen-rich",
+        "benefit_2_icon": "🧪",
+        "benefit_2_text": "Cortisol tested",
+        "benefit_3_icon": "🌙",
+        "benefit_3_text": "Non-sedating",
+        "products_heading": "Recommended for Stress Relief",
+        "show_testimonial": true,
+        "testimonial_text": "I was on anxiety medication for 3 years. Under my doctor's supervision I transitioned to the calm stack. I feel more myself than I have in a decade.",
+        "testimonial_author": "Maya R. — Austin, TX · Verified Customer",
+        "testimonial_rating": 5,
+        "bg_color": "#1A2E1C",
+        "text_color": "#E8F0E8",
+        "accent_color": "#7EAA82"
+      }
+    }
+  },
+  "order": ["goal_page_hero"]
+}

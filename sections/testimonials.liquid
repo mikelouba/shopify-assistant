@@ -47,4 +47,37 @@
     {
       "type": "select",
       "id": "cols",
-      "label": "Co
+      "label": "Columns",
+      "options": [
+        { "value": "1", "label": "1 column (stacked)" },
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "3",
+      "info": "Collapses to a single column on mobile."
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20, "max": 100, "step": 10, "unit": "px",
+      "default": 60
+    },
+    { "type": "header",   "content": "Style" },
+    { "type": "color",    "id": "bg_color",      "label": "Background colour", "default": "#F8F5F0" },
+    { "type": "checkbox", "id": "show_verified",  "label": "Show Verified Purchase badge", "default": true }
+  ],
+  "blocks": [{
+    "type": "testimonial",
+    "name": "Testimonial",
+    "settings": [
+      { "type": "range",    "id": "stars",    "label": "Stars",         "min": 1, "max": 5, "step": 1, "default": 5 },
+      { "type": "textarea", "id": "text",     "label": "Review text" },
+      { "type": "text",     "id": "author",   "label": "Customer name", "default": "Happy Customer" },
+      { "type": "text",     "id": "location", "label": "Location",      "default": "United States" },
+      { "type": "text",     "id": "avatar",   "label": "Avatar emoji",  "default": "🌿" }
+    ]
+  }],
+  "presets": [{ "name": "Testimonials" }]
+}
+{% endschema %}

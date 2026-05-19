@@ -25,4 +25,56 @@
         <div class="ing-name">{{ block.settings.name }}</div>
         <div class="ing-desc">{{ block.settings.desc }}</div>
         {%- if block.settings.link != blank -%}
-          <a class="ing-link" href="{{ bl
+          <a class="ing-link" href="{{ block.settings.link }}">Learn more →</a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Ingredients Grid",
+  "tag": "div",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "text",   "id": "eyebrow", "label": "Eyebrow", "default": "✦ Hero Ingredients" },
+    { "type": "text",   "id": "heading", "label": "Heading", "default": "Nature's most powerful botanicals" },
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "cols",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "4",
+      "info": "Collapses to 2 columns on mobile."
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20, "max": 100, "step": 10, "unit": "px",
+      "default": 60
+    },
+    { "type": "header", "content": "Style" },
+    { "type": "color",  "id": "bg_color", "label": "Background colour", "default": "#F8F5F0" }
+  ],
+  "blocks": [{
+    "type": "ingredient",
+    "name": "Ingredient",
+    "settings": [
+      { "type": "text",         "id": "emoji", "label": "Emoji (shown if no image)", "default": "🌿" },
+      { "type": "image_picker", "id": "image", "label": "Ingredient image (optional)" },
+      { "type": "text",         "id": "name",  "label": "Name",                      "default": "Ashwagandha" },
+      { "type": "textarea",     "id": "desc",  "label": "Description" },
+      { "type": "url",          "id": "link",  "label": "Learn more link (optional)" }
+    ]
+  }],
+  "max_blocks": 8,
+  "presets": [{ "name": "Ingredients Grid" }]
+}
+{% endschema %}

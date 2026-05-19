@@ -36,4 +36,40 @@
     {
       "type": "text",
       "id": "items",
-      "label": "
+      "label": "Items (comma-separated)",
+      "default": "Gut Health,Sleep Support,Stress Relief,Immune Boost,Energy & Focus,Skin Glow,Hormonal Balance"
+    },
+    { "type": "header", "content": "Behaviour" },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 10, "max": 60, "step": 5, "unit": "s",
+      "default": 30,
+      "info": "Lower value = faster scroll"
+    },
+    { "type": "header", "content": "Style" },
+    { "type": "color",  "id": "bg_color",   "label": "Background colour", "default": "#2D4A30" },
+    { "type": "color",  "id": "text_color", "label": "Text colour",       "default": "#ffffff" },
+    {
+      "type": "range",
+      "id": "font_size",
+      "label": "Font size",
+      "min": 11, "max": 22, "step": 1, "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "separator",
+      "label": "Item separator",
+      "options": [
+        { "value": "leaf", "label": "🌿 Leaf" },
+        { "value": "dot",  "label": "· Dot" },
+        { "value": "dash", "label": "— Dash" }
+      ],
+      "default": "leaf"
+    }
+  ],
+  "presets": [{ "name": "Marquee Strip" }]
+}
+{% endschema %}

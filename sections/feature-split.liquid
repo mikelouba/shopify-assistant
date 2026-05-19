@@ -80,4 +80,37 @@
     { "type": "textarea",     "id": "pillar_1_body",    "label": "Body" },
     { "type": "header",       "content": "Pillar 2" },
     { "type": "text",         "id": "pillar_2_icon",    "label": "Icon",     "default": "🌿" },
-    { "type": "text",  
+    { "type": "text",         "id": "pillar_2_title",   "label": "Title",    "default": "Certified Organic Sourcing" },
+    { "type": "textarea",     "id": "pillar_2_body",    "label": "Body" },
+    { "type": "header",       "content": "Pillar 3" },
+    { "type": "text",         "id": "pillar_3_icon",    "label": "Icon",     "default": "♻️" },
+    { "type": "text",         "id": "pillar_3_title",   "label": "Title",    "default": "Zero-Plastic Packaging" },
+    { "type": "textarea",     "id": "pillar_3_body",    "label": "Body" },
+    { "type": "header",       "content": "Button" },
+    { "type": "text",         "id": "btn_label",        "label": "Button text", "default": "Our Standards →" },
+    { "type": "url",          "id": "btn_url",          "label": "Button link" },
+    { "type": "header",       "content": "Layout" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Image position",
+      "options": [
+        { "value": "image-left",  "label": "Image on left" },
+        { "value": "image-right", "label": "Image on right" }
+      ],
+      "default": "image-left"
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20, "max": 100, "step": 10, "unit": "px",
+      "default": 60
+    },
+    { "type": "header", "content": "Colours" },
+    { "type": "color",  "id": "section_bg", "label": "Section background", "default": "#ffffff" },
+    { "type": "color",  "id": "visual_bg",  "label": "Visual panel background", "default": "#F0EBE3" }
+  ],
+  "presets": [{ "name": "Feature Split" }]
+}
+{% endschema %}
