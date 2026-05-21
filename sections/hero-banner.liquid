@@ -1,74 +1,170 @@
 {%- liquid
-  assign show_trust    = section.settings.show_trust_badges   | default: true
-  assign show_floating = section.settings.show_floating_cards | default: true
-  assign visual_bg     = section.settings.visual_bg           | default: '#F0EBE3'
-  assign review_count  = section.settings.stat_review_count   | default: '12,400+'
-  assign month_label   = section.settings.stat_month_label    | default: 'This Month'
-  assign orders_label  = section.settings.stat_orders_label   | default: 'orders shipped worldwide 🌍'
+  assign show_trust    = section.settings.show_trust_badges
+  assign show_floating = section.settings.show_floating_cards
+  assign show_eyebrow  = section.settings.show_eyebrow
+  assign visual_bg     = section.settings.visual_bg | default: '#2D4A30'
+  assign review_count  = section.settings.stat_review_count | default: '12,400+'
+  assign month_label   = section.settings.stat_month_label  | default: 'This Month'
+  assign orders_label  = section.settings.stat_orders_label | default: 'orders shipped worldwide 🌍'
+  assign sid           = section.id
+
+  assign blob_play   = 'running'
+  unless section.settings.blob_anim_on
+    assign blob_play = 'paused'
+  endunless
+
+  assign orbit_play  = 'running'
+  unless section.settings.orbit_anim_on
+    assign orbit_play = 'paused'
+  endunless
+
+  assign btns_justify = 'flex-start'
+  if section.settings.text_align == 'center'
+    assign btns_justify = 'center'
+  endif
 -%}
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <span class="leaf-icon">🌿</span>
-      {{ section.settings.eyebrow }}
-    </div>
+<style>
+  /* ── Layout ── */
+  .hb-{{ sid }} {
+    min-height: {{ section.settings.section_min_height }}px;
+    grid-template-columns: {{ section.settings.content_col_pct }}% {{ section.settings.visual_col_pct }}%;
+  }
 
-    <h1 class="hero-title">
-      {{ section.settings.heading | replace: "nature's", "<em>nature's</em>" }}
+  /* ── Desktop padding & alignment ── */
+  .hb-{{ sid }} .hero-content {
+    padding-top:     {{ section.settings.section_padding_top }}px !important;
+    padding-bottom:  {{ section.settings.section_padding_bottom }}px !important;
+    padding-left:    {{ section.settings.section_padding_left }}px !important;
+    padding-right:   {{ section.settings.section_padding_right }}px !important;
+    justify-content: {{ section.settings.content_valign }} !important;
+  }
+
+  /* ── Blob animation ── */
+  .hb-{{ sid }} .hero-blob {
+    width:  {{ section.settings.blob_width }}px;
+    height: {{ section.settings.blob_height }}px;
+    animation-duration:   {{ section.settings.blob_anim_speed }}s !important;
+    animation-play-state: {{ blob_play }} !important;
+  }
+
+  /* ── Orbit dots ── */
+  .hb-{{ sid }} .fc-dot {
+    animation-duration:   {{ section.settings.orbit_anim_speed }}s !important;
+    animation-play-state: {{ orbit_play }} !important;
+  }
+  .hb-{{ sid }} .fc-dot2 {
+    animation-duration:   {{ section.settings.orbit_anim_speed | times: 0.7 | round }}s !important;
+    animation-play-state: {{ orbit_play }} !important;
+  }
+
+  /* ── Hero image scale ── */
+  .hb-{{ sid }} .hero-product-img {
+    transform: scale({{ section.settings.image_scale | divided_by: 100.0 }});
+    transform-origin: center center;
+  }
+
+  /* ── Floating card colours ── */
+  .hb-{{ sid }} .hero-floating-card  { background: {{ section.settings.card1_bg }}; }
+  .hb-{{ sid }} .hero-floating-card2 { background: {{ section.settings.card2_bg }}; }
+  .hb-{{ sid }} .hfc2-text,
+  .hb-{{ sid }} .hfc2-stars          { color: {{ section.settings.card2_text }}; }
+
+  /* ── Entrance animation ── */
+  {%- if section.settings.entrance_anim_on -%}
+  @keyframes hbFadeUp-{{ sid }} {
+    from { opacity: 0; transform: translateY({{ section.settings.entrance_distance }}px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hb-{{ sid }} .hero-eyebrow { animation: hbFadeUp-{{ sid }} {{ section.settings.entrance_duration }}ms ease both; animation-delay: 0ms; }
+  .hb-{{ sid }} .hero-title   { animation: hbFadeUp-{{ sid }} {{ section.settings.entrance_duration }}ms ease both; animation-delay: {{ section.settings.entrance_stagger }}ms; }
+  .hb-{{ sid }} .hero-sub     { animation: hbFadeUp-{{ sid }} {{ section.settings.entrance_duration }}ms ease both; animation-delay: {{ section.settings.entrance_stagger | times: 2 }}ms; }
+  .hb-{{ sid }} .hero-btns    { animation: hbFadeUp-{{ sid }} {{ section.settings.entrance_duration }}ms ease both; animation-delay: {{ section.settings.entrance_stagger | times: 3 }}ms; }
+  .hb-{{ sid }} .hero-trust   { animation: hbFadeUp-{{ sid }} {{ section.settings.entrance_duration }}ms ease both; animation-delay: {{ section.settings.entrance_stagger | times: 4 }}ms; }
+  {%- endif -%}
+
+  /* ── Mobile (≤768px) ── */
+  @media (max-width: 768px) {
+    .hb-{{ sid }} {
+      min-height: {{ section.settings.mobile_min_height }}px;
+      grid-template-columns: 1fr;
+    }
+    .hb-{{ sid }} .hero-content {
+      padding-top:    {{ section.settings.mobile_padding_top }}px !important;
+      padding-bottom: {{ section.settings.mobile_padding_bottom }}px !important;
+      padding-left:   {{ section.settings.mobile_padding_left }}px !important;
+      padding-right:  {{ section.settings.mobile_padding_right }}px !important;
+      justify-content: {{ section.settings.mobile_valign }} !important;
+    }
+    .hb-{{ sid }} h1.hero-title { font-size: {{ section.settings.mobile_heading_size }}px !important; }
+    .hb-{{ sid }} .hero-sub     { font-size: {{ section.settings.mobile_subheading_size }}px !important; }
+  }
+</style>
+
+<section class="hero hb-{{ sid }}"
+  style="background-color: {{ section.settings.section_bg_color }}; {%- if section.settings.section_bg_image != blank -%}background-image: url({{ section.settings.section_bg_image | img_url: '1600x' }}); background-size: cover; background-position: center;{%- endif -%}">
+
+  {%- if section.settings.overlay_opacity > 0 -%}
+    <div style="position:absolute;inset:0;background:{{ section.settings.overlay_color }};opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};pointer-events:none;z-index:0;"></div>
+  {%- endif -%}
+
+  <div class="hero-content" style="text-align: {{ section.settings.text_align }}; max-width: {{ section.settings.content_max_width }}px; {%- if section.settings.text_align == 'center' %}margin-left: auto; margin-right: auto;{%- endif %} position: relative; z-index: 1;">
+
+    {%- if show_eyebrow and section.settings.eyebrow != blank -%}
+      <div class="hero-eyebrow" style="color: {{ section.settings.eyebrow_color }}; font-size: {{ section.settings.eyebrow_size }}px; letter-spacing: {{ section.settings.eyebrow_spacing }}px; background: {{ section.settings.eyebrow_bg }}; border-radius: 100px; display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; margin-bottom: 16px;">
+        {%- if section.settings.eyebrow_icon != blank -%}<span>{{ section.settings.eyebrow_icon }}</span>{%- endif -%}
+        {{ section.settings.eyebrow }}
+      </div>
+    {%- endif -%}
+
+    <h1 class="hero-title" style="font-size: {{ section.settings.heading_size }}px; line-height: {{ section.settings.heading_line_height }}; color: {{ section.settings.heading_color }}; font-weight: {{ section.settings.heading_weight }}; letter-spacing: {{ section.settings.heading_spacing }}px; margin-bottom: {{ section.settings.heading_margin_bottom }}px;">
+      {%- if section.settings.heading_em_word != blank -%}
+        {{ section.settings.heading | replace: section.settings.heading_em_word, '<em>' | append: '</em>' }}
+      {%- else -%}
+        {{ section.settings.heading }}
+      {%- endif -%}
     </h1>
 
-    <p class="hero-sub">{{ section.settings.subheading }}</p>
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero-sub" style="font-size: {{ section.settings.subheading_size }}px; color: {{ section.settings.subheading_color }}; max-width: {{ section.settings.subheading_max_width }}px; margin-bottom: {{ section.settings.subheading_margin_bottom }}px;">{{ section.settings.subheading }}</p>
+    {%- endif -%}
 
-    <div class="hero-btns">
-      <a class="btn-fill" href="{{ section.settings.btn_primary_url }}">
-        {{ section.settings.btn_primary_label }}
-      </a>
-      <a class="btn-outline" href="{{ section.settings.btn_secondary_url }}">
-        {{ section.settings.btn_secondary_label }}
-      </a>
+    <div class="hero-btns" style="justify-content: {{ btns_justify }};">
+      {%- if section.settings.btn_primary_label != blank -%}
+        <a class="btn-fill" href="{{ section.settings.btn_primary_url }}" style="background: {{ section.settings.btn_bg }}; color: {{ section.settings.btn_text_color }}; border-radius: {{ section.settings.btn_radius }}px; font-size: {{ section.settings.btn_font_size }}px; padding: {{ section.settings.btn_padding_v }}px {{ section.settings.btn_padding_h }}px;">{{ section.settings.btn_primary_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.btn_secondary_label != blank -%}
+        <a class="btn-outline" href="{{ section.settings.btn_secondary_url }}" style="color: {{ section.settings.btn_outline_color }}; border-color: {{ section.settings.btn_outline_color }}; border-radius: {{ section.settings.btn_radius }}px; font-size: {{ section.settings.btn_font_size }}px; padding: {{ section.settings.btn_padding_v }}px {{ section.settings.btn_padding_h }}px;">{{ section.settings.btn_secondary_label }}</a>
+      {%- endif -%}
     </div>
 
     {%- if show_trust -%}
       <div class="hero-trust">
-        {%- if section.settings.trust_1 != blank -%}
-          <span class="trust-item"><span class="trust-icon">🧪</span> {{ section.settings.trust_1 }}</span>
-        {%- endif -%}
-        {%- if section.settings.trust_2 != blank -%}
-          <span class="trust-item"><span class="trust-icon">🌱</span> {{ section.settings.trust_2 }}</span>
-        {%- endif -%}
-        {%- if section.settings.trust_3 != blank -%}
-          <span class="trust-item"><span class="trust-icon">♻️</span> {{ section.settings.trust_3 }}</span>
-        {%- endif -%}
+        {%- if section.settings.trust_1 != blank -%}<span class="trust-item"><span class="trust-icon">{{ section.settings.trust_1_icon }}</span> {{ section.settings.trust_1 }}</span>{%- endif -%}
+        {%- if section.settings.trust_2 != blank -%}<span class="trust-item"><span class="trust-icon">{{ section.settings.trust_2_icon }}</span> {{ section.settings.trust_2 }}</span>{%- endif -%}
+        {%- if section.settings.trust_3 != blank -%}<span class="trust-item"><span class="trust-icon">{{ section.settings.trust_3_icon }}</span> {{ section.settings.trust_3 }}</span>{%- endif -%}
       </div>
     {%- endif -%}
   </div>
 
-  <div class="hero-visual">
+  <div class="hero-visual" style="background-color: {{ visual_bg }};">
     <div class="hero-visual-inner">
       <div class="hero-blob" style="background-color: {{ visual_bg }}">
         <div class="fc-dot"></div>
         <div class="fc-dot2"></div>
         {%- if section.settings.hero_image != blank -%}
-          {{ section.settings.hero_image | img_tag:
-              section.settings.hero_image.alt | default: shop.name,
-              loading: 'eager',
-              class: 'hero-product-img',
-              widths: '400, 600, 800',
-              sizes: '45vw' }}
+          {{ section.settings.hero_image | image_url: width: 800 | image_tag: alt: section.settings.hero_image.alt | default: shop.name, loading: 'eager', class: 'hero-product-img', widths: '400, 600, 800', sizes: '45vw' }}
         {%- else -%}
           <span class="blob-icon">🌿</span>
           <span class="blob-label">Pure · Potent · Kind</span>
         {%- endif -%}
       </div>
     </div>
-
     {%- if show_floating -%}
       <div class="hero-floating-card2">
         <div class="hfc2-text">⭐ {{ section.settings.stat_rating }}</div>
         <div class="hfc2-stars">★★★★★ {{ review_count }} reviews</div>
       </div>
-
       <div class="hero-floating-card">
         <div class="hfc-label">{{ month_label }}</div>
         <div class="hfc-val">{{ section.settings.stat_orders }}</div>
@@ -76,6 +172,7 @@
       </div>
     {%- endif -%}
   </div>
+
 </section>
 
 {% schema %}
@@ -84,31 +181,146 @@
   "tag": "div",
   "class": "hero-wrapper",
   "settings": [
-    { "type": "header",   "content": "Content" },
-    { "type": "text",     "id": "eyebrow",            "label": "Eyebrow text",         "default": "New — Spring Wellness Collection" },
-    { "type": "text",     "id": "heading",             "label": "Main heading",          "default": "Wellness rooted in nature's wisdom" },
-    { "type": "textarea", "id": "subheading",          "label": "Subheading",            "default": "Solmara blends ancient botanical knowledge with modern science." },
-    { "type": "header",   "content": "Buttons" },
-    { "type": "text",     "id": "btn_primary_label",   "label": "Primary button text",   "default": "Shop the Collection" },
-    { "type": "url",      "id": "btn_primary_url",     "label": "Primary button link" },
-    { "type": "text",     "id": "btn_secondary_label", "label": "Secondary button text", "default": "Take the Wellness Quiz" },
-    { "type": "url",      "id": "btn_secondary_url",   "label": "Secondary button link" },
-    { "type": "header",   "content": "Visual" },
-    { "type": "image_picker", "id": "hero_image",      "label": "Hero product image (optional)" },
-    { "type": "color",    "id": "visual_bg",           "label": "Blob background colour","default": "#F0EBE3" },
-    { "type": "header",   "content": "Trust Badges" },
-    { "type": "checkbox", "id": "show_trust_badges",   "label": "Show trust badges",     "default": true },
-    { "type": "text",     "id": "trust_1",             "label": "Trust badge 1",         "default": "Clinically tested" },
-    { "type": "text",     "id": "trust_2",             "label": "Trust badge 2",         "default": "Certified organic" },
-    { "type": "text",     "id": "trust_3",             "label": "Trust badge 3",         "default": "Plastic-free packaging" },
-    { "type": "header",   "content": "Social Proof Stats" },
-    { "type": "text",     "id": "stat_orders",         "label": "Orders shipped stat",   "default": "24,800+" },
-    { "type": "text",     "id": "stat_rating",         "label": "Rating stat",           "default": "4.9 / 5 Rating" },
-    { "type": "text",     "id": "stat_review_count",   "label": "Review count",          "default": "12,400+" },
-    { "type": "header",   "content": "Floating Cards" },
-    { "type": "checkbox", "id": "show_floating_cards", "label": "Show floating stat cards","default": true },
-    { "type": "text",     "id": "stat_month_label",    "label": "Card label (e.g. 'This Month')", "default": "This Month" },
-    { "type": "text",     "id": "stat_orders_label",   "label": "Card sub-label",        "default": "orders shipped worldwide 🌍" }
+
+    { "type": "header", "content": "── CONTENT ──" },
+    { "type": "checkbox", "id": "show_eyebrow",   "label": "Show eyebrow",         "default": true },
+    { "type": "text",     "id": "eyebrow",         "label": "Eyebrow text",         "default": "✦ New — Spring Wellness Collection" },
+    { "type": "text",     "id": "eyebrow_icon",    "label": "Eyebrow icon (emoji)", "default": "🌿" },
+    { "type": "text",     "id": "heading",         "label": "Main heading",         "default": "Wellness rooted in wisdom" },
+    { "type": "text",     "id": "heading_em_word", "label": "Word to italicise",    "default": "wisdom",
+      "info": "This exact word in the heading will be italicised." },
+    { "type": "textarea", "id": "subheading",      "label": "Subheading",
+      "default": "Solmara blends ancient botanical knowledge with modern science — creating supplements, skincare, and rituals that work with your body, not against it." },
+    {
+      "type": "select", "id": "text_align", "label": "Text alignment",
+      "options": [
+        { "value": "left",   "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+
+    { "type": "header", "content": "── BUTTONS ──" },
+    { "type": "text", "id": "btn_primary_label",   "label": "Primary button text",   "default": "Shop the Collection" },
+    { "type": "url",  "id": "btn_primary_url",     "label": "Primary button link" },
+    { "type": "text", "id": "btn_secondary_label", "label": "Secondary button text", "default": "Take the Wellness Quiz" },
+    { "type": "url",  "id": "btn_secondary_url",   "label": "Secondary button link" },
+
+    { "type": "header", "content": "── TRUST BADGES ──" },
+    { "type": "checkbox", "id": "show_trust_badges", "label": "Show trust badges", "default": true },
+    { "type": "text", "id": "trust_1_icon", "label": "Badge 1 icon", "default": "✓" },
+    { "type": "text", "id": "trust_1",      "label": "Badge 1 text", "default": "Clinically tested" },
+    { "type": "text", "id": "trust_2_icon", "label": "Badge 2 icon", "default": "🌱" },
+    { "type": "text", "id": "trust_2",      "label": "Badge 2 text", "default": "Certified organic" },
+    { "type": "text", "id": "trust_3_icon", "label": "Badge 3 icon", "default": "♻️" },
+    { "type": "text", "id": "trust_3",      "label": "Badge 3 text", "default": "Plastic-free packaging" },
+
+    { "type": "header", "content": "── SOCIAL PROOF ──" },
+    { "type": "text", "id": "stat_orders",       "label": "Orders stat",    "default": "24,800+" },
+    { "type": "text", "id": "stat_rating",       "label": "Rating stat",    "default": "4.9 / 5 Rating" },
+    { "type": "text", "id": "stat_review_count", "label": "Review count",   "default": "12,400+" },
+
+    { "type": "header", "content": "── FLOATING CARDS ──" },
+    { "type": "checkbox", "id": "show_floating_cards", "label": "Show floating cards", "default": true },
+    { "type": "text",     "id": "stat_month_label",    "label": "Card label",          "default": "This Month" },
+    { "type": "text",     "id": "stat_orders_label",   "label": "Card sub-label",      "default": "orders shipped worldwide 🌍" },
+    { "type": "color",    "id": "card1_bg",            "label": "Bottom card background", "default": "#FDFAF5",
+      "info": "The order/stats card at the bottom right." },
+    { "type": "color",    "id": "card2_bg",            "label": "Top card background",    "default": "#C2714F",
+      "info": "The rating badge at the top left." },
+    { "type": "color",    "id": "card2_text",          "label": "Top card text color",    "default": "#ffffff" },
+
+    { "type": "header", "content": "── ANIMATIONS ──" },
+    { "type": "checkbox", "id": "blob_anim_on",      "label": "Blob morphing animation",         "default": true },
+    { "type": "range",    "id": "blob_anim_speed",   "label": "Blob morph speed (seconds)",      "min": 2, "max": 20, "step": 1,  "default": 8,
+      "info": "Lower = faster morphing. Set off above to disable." },
+    { "type": "checkbox", "id": "orbit_anim_on",     "label": "Orbit dots animation",            "default": true },
+    { "type": "range",    "id": "orbit_anim_speed",  "label": "Orbit speed (seconds per loop)",  "min": 5, "max": 40, "step": 5,  "default": 20 },
+    { "type": "checkbox", "id": "entrance_anim_on",  "label": "Content entrance animation",      "default": true },
+    { "type": "range",    "id": "entrance_duration", "label": "Entrance duration (ms)",           "min": 200, "max": 1200, "step": 100, "default": 700 },
+    { "type": "range",    "id": "entrance_stagger",  "label": "Stagger delay per element (ms)",  "min": 0,   "max": 300,  "step": 25,  "default": 100 },
+    { "type": "range",    "id": "entrance_distance", "label": "Entrance slide-up distance (px)", "min": 5,   "max": 60,   "step": 5,   "default": 20 },
+
+    { "type": "header", "content": "── VISUAL PANEL ──" },
+    { "type": "image_picker", "id": "hero_image",       "label": "Hero product image" },
+    { "type": "image_picker", "id": "section_bg_image", "label": "Background image (optional)" },
+    { "type": "color",        "id": "visual_bg",        "label": "Visual panel / blob background", "default": "#2D4A30" },
+    { "type": "range",        "id": "blob_width",       "label": "Blob width (px)",   "min": 180, "max": 600, "step": 10, "default": 340 },
+    { "type": "range",        "id": "blob_height",      "label": "Blob height (px)",  "min": 180, "max": 700, "step": 10, "default": 420 },
+    { "type": "range",        "id": "image_scale",      "label": "Product image scale (%)", "min": 50, "max": 130, "step": 5, "default": 100,
+      "info": "Scale the image up or down within the blob." },
+
+    { "type": "header", "content": "── TYPOGRAPHY ──" },
+    { "type": "range", "id": "heading_size",            "label": "Heading size (px)",            "min": 28, "max": 100, "step": 2,   "default": 58 },
+    { "type": "range", "id": "heading_line_height",     "label": "Heading line height",          "min": 1,  "max": 2,   "step": 0.1, "default": 1.1 },
+    { "type": "range", "id": "heading_weight",          "label": "Heading font weight",          "min": 300,"max": 900, "step": 100, "default": 400 },
+    { "type": "range", "id": "heading_spacing",         "label": "Heading letter spacing (px)",  "min": 0,  "max": 8,   "step": 1,   "default": 0 },
+    { "type": "range", "id": "heading_margin_bottom",   "label": "Space below heading (px)",     "min": 0,  "max": 60,  "step": 4,   "default": 24 },
+    { "type": "range", "id": "subheading_size",         "label": "Subheading size (px)",         "min": 12, "max": 24,  "step": 1,   "default": 16 },
+    { "type": "range", "id": "subheading_max_width",    "label": "Subheading max width (px)",    "min": 200,"max": 700, "step": 20,  "default": 440 },
+    { "type": "range", "id": "subheading_margin_bottom","label": "Space below subheading (px)",  "min": 0,  "max": 60,  "step": 4,   "default": 40 },
+    { "type": "range", "id": "content_max_width",       "label": "Content column max width (px)","min": 300,"max": 900, "step": 20,  "default": 560 },
+    { "type": "range", "id": "eyebrow_size",            "label": "Eyebrow font size (px)",       "min": 9,  "max": 16,  "step": 1,   "default": 11 },
+    { "type": "range", "id": "eyebrow_spacing",         "label": "Eyebrow letter spacing (px)",  "min": 0,  "max": 6,   "step": 1,   "default": 2 },
+
+    { "type": "header", "content": "── BUTTON STYLE ──" },
+    { "type": "range", "id": "btn_font_size", "label": "Font size (px)",          "min": 11, "max": 20, "step": 1, "default": 14 },
+    { "type": "range", "id": "btn_padding_v", "label": "Vertical padding (px)",   "min": 8,  "max": 28, "step": 2, "default": 16 },
+    { "type": "range", "id": "btn_padding_h", "label": "Horizontal padding (px)", "min": 16, "max": 60, "step": 2, "default": 32 },
+    { "type": "range", "id": "btn_radius",    "label": "Corner radius (px)",      "min": 0,  "max": 40, "step": 2, "default": 4 },
+
+    { "type": "header", "content": "── COLORS ──" },
+    { "type": "color", "id": "section_bg_color", "label": "Section background",  "default": "#FAF6F0" },
+    { "type": "color", "id": "heading_color",    "label": "Heading color",        "default": "#2C3E1F" },
+    { "type": "color", "id": "subheading_color", "label": "Subheading color",     "default": "#5C6B4A" },
+    { "type": "color", "id": "eyebrow_color",    "label": "Eyebrow text color",   "default": "#4A7C59" },
+    { "type": "color", "id": "eyebrow_bg",       "label": "Eyebrow background",   "default": "#E8F0E9" },
+    { "type": "color", "id": "btn_bg",           "label": "Primary button",       "default": "#2C3E1F" },
+    { "type": "color", "id": "btn_text_color",   "label": "Primary button text",  "default": "#ffffff" },
+    { "type": "color", "id": "btn_outline_color","label": "Outline button",       "default": "#2C3E1F" },
+    { "type": "color", "id": "overlay_color",    "label": "Overlay color",        "default": "#000000" },
+    { "type": "range", "id": "overlay_opacity",  "label": "Overlay opacity (%)",  "min": 0, "max": 80, "step": 5, "default": 0 },
+
+    { "type": "header", "content": "── DESKTOP SIZING ──" },
+    { "type": "range", "id": "content_col_pct",  "label": "Content column width (%)", "min": 30, "max": 70, "step": 5, "default": 55,
+      "info": "Visual column takes the remainder automatically." },
+    { "type": "range", "id": "visual_col_pct",   "label": "Visual column width (%)",  "min": 30, "max": 70, "step": 5, "default": 45 },
+    { "type": "range", "id": "section_min_height","label": "Hero min-height (px)",    "min": 0, "max": 1000, "step": 20, "default": 600,
+      "info": "Drag down to remove empty space below the content." },
+    {
+      "type": "select", "id": "content_valign", "label": "Content vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center",     "label": "Centre" },
+        { "value": "flex-end",   "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    { "type": "paragraph", "content": "Desktop content padding (px)" },
+    { "type": "range", "id": "section_padding_top",    "label": "Top",    "min": 0, "max": 200, "step": 4, "default": 80 },
+    { "type": "range", "id": "section_padding_bottom", "label": "Bottom", "min": 0, "max": 200, "step": 4, "default": 80 },
+    { "type": "range", "id": "section_padding_left",   "label": "Left",   "min": 0, "max": 200, "step": 4, "default": 72 },
+    { "type": "range", "id": "section_padding_right",  "label": "Right",  "min": 0, "max": 200, "step": 4, "default": 72 },
+
+    { "type": "header", "content": "── MOBILE SIZING ──" },
+    { "type": "range", "id": "mobile_min_height",      "label": "Mobile hero min-height (px)", "min": 0, "max": 800, "step": 20, "default": 0 },
+    {
+      "type": "select", "id": "mobile_valign", "label": "Mobile content vertical position",
+      "options": [
+        { "value": "flex-start", "label": "Top" },
+        { "value": "center",     "label": "Centre" },
+        { "value": "flex-end",   "label": "Bottom" }
+      ],
+      "default": "flex-start"
+    },
+    { "type": "range", "id": "mobile_heading_size",    "label": "Mobile heading size (px)",    "min": 20, "max": 72, "step": 2, "default": 34 },
+    { "type": "range", "id": "mobile_subheading_size", "label": "Mobile subheading size (px)", "min": 12, "max": 22, "step": 1, "default": 15 },
+    { "type": "paragraph", "content": "Mobile content padding (px)" },
+    { "type": "range", "id": "mobile_padding_top",    "label": "Top",    "min": 0, "max": 120, "step": 4, "default": 48 },
+    { "type": "range", "id": "mobile_padding_bottom", "label": "Bottom", "min": 0, "max": 120, "step": 4, "default": 48 },
+    { "type": "range", "id": "mobile_padding_left",   "label": "Left",   "min": 0, "max": 80,  "step": 4, "default": 24 },
+    { "type": "range", "id": "mobile_padding_right",  "label": "Right",  "min": 0, "max": 80,  "step": 4, "default": 24 }
+
   ],
   "presets": [{ "name": "Hero Banner" }]
 }

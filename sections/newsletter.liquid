@@ -4,11 +4,26 @@
   assign privacy_text = section.settings.privacy_text | default: '🔒 No spam, ever. Unsubscribe anytime.'
   assign success_msg  = section.settings.success_msg  | default: '🌿 Welcome to the Solmara Circle!'
   assign placeholder  = section.settings.input_placeholder | default: 'your@email.com'
-  assign pad          = section.settings.section_padding | default: 80
 -%}
 
-<section class="newsletter"
-  style="background-color: {{ bg_color }}; color: {{ text_color }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
+<style>
+  .nwl-{{ section.id }} {
+    padding-top:    {{ section.settings.pad_top }}px !important;
+    padding-bottom: {{ section.settings.pad_bottom }}px !important;
+    padding-left:   {{ section.settings.pad_left }}px !important;
+    padding-right:  {{ section.settings.pad_right }}px !important;
+  }
+  @media (max-width: 768px) {
+    .nwl-{{ section.id }} {
+      padding-top:    {{ section.settings.mob_pad_top }}px !important;
+      padding-bottom: {{ section.settings.mob_pad_bottom }}px !important;
+      padding-left:   {{ section.settings.mob_pad_left }}px !important;
+      padding-right:  {{ section.settings.mob_pad_right }}px !important;
+    }
+  }
+</style>
+<section class="newsletter nwl-{{ section.id }}"
+  style="background-color: {{ bg_color }}; color: {{ text_color }};">
   <h2 class="nl-title" style="color: {{ text_color }}">
     {{ section.settings.heading | replace: 'Solmara Circle', '<em>Solmara Circle</em>' }}
   </h2>
@@ -53,13 +68,17 @@
     { "type": "text",     "id": "privacy_text",     "label": "Privacy note",     "default": "🔒 No spam, ever. Unsubscribe anytime." },
     { "type": "text",     "id": "success_msg",      "label": "Success message",  "default": "🌿 Welcome to the Solmara Circle!" },
     { "type": "header",   "content": "Layout" },
-    {
-      "type": "range",
-      "id": "section_padding",
-      "label": "Section padding",
-      "min": 40, "max": 120, "step": 10, "unit": "px",
-      "default": 80
-    },
+        { "type": "header", "content": "── SPACING ──" },
+    { "type": "paragraph", "content": "Desktop padding (applies above 768px)" },
+    { "type": "range", "id": "pad_top",        "label": "Desktop top (px)",    "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_bottom",     "label": "Desktop bottom (px)", "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_left",       "label": "Desktop left (px)",   "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "range", "id": "pad_right",      "label": "Desktop right (px)",  "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "paragraph", "content": "Mobile padding (applies at ≤768px)" },
+    { "type": "range", "id": "mob_pad_top",    "label": "Mobile top (px)",     "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_bottom", "label": "Mobile bottom (px)",  "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_left",   "label": "Mobile left (px)",    "min": 0, "max": 80,  "step": 4, "default": 0 },
+    { "type": "range", "id": "mob_pad_right",  "label": "Mobile right (px)",   "min": 0, "max": 80,  "step": 4, "default": 0 },
     { "type": "header", "content": "Style" },
     { "type": "color",  "id": "bg_color",   "label": "Background colour", "default": "#1A2B1E" },
     { "type": "color",  "id": "text_color", "label": "Text & button colour", "default": "#ffffff" }

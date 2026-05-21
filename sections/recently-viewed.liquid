@@ -35,7 +35,7 @@
       .then(function(p) {
         var variant  = p.variants[0];
         var img      = p.featured_image
-          ? '<img src="' + p.featured_image + '" alt="' + p.title.replace(/"/g, "'") + '" loading="lazy" class="p-img">'
+          ? '<img src="' + p.featured_image + '" alt="' + p.title.replace(/"/g, "'") + '" loading="lazy" class="p-img" style="object-fit: contain; object-position: center center; width: 100%; height: 100%;">'
           : '<div class="p-img-bg" style="background:var(--sand)"><span class="p-icon">🌿</span></div>';
         var isSale   = variant.compare_at_price && variant.compare_at_price > variant.price;
         var price    = '<span class="p-price"' + (isSale ? ' style="color:var(--terracotta)"' : '') + '>' + formatMoney(variant.price) + '</span>';

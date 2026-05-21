@@ -43,7 +43,8 @@
                   loading: forloop.first | default: 'lazy',
                   class: 'pd-slide-img',
                   widths: '500,700,900,1000',
-                  sizes: '(max-width:768px) 100vw, 48vw' }}
+                  sizes: '(max-width:768px) 100vw, 48vw',
+                  style: 'object-fit: contain; object-position: center center; width: 100%; height: 100%;' }}
             </div>
           {%- endfor -%}
           {%- if product.images.size == 0 -%}
@@ -705,13 +706,58 @@
   .pd-stats-bar { grid-template-columns: repeat(2,1fr); }
 }
 @media (max-width: 600px) {
-  .pd { padding: 0 16px 56px; }
-  .pd-buy-row { flex-direction: column; }
-  .pd-atc-btn { min-height: 56px; }
+  /* Layout */
+  .pd { padding: 0 16px 56px; max-width: 100%; box-sizing: border-box; overflow: hidden; }
+  .pd-layout { max-width: 100%; }
+
+  /* Image gallery — give the slide a real height so contain has room */
+  .pd-slide-wrap { height: 320px; max-height: 80vw; border-radius: 12px; }
+  .pd-slide-img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    inset: 0;
+  }
+  .pd-slide { position: relative; height: 100%; }
+  .pd-slide--active { display: block; height: 100%; }
+
+  /* Info column — prevent overflow */
+  .pd-info { max-width: 100%; overflow: hidden; box-sizing: border-box; }
+  .pd-title { font-size: 22px; overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
+  .pd-lede { overflow-wrap: break-word; word-break: break-word; max-width: 100%; }
+  .pd-meta-row { flex-wrap: wrap; max-width: 100%; }
+
+  /* Ingredient chips — wrap properly */
+  .pd-ing-list { flex-wrap: wrap; max-width: 100%; }
+  .pd-ing-chip { white-space: normal; }
+
+  /* Accordion text — prevent overflow */
+  .pd-acc-content, .pd-acc-content.rte { max-width: 100%; overflow-wrap: break-word; word-break: break-word; }
+  .pd-acc-content ul, .pd-acc-content ol { padding-left: 20px; max-width: 100%; box-sizing: border-box; }
+  .pd-acc-content li { overflow-wrap: break-word; word-break: break-word; }
+
+  /* Buy row — fix the stretched button bug */
+  .pd-buy-row { flex-direction: column; align-items: stretch; }
+  .pd-qty { width: 100%; justify-content: center; }
+  .pd-atc-btn {
+    flex: none !important;          /* stop it stretching vertically */
+    width: 100% !important;
+    min-height: 56px;
+    max-height: 56px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Trust + misc */
   .pd-trust { grid-template-columns: 1fr; }
   .pd-stats-bar { grid-template-columns: 1fr 1fr; }
   .pd-sub-toggle { grid-template-columns: 1fr; }
   .pd-thumbs { display: none; }
+  .pd-price-wrap { flex-wrap: wrap; }
 }
 </style>
 

@@ -41,20 +41,20 @@ body { background: var(--white); color: var(--dark); font-family: var(--sans); o
   position: sticky; top: 0; z-index: 90;
   background: rgba(253,250,245,0.96); backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(122,158,126,0.15);
-  padding: 0 48px; height: 72px;
+  padding: 0 48px; height: 80px;
   display: flex; align-items: center; justify-content: space-between;
 }
 .logo {
   display: flex; align-items: baseline; gap: 6px;
-  font-family: var(--serif); font-size: 28px; font-weight: 500;
+  font-family: var(--serif); font-size: 30px; font-weight: 500;
   color: var(--forest); text-decoration: none; letter-spacing: 1px;
 }
 .logo-dot { width: 8px; height: 8px; background: var(--sage); border-radius: 50%; align-self: center; margin-bottom: 3px; }
-nav { display: flex; gap: 36px; }
+nav { display: flex; gap: 12px; }
 nav a {
-  font-size: 12.5px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 400;
+  font-size: 15px; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 400;
   color: var(--dark); text-decoration: none;
-  position: relative; padding-bottom: 2px; transition: color 0.2s;
+  position: relative; padding: 0 12px 2px; transition: color 0.2s;
 }
 nav a::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 1.5px; background: var(--sage); transition: width 0.3s; }
 nav a:hover { color: var(--forest); }
@@ -99,10 +99,10 @@ nav a[aria-current="page"]::after { width: 100%; }
 .btn-outline:hover { border-color: var(--sage); color: var(--sage); }
 
 /* ─── HERO ─── */
-.hero { min-height: 91vh; display: grid; grid-template-columns: 55% 45%; position: relative; overflow: hidden; }
+.hero { display: grid; grid-template-columns: 55% 45%; position: relative; overflow: hidden; }
 .hero-content {
   background: var(--cream); display: flex; flex-direction: column;
-  justify-content: center; padding: 80px 72px; position: relative;
+  justify-content: center; position: relative;
 }
 .hero-content::before {
   content: ''; position: absolute; top: 0; right: 0; bottom: 0; width: 1px;
@@ -116,9 +116,9 @@ nav a[aria-current="page"]::after { width: 100%; }
   color: var(--forest); font-weight: 500; margin-bottom: 28px; width: fit-content;
 }
 .leaf-icon { font-size: 13px; }
-h1.hero-title { font-family: var(--serif); font-weight: 400; font-size: clamp(46px, 4.5vw, 72px); line-height: 1.1; color: var(--forest); margin-bottom: 24px; }
+h1.hero-title { font-family: var(--serif); font-weight: 400; color: var(--forest); margin-bottom: 24px; }
 h1.hero-title em { font-style: italic; color: var(--sage); }
-.hero-sub { font-size: 16px; line-height: 1.75; color: var(--muted); font-weight: 300; max-width: 430px; margin-bottom: 44px; }
+.hero-sub { line-height: 1.75; color: var(--muted); font-weight: 300; }
 .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 56px; }
 .hero-trust { display: flex; gap: 28px; flex-wrap: wrap; }
 .trust-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); font-weight: 400; }
@@ -172,7 +172,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .section-title em { font-style: italic; color: var(--sage); }
 
 /* ─── SHOP BY GOAL ─── */
-.goals-section { padding: 84px 48px; background: var(--white); }
+.goals-section { background: var(--white); }
 .goals-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; max-width: 1100px; margin: 0 auto; }
 .goal-card {
   background: var(--cream); border-radius: 14px; padding: 32px 20px 28px;
@@ -188,7 +188,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .goal-desc { font-size: 11.5px; color: var(--muted); line-height: 1.5; font-weight: 300; }
 
 /* ─── PRODUCTS GRID ─── */
-.products-section { padding: 0 48px 84px; background: var(--white); }
+.products-section { background: var(--white); }
 .section-header-row { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 40px; }
 .view-all-link { font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--sage); text-decoration: none; border-bottom: 1px solid rgba(122,158,126,0.4); padding-bottom: 2px; transition: color 0.2s, border-color 0.2s; font-weight: 500; }
 .view-all-link:hover { color: var(--forest); border-color: var(--forest); }
@@ -271,7 +271,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .pillar-text p { font-size: 12.5px; color: var(--muted); line-height: 1.5; font-weight: 300; }
 
 /* ─── QUIZ BANNER ─── */
-.quiz-banner { background: var(--forest); padding: 72px 48px; text-align: center; }
+.quiz-banner { background: var(--forest); text-align: center; }
 .quiz-banner .section-eyebrow { color: var(--sage-lt); margin-bottom: 14px; }
 .quiz-title { font-family: var(--serif); font-size: clamp(30px, 3vw, 46px); font-weight: 400; color: var(--cream); line-height: 1.2; margin-bottom: 16px; }
 .quiz-title em { font-style: italic; color: var(--sage-lt); }
@@ -280,7 +280,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .btn-quiz:hover { background: var(--cream); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 
 /* ─── TESTIMONIALS ─── */
-.testimonials-section { padding: 84px 48px; background: var(--cream); }
+.testimonials-section { background: var(--cream); }
 .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
 .testimonial-card { background: var(--white); border-radius: 14px; padding: 30px 28px; border: 1px solid rgba(122,158,126,0.12); transition: all 0.3s; }
 .testimonial-card:hover { box-shadow: 0 10px 36px rgba(45,74,48,0.1); transform: translateY(-3px); }
@@ -293,7 +293,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .t-verified { font-size: 10.5px; color: var(--sage); font-weight: 500; margin-top: 3px; }
 
 /* ─── INGREDIENTS ─── */
-.ingredients-section { padding: 84px 48px; background: var(--white); }
+.ingredients-section { background: var(--white); }
 .ing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; max-width: 1100px; margin: 0 auto; }
 .ing-card { text-align: center; padding: 32px 20px; background: var(--cream); border-radius: 12px; transition: all 0.3s; }
 .ing-card:hover { background: var(--forest); }
@@ -304,7 +304,7 @@ h1.hero-title em { font-style: italic; color: var(--sage); }
 .ing-desc { font-size: 12.5px; color: var(--muted); line-height: 1.6; font-weight: 300; transition: color 0.3s; }
 
 /* ─── NEWSLETTER ─── */
-.newsletter { background: var(--sand); padding: 84px 48px; text-align: center; }
+.newsletter { background: var(--sand); text-align: center; }
 .nl-title { font-family: var(--serif); font-size: clamp(28px, 3vw, 44px); font-weight: 400; color: var(--forest); margin-bottom: 12px; }
 .nl-title em { font-style: italic; color: var(--clay); }
 .nl-sub { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 420px; margin: 0 auto 32px; line-height: 1.65; }
@@ -399,6 +399,7 @@ footer { background: var(--forest); padding: 72px 60px 40px; color: var(--cream)
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 960px) {
+  #site-header         { height: 64px; }
   .hero                { grid-template-columns: 1fr; }
   .hero-visual         { height: 56vw; }
   .products-grid       { grid-template-columns: repeat(2, 1fr); }
@@ -407,21 +408,21 @@ footer { background: var(--forest); padding: 72px 60px 40px; color: var(--cream)
   .testimonials-grid   { grid-template-columns: 1fr; }
   .ing-grid            { grid-template-columns: repeat(2, 1fr); }
   .footer-top          { grid-template-columns: 1fr 1fr; }
-  .hero-content        { padding: 60px 40px; }
+  /* hero-content padding now controlled by hero-banner schema sliders */
   .feature-content     { padding: 60px 40px; }
   /* Hide floating social-proof cards on mobile — they overlap hero content */
   .hero-floating-card,
   .hero-floating-card2 { display: none; }
 }
 @media (max-width: 640px) {
-  #site-header         { padding: 0 20px; }
+  #site-header         { padding: 0 20px; height: 60px; }
   nav                  { display: none; }
   .goals-grid          { grid-template-columns: repeat(2, 1fr); }
   .footer-top          { grid-template-columns: 1fr; }
   .footer-certs        { display: none; }
   .cart-drawer         { width: 100%; }
   .products-section,
-  .goals-section       { padding-left: 20px; padding-right: 20px; }
+  /* goals-section padding controlled by schema sliders */
   .top-bar             { font-size: 10px; gap: 12px; }
   .search-drawer       { padding: 20px; }
   footer               { padding: 56px 24px 32px; }
@@ -795,6 +796,169 @@ footer { background: var(--forest); padding: 72px 60px 40px; color: var(--cream)
 .auth-sub { font-size: 14px; color: var(--muted); text-align: center; margin-bottom: 28px; font-weight: 300; }
 .auth-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
 .auth-field label { font-size: 13px; font-weight: 500; color: var(--forest); }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE RESPONSIVE FIXES
+   Targets 5 specific issues seen in mobile screenshots:
+   1. Product card images cropped (object-fit + grid width)
+   2. Goals strip overflowing right edge
+   3. Quiz/CTA text clipped on left (caused by page overflow)
+   4. Bestseller cards too narrow (inline style override fix)
+   5. General horizontal overflow
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── FIX 5: Global overflow — html + body ─── */
+/* body already has overflow-x: hidden, but html must match
+   or Safari/mobile Chrome ignores the body rule entirely */
+html {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Every Shopify section wrapper must be contained */
+.shopify-section {
+  max-width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* ─── FIX 2 & TABLET: Goals grid — override inline style ─── */
+/* The .goals-grid in shop-by-goal.liquid has an inline
+   style="grid-template-columns: repeat(5, 1fr)" that beats
+   the CSS breakpoint rules. !important wins over inline styles. */
+@media (max-width: 960px) {
+  .goals-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+
+  /* FIX 1 & 4 TABLET: products-grid inline style override */
+  /* featured-products.liquid injects style="grid-template-columns:
+     repeat(4, 1fr)" — !important overrides it */
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ─── ALL MOBILE FIXES (≤ 640px) ─── */
+@media (max-width: 640px) {
+
+  /* ── FIX 2: Goals strip — 2-column grid on mobile ── */
+  .goals-section {
+    overflow-x: hidden;
+  }
+
+  .goals-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    overflow-x: hidden !important;
+    /* Ensure the inline max-width from CSS doesn't cause bleed */
+    max-width: 100% !important;
+  }
+
+  /* ── FIX 1 & 4: Products grid — 2 columns, no overflow ── */
+  .products-section {
+    overflow-x: hidden;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    overflow-x: hidden !important;
+  }
+
+  /* Section header row: stack vertically so "View All" link
+     doesn't force the row wider than the viewport */
+  .section-header-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 6px !important;
+  }
+
+  /* ── FIX 1: Product card — full width, no hidden crop ── */
+  .product-card {
+    width: 100% !important;
+    min-width: 0 !important;
+    overflow: hidden;
+  }
+
+  /* Image wrapper: fixed square so image always fits */
+  .p-img-wrap {
+    aspect-ratio: 1 / 1 !important;
+    /* Remove the min-height that can cause portrait crops */
+    min-height: unset !important;
+    overflow: hidden;
+  }
+
+  /* Show full product image — no cropping on any edge */
+  .p-img {
+    object-fit: contain !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  /* ── FIX 3: Quiz banner — fix text clipping on left ── */
+  /* The text cut-off ("here" instead of "where") is caused by
+     page-level horizontal overflow pushing the body wider than
+     the viewport. The grid fixes above solve the root cause,
+     but we also lock the banner's own geometry as defence. */
+  .quiz-banner {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    /* Guard against any stray transform from parent */
+    transform: none !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .quiz-title {
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  .quiz-sub {
+    max-width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* ── General: lock every section to viewport width ── */
+  section,
+  .hero,
+  .goals-section,
+  .products-section,
+  .quiz-banner,
+  .feature-section,
+  .testimonials-section,
+  .ingredients-section,
+  .newsletter,
+  .marquee-strip,
+  .product-tabs-section,
+  .related-products-section,
+  .recently-viewed-section {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Related/recently-viewed grids also need the column fix */
+  .related-grid,
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  /* Hero content padding is now controlled by theme editor inline styles */
+
+  /* Prevent hero visual from overflowing */
+  .hero-visual {
+    overflow: hidden !important;
+  }
+}
 .auth-forgot { text-align: right; margin-bottom: 20px; }
 .auth-forgot a { font-size: 12.5px; color: var(--sage); text-decoration: none; }
 .auth-submit { width: 100%; margin-bottom: 16px; }
@@ -909,3 +1073,422 @@ footer { background: var(--forest); padding: 72px 60px 40px; color: var(--cream)
   .ptab               { padding: 12px 16px; font-size: 12px; }
   .product-tabs-nav   { gap: 0; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE FIX ROUND 2 — 5 remaining screenshot issues
+   (IMG_3219 – IMG_3224)
+   Changes companion to inline-style removals in:
+     sections/shop-by-goal.liquid
+     sections/testimonials.liquid
+     sections/goal-ingredients.liquid   (new class: goal-ing-grid)
+   ═══════════════════════════════════════════════════════ */
+
+/* Desktop default columns for the new goal-ing-grid class
+   (replaces the removed inline grid-template-columns) */
+.goal-ing-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ── Tablet (≤ 960px) ─────────────────────────────────── */
+@media (max-width: 960px) {
+  /* Goals: 3 → 2 cols on tablet */
+  .goals-grid          { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Ingredients: 4 → 2 cols on tablet */
+  .goal-ing-grid       { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Testimonials: collapse to 1 col early */
+  .testimonials-grid   { grid-template-columns: 1fr !important; }
+}
+
+/* ── Mobile (≤ 640px) ─────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* ── ISSUE 1: Product card images — fixed-height wrapper + contain ── */
+  /* Inline style on .p-img-wrap used aspect-ratio:1/1.1 which can
+     make the wrapper very tall and still crop with cover.
+     Use a fixed 200px height so contain fills the space cleanly. */
+  .p-img-wrap {
+    height: 200px        !important;
+    aspect-ratio: unset  !important;
+    min-height: unset    !important;
+    max-height: 200px    !important;
+    overflow: hidden     !important;
+  }
+  /* Target both the class and any bare img child — belt + braces */
+  .p-img,
+  .p-img-wrap img {
+    object-fit: contain          !important;
+    object-position: center center !important;
+    width: 100%                  !important;
+    height: 100%                 !important;
+  }
+
+  /* ── ISSUE 2: Goals grid — 2 columns (inline style removed in Liquid,
+     !important here as safety net if it ever comes back) ── */
+  .goals-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    overflow-x: hidden !important;
+  }
+
+  /* ── ISSUE 3: Quiz CTA — fix left-edge text clipping ──
+     Root cause: a wide child (goals / ingredients grid) makes
+     the body wider than the viewport; some browsers then scroll
+     the body rightward inside overflow:hidden on html, clipping
+     the left edge of centred sections.  Fixing the grids (issues
+     2 & 4) is the real fix; these rules are defensive. */
+  .quiz-banner {
+    overflow-x: hidden   !important;
+    overflow-y: visible  !important;  /* don't clip the button shadow */
+    padding-left: 24px   !important;
+    padding-right: 24px  !important;
+    box-sizing: border-box !important;
+    position: relative   !important;
+    left: 0              !important;
+    margin-left: 0       !important;
+    transform: none      !important;
+  }
+  .quiz-title,
+  .quiz-sub {
+    margin-left: 0   !important;
+    padding-left: 0  !important;
+    left: 0          !important;
+    transform: none  !important;
+    overflow: visible !important;
+    max-width: 100%  !important;
+  }
+
+  /* ── ISSUE 4: Hero Ingredients — 1 column on mobile ──
+     Inline grid-template-columns removed in goal-ingredients.liquid;
+     CSS now owns the column count for both section types. */
+  .goal-ing-grid,
+  .ing-grid {
+    grid-template-columns: 1fr !important;
+    overflow-x: hidden         !important;
+  }
+
+  /* ── ISSUE 5: Testimonials — 1 column on mobile ──
+     Inline style removed from testimonials.liquid. */
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    overflow-x: hidden         !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE FIX ROUND 2 — 5 remaining screenshot issues
+   (IMG_3219 – IMG_3224)
+   Companion to inline-style removals in:
+     sections/shop-by-goal.liquid   (removed inline grid-template-columns)
+     sections/testimonials.liquid   (removed inline grid-template-columns)
+     sections/goal-ingredients.liquid  (added class goal-ing-grid, removed inline grid-template-columns)
+   ═══════════════════════════════════════════════════════ */
+
+/* Desktop default columns for the new goal-ing-grid class
+   (replaces the removed inline grid-template-columns:repeat(4,1fr)) */
+.goal-ing-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ── Tablet (≤ 960px) ─────────────────────────────────── */
+@media (max-width: 960px) {
+  /* Goals: collapse to 2 cols (inline style removed, CSS now controls) */
+  .goals-grid          { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Ingredients: 4 → 2 cols on tablet */
+  .goal-ing-grid       { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Testimonials: collapse to 1 col early */
+  .testimonials-grid   { grid-template-columns: 1fr !important; }
+}
+
+/* ── Mobile (≤ 640px) ─────────────────────────────────── */
+@media (max-width: 640px) {
+
+  /* ISSUE 1 — Product card images: fixed-height wrapper + contain
+     The base rule has object-fit:cover; the earlier !important fix
+     should already win, but we re-state it here with a fixed pixel
+     height so the wrapper is never taller than the image. */
+  .p-img-wrap {
+    height: 200px        !important;
+    aspect-ratio: unset  !important;
+    min-height: unset    !important;
+    max-height: 200px    !important;
+    overflow: hidden     !important;
+  }
+  .p-img,
+  .p-img-wrap img {
+    object-fit: contain            !important;
+    object-position: center center !important;
+    width: 100%                    !important;
+    height: 100%                   !important;
+  }
+
+  /* ISSUE 2 — Goals grid: 2 columns
+     Inline style removed from Liquid; !important here as safety net. */
+  .goals-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    overflow-x: hidden !important;
+  }
+
+  /* ISSUE 3 — Quiz CTA text clipped on left
+     Root cause: wide grids (issues 2 & 4) push body wider than
+     viewport; mobile browsers then shift body right inside
+     overflow:hidden, clipping left edges of centred sections.
+     Fixing grids is the real cure; these rules are defensive. */
+  .quiz-banner {
+    overflow-x: hidden    !important;
+    overflow-y: visible   !important;
+    padding-left: 24px    !important;
+    padding-right: 24px   !important;
+    box-sizing: border-box !important;
+    position: relative    !important;
+    left: 0               !important;
+    margin-left: 0        !important;
+    transform: none       !important;
+  }
+  .quiz-title,
+  .quiz-sub {
+    margin-left: 0    !important;
+    padding-left: 0   !important;
+    left: 0           !important;
+    transform: none   !important;
+    overflow: visible !important;
+    max-width: 100%   !important;
+  }
+
+  /* ISSUE 4 — Hero Ingredients grid: 1 column on mobile
+     Inline grid-template-columns removed from goal-ingredients.liquid.
+     Also targets .ing-grid used by the home-page ingredients section. */
+  .goal-ing-grid,
+  .ing-grid {
+    grid-template-columns: 1fr !important;
+    overflow-x: hidden         !important;
+  }
+
+  /* ISSUE 5 — Testimonials: 1 column on mobile
+     Inline style removed from testimonials.liquid. */
+  .testimonials-grid {
+    grid-template-columns: 1fr !important;
+    overflow-x: hidden         !important;
+  }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PRODUCT PAGE MOBILE FIXES — IMG_3225 / IMG_3226
+   Template: sections/product-detail.liquid (all product.*.json)
+   Active classes: .pd-slide-img · .pd-atc-btn · .pd-dco
+                   .pd-acc-content · .pd-lede · .pd-info
+   Also covers product-main.liquid (.gallery-img · .btn-atc)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Outer wrapper: clip stray overflow on all sizes ─────────── */
+.pd {
+  overflow-x: hidden   !important;
+  box-sizing: border-box !important;
+}
+
+/* ── ISSUE 1: Main product image — show full bottle, no crop ──── */
+/*
+   product-detail.liquid renders: class="pd-slide-img"
+   Inside: .pd-slide > .pd-slide-wrap
+   Problem: inline <style> sets height:auto with no object-fit;
+   on mobile the container has overflow:hidden but no fixed height,
+   so if any parent constrains height the image appears zoomed.
+   Fix: force contain + give the wrap a bounded height on mobile.
+*/
+.pd-slide-img {
+  object-fit: contain          !important;
+  object-position: center center !important;
+  /* Keep width:100% from the inline style; override height below on mobile */
+}
+
+@media (max-width: 768px) {
+  /* Bound the container so contain has something to work with */
+  .pd-slide-wrap {
+    height: 340px             !important;
+    max-height: 70vw          !important;
+    overflow: hidden          !important;
+    background: var(--cream)  !important;
+    box-sizing: border-box    !important;
+  }
+  /* Slide div must fill that container */
+  .pd-slide {
+    height: 100% !important;
+    width: 100%  !important;
+  }
+  /* Image fills the 340px container, shows full product */
+  .pd-slide-img {
+    object-fit: contain          !important;
+    object-position: center center !important;
+    width: 100%                  !important;
+    height: 100%                 !important;
+  }
+}
+
+/* product-main.liquid fallback (.gallery-img already has contain
+   in the base CSS, but reinforce container height on mobile) */
+@media (max-width: 768px) {
+  .gallery-main {
+    height: 340px    !important;
+    max-height: 70vw !important;
+    aspect-ratio: unset !important;
+  }
+  .gallery-slide {
+    height: 100% !important;
+  }
+  .gallery-img {
+    object-fit: contain          !important;
+    object-position: center center !important;
+    width: 100%                  !important;
+    height: 100%                 !important;
+  }
+}
+
+/* ── ISSUE 2: Add to Cart button — full width, no clipping ───── */
+/*
+   product-detail.liquid: button.pd-atc-btn inside div.pd-buy-row
+   Inline mobile rule sets flex-direction:column but no width:100%
+   on the button. flex:1 in column direction grows height, not width.
+   Without explicit width the button can become tiny, showing "AD".
+*/
+@media (max-width: 768px) {
+  .pd-buy-row {
+    flex-direction: column !important;
+    width: 100%            !important;
+    box-sizing: border-box !important;
+  }
+  .pd-atc-btn {
+    width: 100%            !important;
+    max-width: 100%        !important;
+    box-sizing: border-box !important;
+    min-height: 56px       !important;
+    flex: none             !important;
+    padding-left: 20px     !important;
+    padding-right: 20px    !important;
+  }
+  .pd-qty {
+    width: 100%            !important;
+    box-sizing: border-box !important;
+    justify-content: center !important;
+  }
+}
+
+/* product-main.liquid: .btn-atc inside .product-atc-row */
+@media (max-width: 768px) {
+  .product-atc-row {
+    flex-direction: column !important;
+    width: 100%            !important;
+    box-sizing: border-box !important;
+  }
+  .btn-atc {
+    width: 100%            !important;
+    max-width: 100%        !important;
+    box-sizing: border-box !important;
+    flex: none             !important;
+  }
+  .btn-atc-wish {
+    width: 100%            !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ── ISSUE 3: Description / accordion text — no right overflow ── */
+/*
+   .pd-acc-content holds product.description rich text (rte).
+   Long unbreakable strings like UPC codes or URLs overflow right.
+*/
+.pd-lede,
+.pd-acc-content,
+.pd-acc-content.rte,
+.pd-info .rte {
+  overflow-wrap: break-word !important;
+  word-break:    break-word !important;
+  max-width:     100%       !important;
+  overflow-x:    hidden     !important;
+}
+
+.accordion-content,
+.product-short-desc {
+  overflow-wrap: break-word !important;
+  word-break:    break-word !important;
+  max-width:     100%       !important;
+  overflow-x:    hidden     !important;
+}
+
+/* Global .rte guard */
+.rte {
+  max-width:     100%       !important;
+  overflow-x:    hidden     !important;
+  overflow-wrap: break-word !important;
+  word-break:    break-word !important;
+}
+
+/* ── ISSUE 4: Payment buttons — full width, no right overflow ─── */
+/*
+   product-detail.liquid: <div class="pd-dco">{{ form | payment_button }}</div>
+   Shopify renders .shopify-payment-button > .shopify-payment-button__button
+   The purple Shop Pay button overflows right on narrow viewports.
+*/
+.pd-dco {
+  width:      100%       !important;
+  max-width:  100%       !important;
+  box-sizing: border-box !important;
+  overflow:   hidden     !important;
+}
+
+.pd-dco .shopify-payment-button,
+.shopify-payment-button {
+  width:      100%       !important;
+  max-width:  100%       !important;
+  box-sizing: border-box !important;
+}
+
+.pd-dco .shopify-payment-button__button,
+.shopify-payment-button__button,
+.shopify-payment-button__button--unbranded {
+  width:      100%       !important;
+  max-width:  100%       !important;
+  box-sizing: border-box !important;
+}
+
+/* ── Product info column guard ──────────────────────────────── */
+@media (max-width: 768px) {
+  .pd-info {
+    width:      100%       !important;
+    max-width:  100%       !important;
+    overflow-x: hidden     !important;
+    box-sizing: border-box !important;
+  }
+  .product-info {
+    max-width:  100%       !important;
+    overflow-x: hidden     !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NUCLEAR OPTION — Product image object-fit fix
+   Inline styles on <img> tags already enforce this, but these rules
+   act as a belt-and-suspenders backstop against any theme overrides.
+   ═══════════════════════════════════════════════════════════════════ */
+.p-img-
+
+/* ================================================================
+   NUCLEAR OPTION -- Product image object-fit fix
+   Inline styles on <img> tags already enforce this, but these rules
+   act as a belt-and-suspenders backstop against any theme overrides.
+   ================================================================ */
+.p-img-wrap img,
+.pd-slide img,
+.pd-slide-wrap img,
+.gallery-wrap img,
+.gallery-slide img,
+.gph-card__img-wrap img,
+[class*="product-card"] img,
+[class*="product-image"] img,
+.p-card img {
+  object-fit: contain !important;
+  object-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+                                                                                                                                                                        

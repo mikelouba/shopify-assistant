@@ -2,7 +2,6 @@
   assign layout     = section.settings.layout     | default: 'image-left'
   assign section_bg = section.settings.section_bg | default: '#ffffff'
   assign visual_bg  = section.settings.visual_bg  | default: '#F0EBE3'
-  assign pad        = section.settings.section_padding | default: 60
   if layout == 'image-right'
     assign visual_order = 2
     assign content_order = 1
@@ -13,8 +12,24 @@
 -%}
 
 {% comment %}─── FEATURE SPLIT ───{% endcomment %}
-<section class="feature-section"
-  style="background-color: {{ section_bg }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
+<style>
+  .fsp-{{ section.id }} {
+    padding-top:    {{ section.settings.pad_top }}px !important;
+    padding-bottom: {{ section.settings.pad_bottom }}px !important;
+    padding-left:   {{ section.settings.pad_left }}px !important;
+    padding-right:  {{ section.settings.pad_right }}px !important;
+  }
+  @media (max-width: 768px) {
+    .fsp-{{ section.id }} {
+      padding-top:    {{ section.settings.mob_pad_top }}px !important;
+      padding-bottom: {{ section.settings.mob_pad_bottom }}px !important;
+      padding-left:   {{ section.settings.mob_pad_left }}px !important;
+      padding-right:  {{ section.settings.mob_pad_right }}px !important;
+    }
+  }
+</style>
+<section class="feature-section fsp-{{ section.id }}"
+  style="background-color: {{ section_bg }};">
 
   <div class="feature-visual" style="order: {{ visual_order }}; background-color: {{ visual_bg }}">
     {%- if section.settings.feature_image != blank -%}
@@ -100,13 +115,17 @@
       ],
       "default": "image-left"
     },
-    {
-      "type": "range",
-      "id": "section_padding",
-      "label": "Section padding",
-      "min": 20, "max": 100, "step": 10, "unit": "px",
-      "default": 60
-    },
+        { "type": "header", "content": "── SPACING ──" },
+    { "type": "paragraph", "content": "Desktop padding (applies above 768px)" },
+    { "type": "range", "id": "pad_top",        "label": "Desktop top (px)",    "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_bottom",     "label": "Desktop bottom (px)", "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_left",       "label": "Desktop left (px)",   "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "range", "id": "pad_right",      "label": "Desktop right (px)",  "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "paragraph", "content": "Mobile padding (applies at ≤768px)" },
+    { "type": "range", "id": "mob_pad_top",    "label": "Mobile top (px)",     "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_bottom", "label": "Mobile bottom (px)",  "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_left",   "label": "Mobile left (px)",    "min": 0, "max": 80,  "step": 4, "default": 0 },
+    { "type": "range", "id": "mob_pad_right",  "label": "Mobile right (px)",   "min": 0, "max": 80,  "step": 4, "default": 0 },
     { "type": "header", "content": "Colours" },
     { "type": "color",  "id": "section_bg", "label": "Section background", "default": "#ffffff" },
     { "type": "color",  "id": "visual_bg",  "label": "Visual panel background", "default": "#F0EBE3" }

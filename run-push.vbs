@@ -1,0 +1,2 @@
+Set shell = WScript.CreateObject("WScript.Shell")
+shell.Run "cmd /k ""cd /d C:\Users\luba_\Documents\GitHub\shopify-assistant && shopify theme push --path . --theme 159757697252 --store lovesolmara.myshopify.com --only snippets/product-card.liquid sections/product-detail.liquid sections/product-main.liquid sections/recently-viewed.liquid sections/goal-page-hero.liquid assets/solmara.css --force""", 1, False

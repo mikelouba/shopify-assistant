@@ -5,12 +5,27 @@
   assign heading_align  = section.settings.heading_align  | default: 'left'
   assign bg_color       = section.settings.bg_color       | default: '#ffffff'
   assign view_all_label = section.settings.view_all_label | default: 'View All →'
-  assign pad            = section.settings.section_padding | default: 60
   assign show_quick_add = section.settings.show_quick_add
 -%}
 
-<section class="products-section" id="products"
-  style="background-color: {{ bg_color }}; padding-top: {{ pad }}px; padding-bottom: {{ pad }}px;">
+<style>
+  .fps-{{ section.id }} {
+    padding-top:    {{ section.settings.pad_top }}px !important;
+    padding-bottom: {{ section.settings.pad_bottom }}px !important;
+    padding-left:   {{ section.settings.pad_left }}px !important;
+    padding-right:  {{ section.settings.pad_right }}px !important;
+  }
+  @media (max-width: 768px) {
+    .fps-{{ section.id }} {
+      padding-top:    {{ section.settings.mob_pad_top }}px !important;
+      padding-bottom: {{ section.settings.mob_pad_bottom }}px !important;
+      padding-left:   {{ section.settings.mob_pad_left }}px !important;
+      padding-right:  {{ section.settings.mob_pad_right }}px !important;
+    }
+  }
+</style>
+<section class="products-section fps-{{ section.id }}" id="products"
+  style="background-color: {{ bg_color }};">
 
   <div class="section-header-row">
     <div>
@@ -81,13 +96,17 @@
       "default": "4",
       "info": "On mobile, columns automatically collapse to 1–2."
     },
-    {
-      "type": "range",
-      "id": "section_padding",
-      "label": "Section padding",
-      "min": 20, "max": 100, "step": 10, "unit": "px",
-      "default": 60
-    },
+        { "type": "header", "content": "── SPACING ──" },
+    { "type": "paragraph", "content": "Desktop padding (applies above 768px)" },
+    { "type": "range", "id": "pad_top",        "label": "Desktop top (px)",    "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_bottom",     "label": "Desktop bottom (px)", "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_left",       "label": "Desktop left (px)",   "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "range", "id": "pad_right",      "label": "Desktop right (px)",  "min": 0, "max": 160, "step": 4, "default": 0 },
+    { "type": "paragraph", "content": "Mobile padding (applies at ≤768px)" },
+    { "type": "range", "id": "mob_pad_top",    "label": "Mobile top (px)",     "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_bottom", "label": "Mobile bottom (px)",  "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_left",   "label": "Mobile left (px)",    "min": 0, "max": 80,  "step": 4, "default": 0 },
+    { "type": "range", "id": "mob_pad_right",  "label": "Mobile right (px)",   "min": 0, "max": 80,  "step": 4, "default": 0 },
     { "type": "header",   "content": "Style" },
     { "type": "color",    "id": "bg_color",      "label": "Background colour", "default": "#ffffff" },
     { "type": "checkbox", "id": "show_quick_add", "label": "Show quick-add button on hover", "default": true }

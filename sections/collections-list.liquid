@@ -1,0 +1,290 @@
+{%- comment -%}
+  Section: collections-list.liquid
+  Displays a grid of all collections for the /collections page
+{%- endcomment -%}
+
+<style>
+  .cls-{{ section.id }} {
+    padding-top:    {{ section.settings.pad_top }}px !important;
+    padding-bottom: {{ section.settings.pad_bottom }}px !important;
+    padding-left:   {{ section.settings.pad_left }}px !important;
+    padding-right:  {{ section.settings.pad_right }}px !important;
+  }
+  @media (max-width: 768px) {
+    .cls-{{ section.id }} {
+      padding-top:    {{ section.settings.mob_pad_top }}px !important;
+      padding-bottom: {{ section.settings.mob_pad_bottom }}px !important;
+      padding-left:   {{ section.settings.mob_pad_left }}px !important;
+      padding-right:  {{ section.settings.mob_pad_right }}px !important;
+    }
+  }
+</style>
+<section class="colls-list-section cls-{{ section.id }}" style="
+  background: {{ section.settings.bg_color }};
+">
+  <div class="colls-list-inner">
+
+    {%- if section.settings.heading != blank -%}
+      <h1 class="colls-list-heading">{{ section.settings.heading }}</h1>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="colls-list-sub">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <div class="colls-grid" style="--cols: {{ section.settings.columns }};">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'frontpage' or collection.handle == 'all' -%}
+          <a href="{{ collection.url }}" class="coll-card">
+            <div class="coll-card__img-wrap">
+              {%- if collection.image -%}
+                {{ collection.image | image_url: width: 600 | image_tag:
+                    alt: collection.image.alt | default: collection.title,
+                    loading: 'lazy',
+                    class: 'coll-card__img',
+                    style: 'object-fit: cover; width: 100%; height: 100%;' }}
+              {%- else -%}
+                <div class="coll-card__img-placeholder">
+                  <span>🌿</span>
+                </div>
+              {%- endif -%}
+              <div class="coll-card__overlay"></div>
+              <div class="coll-card__text">
+                <h2 class="coll-card__title">{{ collection.title }}</h2>
+                {%- if section.settings.show_product_count -%}
+                  <p class="coll-card__count">{{ collection.all_products_count }} products</p>
+                {%- endif -%}
+                <span class="coll-card__cta">{{ section.settings.button_text }}</span>
+              </div>
+            </div>
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .colls-list-section {
+    width: 100%;
+  }
+  .colls-list-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  .colls-list-heading {
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: clamp(28px, 4vw, 48px);
+    color: {{ section.settings.heading_color }};
+    text-align: center;
+    margin: 0 0 12px;
+  }
+  .colls-list-sub {
+    font-size: 16px;
+    color: {{ section.settings.heading_color }};
+    opacity: 0.75;
+    text-align: center;
+    margin: 0 0 40px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .colls-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 3), 1fr);
+    gap: {{ section.settings.card_gap }}px;
+  }
+  .coll-card {
+    text-decoration: none;
+    display: block;
+    border-radius: {{ section.settings.card_radius }}px;
+    overflow: hidden;
+  }
+  .coll-card__img-wrap {
+    position: relative;
+    padding-top: {{ section.settings.card_aspect }}%;
+    background: {{ section.settings.card_fallback_color }};
+  }
+  .coll-card__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .coll-card:hover .coll-card__img {
+    transform: scale(1.04);
+  }
+  .coll-card__img-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: {{ section.settings.card_fallback_color }};
+  }
+  .coll-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+  }
+  .coll-card__text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: #fff;
+  }
+  .coll-card__title {
+    font-family: var(--font-heading, Georgia, serif);
+    font-size: clamp(16px, 2.5vw, 24px);
+    margin: 0 0 4px;
+    color: #fff;
+  }
+  .coll-card__count {
+    font-size: 13px;
+    opacity: 0.85;
+    margin: 0 0 10px;
+  }
+  .coll-card__cta {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255,255,255,0.6);
+    padding-bottom: 2px;
+    color: #fff;
+  }
+
+  @media (max-width: 768px) {
+    .colls-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+  }
+  @media (max-width: 480px) {
+    .colls-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Collections List",
+  "tag": "section",
+  "class": "shopify-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Page Heading",
+      "default": "Shop by Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Explore our wellness collections, crafted with nature's finest ingredients."
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "Columns (desktop)",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards (px)",
+      "min": 8,
+      "max": 40,
+      "step": 4,
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card corner radius (px)",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "card_aspect",
+      "label": "Card height ratio (%)",
+      "info": "100 = square, 75 = landscape, 133 = portrait",
+      "min": 60,
+      "max": 150,
+      "step": 5,
+      "default": 100
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Card CTA text",
+      "default": "Shop now →"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_product_count",
+      "label": "Show product count",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#F7F5F0"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#2C3E1F"
+    },
+    {
+      "type": "color",
+      "id": "card_fallback_color",
+      "label": "Card placeholder color",
+      "default": "#C8B89A"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+        { "type": "header", "content": "── SPACING ──" },
+    { "type": "paragraph", "content": "Desktop padding controls (applies above 768px)" },
+    { "type": "range", "id": "pad_top",    "label": "Desktop top padding (px)",    "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_bottom", "label": "Desktop bottom padding (px)", "min": 0, "max": 200, "step": 4, "default": 60 },
+    { "type": "range", "id": "pad_left",   "label": "Desktop left padding (px)",   "min": 0, "max": 160, "step": 4, "default": 24 },
+    { "type": "range", "id": "pad_right",  "label": "Desktop right padding (px)",  "min": 0, "max": 160, "step": 4, "default": 24 },
+    { "type": "paragraph", "content": "Mobile padding controls (applies at ≤768px)" },
+    { "type": "range", "id": "mob_pad_top",    "label": "Mobile top padding (px)",    "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_bottom", "label": "Mobile bottom padding (px)", "min": 0, "max": 120, "step": 4, "default": 40 },
+    { "type": "range", "id": "mob_pad_left",   "label": "Mobile left padding (px)",   "min": 0, "max": 80,  "step": 4, "default": 16 },
+    { "type": "range", "id": "mob_pad_right",  "label": "Mobile right padding (px)",  "min": 0, "max": 80,  "step": 4, "default": 16 }
+  ],
+  "presets": [
+    {
+      "name": "Collections List"
+    }
+  ]
+}
+{% endschema %}
